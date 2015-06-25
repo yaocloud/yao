@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Oslo::VERSION
   spec.authors       = ["Uchio, KONDO"]
   spec.email         = ["udzura@udzura.jp"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{OpenStack API Wrapper greatest ever}
+  spec.description   = %q{OpenStack API Wrapper greatest ever}
+  spec.homepage      = "https://github.com/udzura/oslo"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
