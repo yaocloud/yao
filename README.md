@@ -1,6 +1,6 @@
 # Oslo
 
-TODO: Write a gem description
+OpenStack API Wrapper that rocks!!
 
 ## Installation
 
@@ -20,7 +20,16 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+Oslo.configure do
+  auth_url "http://keystone.example.local:8080/v2.0/tokens"
+  tenant   "fooproject"
+  user     "udzura"
+  password "tonk0tsu-r@men"
+end
+
+Oslo::Nova.create_instance( ... )
+```
 
 ## Contributing
 

@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Oslo::VERSION
   spec.authors       = ["Uchio, KONDO"]
   spec.email         = ["udzura@udzura.jp"]
-  spec.summary       = %q{OpenStack API Wrapper greatest ever}
-  spec.description   = %q{OpenStack API Wrapper greatest ever}
+  spec.summary       = %q{OpenStack API Wrapper that rocks!!}
+  spec.description   = %q{OpenStack API Wrapper that rocks!!}
   spec.homepage      = "https://github.com/udzura/oslo"
   spec.license       = "MIT"
 
