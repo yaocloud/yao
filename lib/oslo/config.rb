@@ -33,7 +33,9 @@ module Oslo
     end
   end
 
-  def self.config
+  def self.config(&blk)
     @__config ||= Config.new
+    @__config.instance_eval(&blk) if blk
+    @__config
   end
 end
