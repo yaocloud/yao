@@ -1,5 +1,8 @@
 require "oslo/version"
 
 module Oslo
-  # Your code goes here...
 end
+
+require 'oslo/config'
+require 'oslo/client'
+require 'oslo/auth'
