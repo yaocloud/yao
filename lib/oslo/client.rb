@@ -2,6 +2,7 @@ require 'oslo'
 require 'oslo/config'
 require 'faraday'
 require 'faraday_middleware'
+require 'oslo/faraday_middlewares'
 
 module Oslo
   module Client
@@ -17,9 +18,9 @@ module Oslo
         end
       end
 
-      def register_endpoints(endpoints)
+      def register_endpoints(endpoints, token: nil)
         endpoints.each_pair do |type, endpoint|
-          self.pool[type] = Oslo::Client.gen_client(endpoint)
+          self.pool[type] = Oslo::Client.gen_client(endpoint, token: token)
         end
       end
     end
@@ -27,10 +28,15 @@ module Oslo
     class << self
       attr_accessor :default_client
 
-      def gen_client(endpoint)
+      def gen_client(endpoint, token: nil)
         Faraday.new( endpoint ) do |f|
           f.request :url_encoded
           f.request :json
+
+          if token
+            f.request :os_token, token
+          end
+
           f.response :json, :content_type => /\bjson$/
           f.response :logger
 

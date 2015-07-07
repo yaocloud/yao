@@ -52,7 +52,7 @@ module Oslo::Auth
           @endpoints[key] = value
         end
       end
-      Oslo.default_client.register_endpoints(@endpoints)
+      Oslo.default_client.register_endpoints(@endpoints, token: @token)
     end
   end
 end
