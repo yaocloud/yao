@@ -14,7 +14,7 @@ module Oslo::Auth
       }
       authinfo[:auth][:tenantName] = tenant_name if tenant_name
 
-      reply = Oslo::Client.conn.post('/v2.0/tokens') do |req|
+      reply = Oslo.default_client.default.post('/v2.0/tokens') do |req|
         req.body = authinfo.to_json
         req.headers['Content-Type'] = 'application/json'
       end
@@ -52,6 +52,7 @@ module Oslo::Auth
           @endpoints[key] = value
         end
       end
+      Oslo.default_client.register_endpoints(@endpoints)
     end
   end
 end
