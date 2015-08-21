@@ -22,13 +22,14 @@ Or install it yourself as:
 
 ```ruby
 Oslo.configure do
-  auth_url "http://keystone.example.local:8080/v2.0/tokens"
-  tenant   "fooproject"
-  user     "udzura"
-  password "tonk0tsu-r@men"
+  auth_url    "http://keystone.example.local:8080/v2.0/tokens"
+  tenant_name "fooproject"
+  username    "udzura"
+  password    "tonk0tsu-r@men"
 end
 
-Oslo::Nova.create_instance( ... )
+Oslo::Network.list # list up networks...
+Oslo::Server.list_detail # list up instances...
 ```
 
 ## Contributing
