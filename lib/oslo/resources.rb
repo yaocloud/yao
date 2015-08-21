@@ -8,6 +8,9 @@ module Oslo
   end
 
   def self.const_missing(name)
-    Oslo.const_set(name, Oslo::Resources.const_get(name))
+    new_klass = Oslo::Resources.const_get(name)
+    Oslo.const_set(name, new_klass)
+  rescue NameError
+    super
   end
 end
