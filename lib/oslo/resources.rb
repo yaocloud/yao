@@ -5,6 +5,7 @@ module Oslo
     autoload :Server,           "oslo/resources/server"
     autoload :Flavor,           "oslo/resources/flavor"
     autoload :Image,            "oslo/resources/image"
+    autoload :SecurityGroup,    "oslo/resources/security_group"
   end
 
   def self.const_missing(name)

@@ -12,7 +12,7 @@ module Oslo::Resources
       end
 
       def service=(name)
-        @client ||= Oslo.default_client.pool[name]
+        @client = Oslo.default_client.pool[name]
       end
 
       # restful methods

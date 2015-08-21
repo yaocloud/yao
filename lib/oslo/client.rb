@@ -20,6 +20,11 @@ module Oslo
 
       def register_endpoints(endpoints, token: nil)
         endpoints.each_pair do |type, endpoint|
+          # XXX: neutron just have v2.0 API and endpoint may not have version prefix
+          if type == "network" && URI.parse(endpoint).path == "/"
+            endpoint = File.join(endpoint, "v2.0")
+          end
+
           self.pool[type] = Oslo::Client.gen_client(endpoint, token: token)
         end
       end
