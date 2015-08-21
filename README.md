@@ -21,6 +21,8 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
+require 'oslo'
+
 Oslo.configure do
   auth_url    "http://keystone.example.local:8080/v2.0/tokens"
   tenant_name "fooproject"
@@ -30,6 +32,24 @@ end
 
 Oslo::Network.list # list up networks...
 Oslo::Server.list_detail # list up instances...
+```
+
+## Pro tips
+
+You can use a prittier namespace:
+
+```ruby
+# Instead of require-ing 'oslo'
+require 'oslo/is_openstack_client'
+
+OpenStack.configure do
+  auth_url    "http://keystone.example.local:8080/v2.0/tokens"
+  tenant_name "fooproject"
+  username    "udzura"
+  password    "tonk0tsu-r@men"
+end
+
+OpenStack::Server.list_detail # And let's go on
 ```
 
 ## Contributing
