@@ -4,5 +4,6 @@ module Oslo
 
     autoload :Server,           "oslo/resources/server"
     autoload :Flavor,           "oslo/resources/flavor"
+    autoload :Image,            "oslo/resources/image"
   end
 end
