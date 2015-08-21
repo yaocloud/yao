@@ -20,8 +20,15 @@ module Oslo
       name = name.to_sym
       _configuration_defaults[name] = default
       _configuration_hooks[name] = hook if block_given?
-      self.define_singleton_method(name) do
-        configuration[name] || _configuration_defaults[name]
+      self.define_singleton_method(name) do |*a|
+        case a.size
+        when 0
+          configuration[name] || _configuration_defaults[name]
+        when 1
+          set(name, a.first)
+        else
+          raise ArgumentError, "wrong number of arguments (#{a.size} for 0, 1)"
+        end
       end
     end
 
@@ -37,5 +44,9 @@ module Oslo
     @__config ||= Config.new
     @__config.instance_eval(&blk) if blk
     @__config
+  end
+
+  def self.configure(&blk)
+    config &blk
   end
 end

@@ -3,8 +3,24 @@ require 'json'
 require 'time'
 
 module Oslo::Auth
+  %i(tenant_name username password).each do |name|
+    Oslo.config.param name, nil do |_|
+      Oslo::Auth.try_new
+    end
+  end
+
   class << self
-    def new(tenant_name: nil, username: nil, password: nil)
+    def try_new
+      if Oslo.config.tenant_name && Oslo.config.username && Oslo.config.password && Oslo.default_client
+        Oslo::Auth.new
+      end
+    end
+
+    def new(
+        tenant_name: Oslo.config.tenant_name,
+        username: Oslo.config.username,
+        password: Oslo.config.password
+    )
       authinfo = {
         auth: {
           passwordCredentials: {

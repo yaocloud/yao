@@ -56,11 +56,12 @@ module Oslo
       end
     end
 
-    Oslo.config.param :endpoint, "http://localhost" do |endpoint|
-      Oslo::Client.reset_client(endpoint)
+    Oslo.config.param :auth_url, nil do |endpoint|
+      if endpoint
+        Oslo::Client.reset_client(endpoint)
+        Oslo::Auth.try_new
+      end
     end
-
-    self.reset_client
   end
 
   def self.default_client
