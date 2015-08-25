@@ -1,6 +1,6 @@
 module Oslo
   module Resources
-    autoload :RestfulResources, "oslo/resources/restful_resources"
+    require "oslo/resources/base"
 
     autoload :Server,           "oslo/resources/server"
     autoload :Flavor,           "oslo/resources/flavor"

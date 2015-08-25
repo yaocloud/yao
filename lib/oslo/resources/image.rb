@@ -1,5 +1,5 @@
 module Oslo::Resources
-  class Image < RestfulResources
+  class Image < Base
     self.service        = "compute"
     self.resource_name  = "image"
     self.resources_name = "images"

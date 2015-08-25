@@ -1,5 +1,5 @@
 module Oslo::Resources
-  class SecurityGroup < RestfulResources
+  class SecurityGroup < Base
     self.service        = "compute"
     self.resource_name  = "os-security-group"
     self.resources_name = "os-security-groups"

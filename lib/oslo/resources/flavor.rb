@@ -1,5 +1,5 @@
 module Oslo::Resources
-  class Flavor < RestfulResources
+  class Flavor < Base
     self.service        = "compute"
     self.resource_name  = "flavor"
     self.resources_name = "flavors"

@@ -1,5 +1,5 @@
 module Oslo::Resources
-  class Keypair < RestfulResources
+  class Keypair < Base
     self.service        = "compute"
     self.resource_name  = "os-keypair"
     self.resources_name = "os-keypairs"
