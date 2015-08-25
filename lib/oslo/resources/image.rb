@@ -1,3 +1,4 @@
+require 'oslo/resources/metadata_available'
 module Oslo::Resources
   class Image < Base
     friendly_attributes :name, :status, :progress, :metadata
@@ -21,5 +22,7 @@ module Oslo::Resources
     self.service        = "compute"
     self.resource_name  = "image"
     self.resources_name = "images"
+
+    extend MetadataAvailable
   end
 end

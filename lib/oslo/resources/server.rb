@@ -1,3 +1,4 @@
+require 'oslo/resources/metadata_available'
 module Oslo::Resources
   class Server < Base
     friendly_attributes :addresses, :metadata, :name, :progress,
@@ -10,5 +11,7 @@ module Oslo::Resources
     self.service        = "compute"
     self.resource_name  = "server"
     self.resources_name = "servers"
+
+    extend MetadataAvailable
   end
 end
