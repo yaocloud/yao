@@ -1,3 +1,4 @@
+require 'oslo/resources/security_group'
 module Oslo::Resources
   class SecurityGroupRule < Base
     friendly_attributes :ethertype
@@ -40,11 +41,15 @@ module Oslo::Resources
     end
 
     def remote_group
-      return nil if !self["remote_group_id"] && self["group"].empty?
+      return nil if self["remote_group_id"].nil? && (self["group"].nil? || self["group"].empty?)
 
       SecurityGroup.new(
-        {"id" => self["remote_group_id"]}.merge(self["group"])
+        {"id" => self["remote_group_id"]}.merge(self["group"] || {})
       )
     end
+
+    self.service        = "compute"
+    self.resource_name  = "os-security-group-rule"
+    self.resources_name = "os-security-group-rules"
   end
 end
