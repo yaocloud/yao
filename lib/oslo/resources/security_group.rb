@@ -3,12 +3,12 @@ module Oslo::Resources
     friendly_attributes :name, :description, :tenant_id
 
     def rules
-      ["rules", SecurityGroupRule].join("__")] ||= case self.class.service
+      self[["rules", SecurityGroupRule].join("__")] ||= (case self.class.service
       when "compute"
         self["rules"].map{|r| SecurityGroupRule.new(r) }
       when "network"
         self["security_group_rules"].map{|r| SecurityGroupRule.new(r) }
-      end
+      end)
     end
 
     self.service        = "compute"
