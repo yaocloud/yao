@@ -17,7 +17,12 @@ module Oslo::Resources
     end
 
     def service=(name)
+      @service = name
       @client = Oslo.default_client.pool[name]
+    end
+
+    def service
+      @service
     end
 
     # restful methods
