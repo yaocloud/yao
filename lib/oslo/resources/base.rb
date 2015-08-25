@@ -26,6 +26,16 @@ module Oslo::Resources
       end
     end
 
+    def self.map_attribute_to_resources(k_and_v)
+      _name, klass = *k_and_v.to_a.first
+      name = _name.to_s
+      define_method(name) do
+        self[[name, klass].join("__")] ||= self[name].map {|d|
+          klass.new(d)
+        }
+      end
+    end
+
     def initialize(data_via_json)
       @data = data_via_json
     end

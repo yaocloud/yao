@@ -22,11 +22,11 @@ module Oslo::Resources
 
     # restful methods
     def list
-      GET(resources_name).body[resources_name_in_json]
+      return_resources(GET(resources_name).body[resources_name_in_json])
     end
 
     def list_detail
-      GET([resources_name, "detail"].join("/")).body[resources_name_in_json]
+      return_resources(GET([resources_name, "detail"].join("/")).body[resources_name_in_json])
     end
 
     def get(id_or_permalink)
@@ -35,7 +35,7 @@ module Oslo::Resources
             else
               GET([resources_name, id_or_permalink].join("/"))
             end
-      res.body[resource_name_in_json]
+      return_resource(res.body[resource_name_in_json])
     end
     alias find get
 
@@ -47,7 +47,7 @@ module Oslo::Resources
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-      res.body[resource_name_in_json]
+      return_resource(res.body[resource_name_in_json])
     end
 
     def update(id, resource_params)
@@ -58,7 +58,7 @@ module Oslo::Resources
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-      res.body[resource_name_in_json]
+      return_resource(res.body[resource_name_in_json])
     end
 
     def destroy(id)
@@ -73,6 +73,14 @@ module Oslo::Resources
 
     def resources_name_in_json
       @resources_name_in_json ||= resources_name.sub(/^os-/, "").tr("-", "_")
+    end
+
+    def return_resource(d)
+      new(d)
+    end
+
+    def return_resources(arr)
+      arr.map{|d| return_resource(d) }
     end
   end
 end
