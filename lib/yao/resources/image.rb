@@ -1,5 +1,5 @@
-require 'oslo/resources/metadata_available'
-module Oslo::Resources
+require 'yao/resources/metadata_available'
+module Yao::Resources
   class Image < Base
     friendly_attributes :name, :status, :progress, :metadata
     map_attribute_to_attribute :minDisk => :min_disk

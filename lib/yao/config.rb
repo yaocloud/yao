@@ -1,6 +1,6 @@
-require 'oslo'
+require 'yao'
 
-module Oslo
+module Yao
   class Config
     def _configuration_defaults
       @_configuration_defaults ||= {}

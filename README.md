@@ -1,13 +1,13 @@
-# Oslo
+# Yao
 
-OpenStack API Wrapper that rocks!!
+YAO is a Yet Another OpenStack API Wrapper that rocks!!
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'oslo'
+gem 'yao'
 ```
 
 And then execute:
@@ -16,22 +16,22 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install oslo
+    $ gem install yao
 
 ## Usage
 
 ```ruby
-require 'oslo'
+require 'yao'
 
-Oslo.configure do
+Yao.configure do
   auth_url    "http://keystone.example.local:8080/v2.0/tokens"
   tenant_name "fooproject"
   username    "udzura"
   password    "tonk0tsu-r@men"
 end
 
-Oslo::Network.list # list up networks...
-Oslo::Server.list_detail # list up instances...
+Yao::Network.list # list up networks...
+Yao::Server.list_detail # list up instances...
 ```
 
 ## Pro tips
@@ -39,8 +39,8 @@ Oslo::Server.list_detail # list up instances...
 You can use a prittier namespace:
 
 ```ruby
-# Instead of require-ing 'oslo'
-require 'oslo/is_openstack_client'
+# Instead of require-ing 'yao'
+require 'yao/is_openstack_client'
 
 OpenStack.configure do
   auth_url    "http://keystone.example.local:8080/v2.0/tokens"
@@ -54,7 +54,7 @@ OpenStack::Server.list_detail # And let's go on
 
 ## Contributing
 
-1. Fork it ( https://github.com/udzura/oslo/fork )
+1. Fork it ( https://github.com/udzura/yao/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

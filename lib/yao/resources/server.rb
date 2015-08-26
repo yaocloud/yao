@@ -1,5 +1,5 @@
-require 'oslo/resources/metadata_available'
-module Oslo::Resources
+require 'yao/resources/metadata_available'
+module Yao::Resources
   class Server < Base
     friendly_attributes :addresses, :metadata, :name, :progress,
                         :status, :tenant_id, :user_id, :key_name

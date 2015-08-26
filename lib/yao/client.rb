@@ -1,10 +1,10 @@
-require 'oslo'
-require 'oslo/config'
+require 'yao'
+require 'yao/config'
 require 'faraday'
 require 'faraday_middleware'
-require 'oslo/faraday_middlewares'
+require 'yao/faraday_middlewares'
 
-module Oslo
+module Yao
   module Client
     class ClientSet
       def initialize
@@ -25,7 +25,7 @@ module Oslo
             endpoint = File.join(endpoint, "v2.0")
           end
 
-          self.pool[type] = Oslo::Client.gen_client(endpoint, token: token)
+          self.pool[type] = Yao::Client.gen_client(endpoint, token: token)
         end
       end
     end
@@ -51,20 +51,20 @@ module Oslo
 
       def reset_client(new_endpoint=nil)
         set = ClientSet.new
-        set.register_endpoints("default" => (new_endpoint || Oslo.config.endpoint))
+        set.register_endpoints("default" => (new_endpoint || Yao.config.endpoint))
         self.default_client = set
       end
     end
 
-    Oslo.config.param :auth_url, nil do |endpoint|
+    Yao.config.param :auth_url, nil do |endpoint|
       if endpoint
-        Oslo::Client.reset_client(endpoint)
-        Oslo::Auth.try_new
+        Yao::Client.reset_client(endpoint)
+        Yao::Auth.try_new
       end
     end
   end
 
   def self.default_client
-    Oslo::Client.default_client
+    Yao::Client.default_client
   end
 end

@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   class FloatingIP < Base
     friendly_attributes :fixed_ip, :instance_id, :ip, :pool
 

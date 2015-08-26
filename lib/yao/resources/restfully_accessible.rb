@@ -1,6 +1,6 @@
 require "forwardable"
 
-module Oslo::Resources
+module Yao::Resources
   module RestfullyAccessible
     def self.extended(base)
       base.class_eval do
@@ -18,7 +18,7 @@ module Oslo::Resources
 
     def service=(name)
       @service = name
-      @client = Oslo.default_client.pool[name]
+      @client = Yao.default_client.pool[name]
     end
 
     def service

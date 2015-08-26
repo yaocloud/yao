@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   class Flavor < Base
     friendly_attributes :name, :vcpus, :disk, :swap
     map_attribute_to_attribute "os-flavor-access:is_public" => :public?

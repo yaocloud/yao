@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   class Port < Base
     friendly_attributes :name, :mac_address, :status, :allowed_address_pairs,
                         :device_owner, :fixed_ips, :security_groups, :device_id,
@@ -10,11 +10,11 @@ module Oslo::Resources
     end
 
     def primary_subnet
-      Oslo::Subnet.find fixed_ips.first["subnet_id"]
+      Yao::Subnet.find fixed_ips.first["subnet_id"]
     end
 
     def network
-      Oslo::Network.find network_id
+      Yao::Network.find network_id
     end
 
     self.service        = "network"

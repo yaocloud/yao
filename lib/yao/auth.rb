@@ -1,25 +1,25 @@
-require 'oslo'
+require 'yao'
 require 'json'
 require 'time'
 
-module Oslo::Auth
+module Yao::Auth
   %i(tenant_name username password).each do |name|
-    Oslo.config.param name, nil do |_|
-      Oslo::Auth.try_new
+    Yao.config.param name, nil do |_|
+      Yao::Auth.try_new
     end
   end
 
   class << self
     def try_new
-      if Oslo.config.tenant_name && Oslo.config.username && Oslo.config.password && Oslo.default_client
-        Oslo::Auth.new
+      if Yao.config.tenant_name && Yao.config.username && Yao.config.password && Yao.default_client
+        Yao::Auth.new
       end
     end
 
     def new(
-        tenant_name: Oslo.config.tenant_name,
-        username: Oslo.config.username,
-        password: Oslo.config.password
+        tenant_name: Yao.config.tenant_name,
+        username: Yao.config.username,
+        password: Yao.config.password
     )
       authinfo = {
         auth: {
@@ -30,7 +30,7 @@ module Oslo::Auth
       }
       authinfo[:auth][:tenantName] = tenant_name if tenant_name
 
-      reply = Oslo.default_client.default.post('/v2.0/tokens') do |req|
+      reply = Yao.default_client.default.post('/v2.0/tokens') do |req|
         req.body = authinfo.to_json
         req.headers['Content-Type'] = 'application/json'
       end
@@ -68,7 +68,7 @@ module Oslo::Auth
           @endpoints[key] = value
         end
       end
-      Oslo.default_client.register_endpoints(@endpoints, token: @token)
+      Yao.default_client.register_endpoints(@endpoints, token: @token)
     end
   end
 end

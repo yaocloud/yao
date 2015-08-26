@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   module MetadataAvailable
     def list_metadata(id)
       GET(metadata_path(id)).body["metadata"]

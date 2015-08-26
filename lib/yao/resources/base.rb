@@ -1,7 +1,7 @@
-require 'oslo/resources/restfully_accessible'
+require 'yao/resources/restfully_accessible'
 require 'time'
 
-module Oslo::Resources
+module Yao::Resources
   class Base
     def self.friendly_attributes(*names)
       names.map(&:to_s).each do |name|

@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'oslo/version'
+require 'yao/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "oslo"
-  spec.version       = Oslo::VERSION
+  spec.name          = "yao"
+  spec.version       = Yao::VERSION
   spec.authors       = ["Uchio, KONDO"]
   spec.email         = ["udzura@udzura.jp"]
-  spec.summary       = %q{OpenStack API Wrapper that rocks!!}
-  spec.description   = %q{OpenStack API Wrapper that rocks!!}
-  spec.homepage      = "https://github.com/udzura/oslo"
+  spec.summary       = %q{Yet Another OpenStack API Wrapper that rocks!!}
+  spec.description   = %q{YAO is a Yet Another OpenStack API Wrapper that rocks!!}
+  spec.homepage      = "https://github.com/udzura/yao"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

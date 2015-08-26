@@ -1,5 +1,5 @@
-require 'oslo/resources/security_group'
-module Oslo::Resources
+require 'yao/resources/security_group'
+module Yao::Resources
   class SecurityGroupRule < Base
     friendly_attributes :ethertype
 

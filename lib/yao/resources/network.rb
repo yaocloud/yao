@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   class Network < Base
     friendly_attributes :name, :status, :shared, :tenant_id, :subnets, :admin_state_up
     map_attribute_to_attribute "provider:physical_network" => :physical_network

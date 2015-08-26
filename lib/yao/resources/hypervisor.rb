@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   class Hypervisor < Base
     friendly_attributes :hypervisor_hostname, :hypervisor_type, :hypervisor_version, :running_vms, :current_workload
                         :vcpus, :vcpus_used,

@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   class Subnet < Base
     friendly_attributes :name, :cidr, :gateway_ip, :network_id, :tenant_id, :ip_version,
                         :dns_nameservers, :host_routes, :enable_dhcp
@@ -10,7 +10,7 @@ module Oslo::Resources
     end
 
     def network
-      Oslo::Network.find network_id
+      Yao::Network.find network_id
     end
 
     alias dhcp_enabled? enable_dhcp

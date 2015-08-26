@@ -1,4 +1,4 @@
-module Oslo::Resources
+module Yao::Resources
   class Keypair < Base
     friendly_attributes :name, :public_key, :fingerprint
 
