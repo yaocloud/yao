@@ -8,6 +8,15 @@ module Yao::Resources
     map_attribute_to_resource  :image  => Image
     map_attribute_to_resources :security_groups => SecurityGroup
 
+    map_attribute_to_attribute 'OS-EXT-AZ:availability_zone'         => :availability_zone 
+    map_attribyte_to_attribute 'OS-DCF:diskConfig'                   => :dcf_disk_config
+    map_attribute_to_attribute 'OS-EXT-SRV-ATTR:host'                => :ext_srv_attr_host
+    map_attribute_to_attribute 'OS-EXT-SRV-ATTR:hypervisor_hostname' => :ext_srv_attr_hypervisor_hostname
+    map_attribute_to_attribute 'OS-EXT-SRV-ATTR:instance_name'       => :ext_srv_attr_instance_name
+    map_attribute_to_attribute 'OS-EXT-STS:power_state'              => :ext_sts_power_state
+    map_attribute_to_attribute 'OS-EXT-STS:task_state'               => :ext_sts_task_state
+    map_attribute_to_attribute 'OS-EXT-STS:vm_state'                 => :ext_sts_vm_state
+
     self.service        = "compute"
     self.resource_name  = "server"
     self.resources_name = "servers"
