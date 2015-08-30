@@ -8,7 +8,7 @@ module Yao::Resources
     map_attribute_to_resource  :image  => Image
     map_attribute_to_resources :security_groups => SecurityGroup
 
-    map_attribute_to_attribute 'OS-EXT-AZ:availability_zone'         => :availability_zone 
+    map_attribute_to_attribute 'OS-EXT-AZ:availability_zone'         => :availability_zone
     map_attribyte_to_attribute 'OS-DCF:diskConfig'                   => :dcf_disk_config
     map_attribute_to_attribute 'OS-EXT-SRV-ATTR:host'                => :ext_srv_attr_host
     map_attribute_to_attribute 'OS-EXT-SRV-ATTR:hypervisor_hostname' => :ext_srv_attr_hypervisor_hostname
