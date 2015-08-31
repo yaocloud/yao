@@ -10,8 +10,33 @@ module Yao
       @_configuration_hooks ||= {}
     end
 
+    def _configuration_hooks_queue
+      @_configuration_hooks_queue ||= []
+    end
+
     def configuration
       @configuration ||= {}
+    end
+
+    HOOK_RENEW_CLIENT_KEYS = %i(tenant_name username password auth_url debug debug_record_response)
+    def delay_hook=(v)
+      @delay_hook = v
+      if !v and !_configuration_hooks_queue.empty?
+        _configuration_hooks_queue.each do |n, val|
+          _configuration_hooks[n].call(val) if _configuration_hooks[n]
+        end
+        # Authorization process should have special hook
+        # and should run last
+        unless (_configuration_hooks_queue.map(&:first) & HOOK_RENEW_CLIENT_KEYS).empty?
+          Yao::Auth.try_new
+        end
+
+        _configuration_hooks_queue.clear
+      end
+    end
+
+    def delay_hook?
+      @delay_hook
     end
 
     def param(name, default, &hook)
@@ -35,14 +60,22 @@ module Yao
     def set(name, value)
       raise("Undefined config key #{name}") unless self.respond_to?(name)
       configuration[name.to_sym] = value
-      _configuration_hooks[name].call(value) if _configuration_hooks[name]
+      if delay_hook?
+        _configuration_hooks_queue.push([name, value])
+      else
+        _configuration_hooks[name].call(value) if _configuration_hooks[name]
+      end
       value
     end
   end
 
   def self.config(&blk)
     @__config ||= Config.new
-    @__config.instance_eval(&blk) if blk
+    if blk
+      @__config.delay_hook = true
+      @__config.instance_eval(&blk)
+      @__config.delay_hook = false
+    end
     @__config
   end
 

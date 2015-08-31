@@ -4,9 +4,7 @@ require 'time'
 
 module Yao::Auth
   %i(tenant_name username password).each do |name|
-    Yao.config.param name, nil do |_|
-      Yao::Auth.try_new
-    end
+    Yao.config.param name, nil
   end
 
   class << self

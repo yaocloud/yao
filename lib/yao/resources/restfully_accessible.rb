@@ -5,7 +5,6 @@ module Yao::Resources
     def self.extended(base)
       base.class_eval do
         class << self
-          attr_reader   :client
           attr_accessor :resource_name, :resources_name
 
           extend Forwardable
@@ -18,11 +17,14 @@ module Yao::Resources
 
     def service=(name)
       @service = name
-      @client = Yao.default_client.pool[name]
     end
 
     def service
       @service
+    end
+
+    def client
+      Yao.default_client.pool[service]
     end
 
     # restful methods
