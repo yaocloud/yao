@@ -18,6 +18,7 @@ module Yao
       @configuration ||= {}
     end
 
+    HOOK_RENEW_CLIENT_KEYS = %i(tenant_name username password auth_url debug debug_record_response)
     def delay_hook=(v)
       @delay_hook = v
       if !v and !_configuration_hooks_queue.empty?
@@ -25,7 +26,8 @@ module Yao
           _configuration_hooks[n].call(val) if _configuration_hooks[n]
         end
         # Authorization process should have special hook
-        unless (_configuration_hooks_queue.map(&:first) & %i(tenant_name username password auth_url)).empty?
+        # and should run last
+        unless (_configuration_hooks_queue.map(&:first) & HOOK_RENEW_CLIENT_KEYS).empty?
           Yao::Auth.try_new
         end
 

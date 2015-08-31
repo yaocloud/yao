@@ -33,8 +33,8 @@ module Yao
     class << self
       attr_accessor :default_client
 
-      def gen_client(endpoint, token: nil)
-        Faraday.new( endpoint ) do |f|
+      def client_generator_hook
+        lambda do |f, token|
           f.request :url_encoded
           f.request :json
 
@@ -43,17 +43,23 @@ module Yao
           end
 
           f.response :json, :content_type => /\bjson$/
-          # FIXME: Yao global option
-          if ENV['DEBUG']
+
+          if Yao.config.debug
             f.response :logger
             f.response :os_dumper
           end
 
-          if ENV['RECORD_RESPONSE']
+          if Yao.config.debug_record_response
             f.response :os_response_recorder
           end
 
           f.adapter Faraday.default_adapter
+        end
+      end
+
+      def gen_client(endpoint, token: nil)
+        Faraday.new( endpoint ) do |f|
+          client_generator_hook.call(f, token)
         end
       end
 
@@ -74,4 +80,7 @@ module Yao
   def self.default_client
     Yao::Client.default_client
   end
+
+  Yao.config.param :debug, false
+  Yao.config.param :debug_record_response, false
 end
