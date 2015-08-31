@@ -10,8 +10,25 @@ module Yao
       @_configuration_hooks ||= {}
     end
 
+    def _configuration_hooks_queue
+      @_configuration_hooks_queue ||= []
+    end
+
     def configuration
       @configuration ||= {}
+    end
+
+    def delay_hook=(v)
+      @delay_hook = v
+      if !v and !_configuration_hooks_queue.empty?
+        while hook = _configuration_hooks_queue.shift
+          hook.call
+        end
+      end
+    end
+
+    def delay_hook?
+      @delay_hook
     end
 
     def param(name, default, &hook)
@@ -35,14 +52,24 @@ module Yao
     def set(name, value)
       raise("Undefined config key #{name}") unless self.respond_to?(name)
       configuration[name.to_sym] = value
-      _configuration_hooks[name].call(value) if _configuration_hooks[name]
+      if delay_hook?
+        _configuration_hooks_queue.push(lambda {
+            _configuration_hooks[name].call(value)
+          })
+      else
+        _configuration_hooks[name].call(value) if _configuration_hooks[name]
+      end
       value
     end
   end
 
   def self.config(&blk)
     @__config ||= Config.new
-    @__config.instance_eval(&blk) if blk
+    if blk
+      @__config.delay_hook = true
+      @__config.instance_eval(&blk)
+      @__config.delay_hook = false
+    end
     @__config
   end
 
