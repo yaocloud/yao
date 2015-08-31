@@ -49,6 +49,10 @@ module Yao
             f.response :os_dumper
           end
 
+          if ENV['RECORD_RESPONSE']
+            f.response :os_response_recorder
+          end
+
           f.adapter Faraday.default_adapter
         end
       end

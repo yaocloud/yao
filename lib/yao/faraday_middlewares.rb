@@ -45,3 +45,17 @@ Status Code: %s
   end
 end
 Faraday::Response.register_middleware os_dumper: -> { Faraday::Request::OSDumper }
+
+class Faraday::Request::OSResponseRecorder < Faraday::Response::Middleware
+  def on_complete(env)
+    require 'pathname'
+    root = Pathname.new(File.expand_path('../../../tmp', __FILE__))
+    path = [env.method.to_s.upcase, env.url.path.gsub('/', '-')].join("-") + ".json"
+
+    puts root.join(path)
+    File.open(root.join(path), 'w') do |f|
+      f.write env.body
+    end
+  end
+end
+Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Request::OSResponseRecorder }
