@@ -21,9 +21,15 @@ module Yao
     def delay_hook=(v)
       @delay_hook = v
       if !v and !_configuration_hooks_queue.empty?
-        while hook = _configuration_hooks_queue.shift
-          hook.call
+        _configuration_hooks_queue.each do |n, val|
+          _configuration_hooks[n].call(val) if _configuration_hooks[n]
         end
+        # Authorization process should have special hook
+        unless (_configuration_hooks_queue.map(&:first) & %i(tenant_name username password auth_url)).empty?
+          Yao::Auth.try_new
+        end
+
+        _configuration_hooks_queue.clear
       end
     end
 
@@ -53,9 +59,7 @@ module Yao
       raise("Undefined config key #{name}") unless self.respond_to?(name)
       configuration[name.to_sym] = value
       if delay_hook?
-        _configuration_hooks_queue.push(lambda {
-            _configuration_hooks[name].call(value)
-          })
+        _configuration_hooks_queue.push([name, value])
       else
         _configuration_hooks[name].call(value) if _configuration_hooks[name]
       end

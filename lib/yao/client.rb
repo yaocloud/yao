@@ -67,7 +67,6 @@ module Yao
     Yao.config.param :auth_url, nil do |endpoint|
       if endpoint
         Yao::Client.reset_client(endpoint)
-        Yao::Auth.try_new
       end
     end
   end
