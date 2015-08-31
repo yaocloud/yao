@@ -1,6 +1,6 @@
 # Yao
 
-YAO is a Yet Another OpenStack API Wrapper that rocks!!
+YAO is a Yet Another OpenStack API Wrapper that rocks!! [![Build Status](https://travis-ci.org/udzura/yao.svg)](https://travis-ci.org/udzura/yao)
 
 ## Installation
 
