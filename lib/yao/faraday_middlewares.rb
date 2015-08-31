@@ -12,3 +12,50 @@ class Faraday::Request::OSToken
   end
 end
 Faraday::Request.register_middleware os_token: -> { Faraday::Request::OSToken }
+
+class Faraday::Request::OSDumper < Faraday::Response::Middleware
+  def on_complete(env)
+    require 'pp'
+    params = [
+      env.url.to_s,
+      JSON.parse(env.body),
+      env.request_headers,
+      env.response_headers,
+      env.method,
+      env.status
+    ].map(&:pretty_inspect)
+    $stdout.puts(<<-FMT % params)
+================================
+ OpenStack response inspection:
+================================
+Requested To: %s
+
+Body:
+%s
+Request Headers:
+%s
+Response Headers:
+%s
+
+Method: %s
+Status Code: %s
+================================
+
+    FMT
+  end
+end
+Faraday::Response.register_middleware os_dumper: -> { Faraday::Request::OSDumper }
+
+class Faraday::Request::OSResponseRecorder < Faraday::Response::Middleware
+  def on_complete(env)
+    require 'pathname'
+    root = Pathname.new(File.expand_path('../../../tmp', __FILE__))
+    path = [env.method.to_s.upcase, env.url.path.gsub('/', '-')].join("-") + ".json"
+
+    puts root.join(path)
+    File.open(root.join(path), 'w') do |f|
+      f.write env.body
+    end
+  end
+end
+Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Request::OSResponseRecorder }
