@@ -100,12 +100,8 @@ class TestAuth < Test::Unit::TestCase
     stub_request(:post, "http://endpoint.example.com:12345/v2.0/tokens").with(body: AUTH_JSON)
       .to_return(:status => 200, :body => RESPONSE_JSON, :headers => {'Content-Type' => 'application/json'})
 
-    Yao.configure do
-      auth_url    "http://endpoint.example.com:12345"
-      tenant_name "example"
-      username    "udzura"
-      password    "XXXXXXXX"
-    end
+    Yao.config.set :auth_url, "http://endpoint.example.com:12345"
+    @token = Yao::Auth.new(tenant_name: "example", username: "udzura", password: "XXXXXXXX")
   end
 
   def teardown
@@ -114,5 +110,43 @@ class TestAuth < Test::Unit::TestCase
   def test_auth_successful
     cli = Yao.default_client.pool["default"]
     assert { cli.url_prefix.to_s == "http://endpoint.example.com:12345/" }
+  end
+
+  def test_service_sclients_initialized
+    %w(compute network image identity).each do |service|
+      cli = Yao.default_client.pool[service]
+      assert { !cli.nil? }
+    end
+  end
+
+  def test_nova_tenant_logged_in
+    tenant_id = "b598bf98671c47e1b955f8c9660e3c44"
+    cli = Yao.default_client.compute
+    assert { cli.url_prefix.to_s == "http://nova-endpoint.example.com:8774/v2/#{tenant_id}" }
+  end
+
+  def test_neutron_prefix_added
+    cli = Yao.default_client.network
+    assert { cli.url_prefix.to_s == "http://neutron-endpoint.example.com:9696/v2.0" }
+  end
+
+  def test_token_is_valid
+    assert { @token.token == "aaaa166533fd49f3b11b1cdce2430000" }
+    assert { @token.issued_at == Time.parse("2015-08-31T03:58:36.073232") }
+    assert { @token.expire_at == Time.parse("2015-09-01T03:58:36Z") }
+    assert { @token.endpoints.size == 4 }
+  end
+
+  def test_hooked_by_configure_block
+    auth = Yao::Auth
+    stub(auth).new
+
+    Yao.configure do
+      auth_url    "http://endpoint.example.com:12345"
+      tenant_name "example"
+      username    "udzura"
+      password    "XXXXXXXX"
+    end
+    assert_received(auth) {|a| a.new }
   end
 end
