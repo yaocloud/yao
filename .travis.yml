@@ -1,0 +1,16 @@
+language: ruby
+
+rvm:
+  - 2.1.7
+  - 2.2.3
+
+install: bundle install --path vendor/bundle
+
+cache:
+  directories: vendor/bundle
+
+script: bundle exec rake test
+
+notifications:
+  slack:
+    secure: RKoynKPOJdYfUSelJlh2xdVeG0KYTObvpThfibNjRrLkYTCWY3rYhpFYtKUzARCCfh6HWZzad/hc4oa0kYR6p0TZwXdm2llxBWuDVlJDnIgkGd+DZgwpFTGjYvMGci2v4dWd6CDDrIHA+rDVrOvUiGM6qO/ATvCWC/r3E+e3CN4=
