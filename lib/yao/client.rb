@@ -43,7 +43,11 @@ module Yao
           end
 
           f.response :json, :content_type => /\bjson$/
-          f.response :logger
+          # FIXME: Yao global option
+          if ENV['DEBUG']
+            f.response :logger
+            f.response :os_dumper
+          end
 
           f.adapter Faraday.default_adapter
         end
