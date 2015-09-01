@@ -42,6 +42,7 @@ module Yao
             f.request :os_token, token
           end
 
+          f.response :os_error_detector
           f.response :json, :content_type => /\bjson$/
 
           if Yao.config.debug
