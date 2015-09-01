@@ -22,25 +22,16 @@ module Yao
           username: Yao.config.username,
           password: Yao.config.password
       )
-        authinfo = {
+        auth_info = {
           auth: {
             passwordCredentials: {
               username: username, password: password
             }
           }
         }
-        authinfo[:auth][:tenantName] = tenant_name if tenant_name
+        auth_info[:auth][:tenantName] = tenant_name if tenant_name
 
-        reply = Yao.default_client.default.post('/v2.0/tokens') do |req|
-          req.body = authinfo.to_json
-          req.headers['Content-Type'] = 'application/json'
-        end
-
-        body = reply.body["access"]
-
-        token = Token.new(body["token"])
-        token.register_endpoints(body["serviceCatalog"])
-        return token
+        return Token.issue(Yao.default_client.default, auth_info)
       end
     end
   end
