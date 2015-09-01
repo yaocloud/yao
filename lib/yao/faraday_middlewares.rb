@@ -63,3 +63,14 @@ class Faraday::Response::OSResponseRecorder < Faraday::Response::Middleware
   end
 end
 Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Response::OSResponseRecorder }
+
+require 'yao/server_error'
+class Faraday::Response::OSErrorDetector < Faraday::Response::Middleware
+  # TODO: Better handling, respecting official doc
+  def on_complete(env)
+    return if env.success?
+
+    raise Yao::ServerError.detect(env)
+  end
+end
+Faraday::Response.register_middleware os_error_detector: -> { Faraday::Response::OSErrorDetector }
