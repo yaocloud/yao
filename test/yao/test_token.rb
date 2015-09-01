@@ -1,4 +1,9 @@
 class TestToken < Test::Unit::TestCase
+  def setup
+    Yao.config.debug false
+    Yao.config.debug_record_response false
+  end
+
   def test_expired
     t = Yao::Token.new({})
     t.register({
