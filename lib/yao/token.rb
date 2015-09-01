@@ -15,6 +15,7 @@ module Yao
     end
     attr_accessor :auth_info, :token, :issued_at, :expire_at, :endpoints
     alias expires expire_at
+    alias to_s token
 
     def register(token_data)
       @token = token_data["id"]
@@ -56,7 +57,7 @@ module Yao
           @endpoints[key] = value
         end
       end
-      Yao.default_client.register_endpoints(@endpoints, token: @token)
+      Yao.default_client.register_endpoints(@endpoints, token: self)
     end
   end
 end
