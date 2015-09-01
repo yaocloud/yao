@@ -48,7 +48,7 @@ module Yao
           ServiceUnavailable.new(extract_message(env.body), env)
         end
       else
-        new(extract_message(body), env)
+        new(extract_message(env.body), env)
       end
     rescue => e
       new("Detection failed - %s" % e.message, env)
