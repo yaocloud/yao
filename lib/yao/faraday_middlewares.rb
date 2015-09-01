@@ -17,7 +17,7 @@ class Faraday::Request::OSToken
 end
 Faraday::Request.register_middleware os_token: -> { Faraday::Request::OSToken }
 
-class Faraday::Request::OSDumper < Faraday::Response::Middleware
+class Faraday::Response::OSDumper < Faraday::Response::Middleware
   def on_complete(env)
     require 'pp'
     params = [
@@ -48,9 +48,9 @@ Status Code: %s
     FMT
   end
 end
-Faraday::Response.register_middleware os_dumper: -> { Faraday::Request::OSDumper }
+Faraday::Response.register_middleware os_dumper: -> { Faraday::Response::OSDumper }
 
-class Faraday::Request::OSResponseRecorder < Faraday::Response::Middleware
+class Faraday::Response::OSResponseRecorder < Faraday::Response::Middleware
   def on_complete(env)
     require 'pathname'
     root = Pathname.new(File.expand_path('../../../tmp', __FILE__))
@@ -62,4 +62,4 @@ class Faraday::Request::OSResponseRecorder < Faraday::Response::Middleware
     end
   end
 end
-Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Request::OSResponseRecorder }
+Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Response::OSResponseRecorder }
