@@ -7,7 +7,11 @@ class Faraday::Request::OSToken
   end
 
   def call(env)
-    env[:request_headers]['X-Auth-Token'] = @token
+    if @token.expired?
+      @token.reflesh(Yao.default_client.default)
+    end
+
+    env[:request_headers]['X-Auth-Token'] = @token.to_s
     @app.call(env)
   end
 end
