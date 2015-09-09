@@ -48,8 +48,8 @@ module Yao::Resources
       )
     end
 
-    self.service        = "compute"
-    self.resource_name  = "os-security-group-rule"
-    self.resources_name = "os-security-group-rules"
+    self.service        = "network"
+    self.resource_name  = "security-group-rule"
+    self.resources_name = "security-group-rules"
   end
 end
