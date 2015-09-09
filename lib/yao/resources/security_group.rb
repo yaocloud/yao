@@ -12,9 +12,9 @@ module Yao::Resources
       end)
     end
 
-    self.service        = "compute"
-    self.resource_name  = "os-security-group"
-    self.resources_name = "os-security-groups"
+    self.service        = "network"
+    self.resource_name  = "security-group"
+    self.resources_name = "security-groups"
   end
 end
 
