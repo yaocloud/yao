@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["udzura@udzura.jp"]
   spec.summary       = %q{Yet Another OpenStack API Wrapper that rocks!!}
   spec.description   = %q{YAO is a Yet Another OpenStack API Wrapper that rocks!!}
-  spec.homepage      = "https://github.com/udzura/yao"
+  spec.homepage      = "https://github.com/yaocloud/yao"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
