@@ -1,6 +1,6 @@
 module Yao::Resources
   class Hypervisor < Base
-    friendly_attributes :hypervisor_hostname, :hypervisor_type, :hypervisor_version, :running_vms, :current_workload
+    friendly_attributes :hypervisor_hostname, :hypervisor_type, :hypervisor_version, :running_vms, :current_workload,
                         :vcpus, :vcpus_used,
                         :memory_mb, :memory_mb_used, :free_disk_gb,
                         :local_gb, :local_gb_used, :free_disk_gb
