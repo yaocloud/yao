@@ -14,6 +14,7 @@ module Yao
     autoload :Subnet,            "yao/resources/subnet"
     autoload :Port,              "yao/resources/port"
     autoload :Tenant,            "yao/resources/tenant"
+    autoload :Host,              "yao/resources/host"
 
   end
 
