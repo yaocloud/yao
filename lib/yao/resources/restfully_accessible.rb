@@ -28,19 +28,19 @@ module Yao::Resources
     end
 
     # restful methods
-    def list
-      return_resources(GET(resources_name).body[resources_name_in_json])
+    def list(query={})
+      return_resources(GET(resources_name, query).body[resources_name_in_json])
     end
 
-    def list_detail
-      return_resources(GET([resources_name, "detail"].join("/")).body[resources_name_in_json])
+    def list_detail(query={})
+      return_resources(GET([resources_name, "detail"].join("/"), query).body[resources_name_in_json])
     end
 
-    def get(id_or_permalink)
+    def get(id_or_permalink, query={})
       res = if id_or_permalink =~ /^https?:\/\//
-              GET(id_or_permalink)
+              GET(id_or_permalink, query)
             else
-              GET([resources_name, id_or_permalink].join("/"))
+              GET([resources_name, id_or_permalink].join("/"), query)
             end
       return_resource(res.body[resource_name_in_json])
     end
