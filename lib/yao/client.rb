@@ -8,24 +8,33 @@ module Yao
   module Client
     class ClientSet
       def initialize
-        @pool = {}
+        @pool       = {}
+        @admin_pool = {}
       end
-      attr_reader :pool
+      attr_reader :pool, :admin_pool
 
       %w(default compute network image metering volume orchestration identity).each do |type|
         define_method(type) do
           self.pool[type]
         end
+
+        define_method("#{type}_admin") do
+          self.admin_pool[type]
+        end
       end
 
       def register_endpoints(endpoints, token: nil)
-        endpoints.each_pair do |type, endpoint|
+        endpoints.each_pair do |type, urls|
           # XXX: neutron just have v2.0 API and endpoint may not have version prefix
-          if type == "network" && URI.parse(endpoint).path == "/"
-            endpoint = File.join(endpoint, "v2.0")
+          if type == "network"
+            urls = urls.map {|public_or_admin, url|
+              url = URI.parse(url).path == "/" ? File.join(url, "v2.0") : url
+              [public_or_admin, url]
+            }.to_h
           end
 
-          self.pool[type] = Yao::Client.gen_client(endpoint, token: token)
+          self.pool[type]       = Yao::Client.gen_client(urls[:public_url], token: token)
+          self.admin_pool[type] = Yao::Client.gen_client(urls[:admin_url],  token: token)
         end
       end
     end
@@ -66,7 +75,7 @@ module Yao
 
       def reset_client(new_endpoint=nil)
         set = ClientSet.new
-        set.register_endpoints("default" => (new_endpoint || Yao.config.endpoint))
+        set.register_endpoints("default" => {public_url: new_endpoint || Yao.config.endpoint})
         self.default_client = set
       end
     end

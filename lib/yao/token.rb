@@ -47,16 +47,15 @@ module Yao
       return unless _endpoints
 
       _endpoints.each do |endpoint_data|
-        key = endpoint_data["type"]
-        value = if d = endpoint_data["endpoints"].first
-                  d["publicURL"]
-                else
-                  nil
-                end
-        if value
-          @endpoints[key] = value
-        end
+        type = endpoint_data["type"]
+        endpoint = endpoint_data["endpoints"].first
+        urls = {}
+        urls[:public_url] = endpoint["publicURL"] if endpoint["publicURL"]
+        urls[:admin_url]  = endpoint["adminURL"]  if endpoint["adminURL"]
+
+        @endpoints[type] = urls
       end
+
       Yao.default_client.register_endpoints(@endpoints, token: self)
     end
   end
