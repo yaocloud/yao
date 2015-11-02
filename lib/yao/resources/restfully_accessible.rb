@@ -23,8 +23,16 @@ module Yao::Resources
       @service
     end
 
+    def admin=(bool)
+      @admin = bool
+    end
+
     def client
-      Yao.default_client.pool[service]
+      if @admin
+        Yao.default_client.admin_pool[service]
+      else
+        Yao.default_client.pool[service]
+      end
     end
 
     # restful methods
