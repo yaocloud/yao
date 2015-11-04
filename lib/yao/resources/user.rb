@@ -9,8 +9,11 @@ module Yao::Resources
     self.resources_name = "users"
     self.admin          = true
 
-    def self.get_by_name(name)
-      self.list.find {|user| user.name == name }
+    class << self
+      def get_by_name(name)
+        self.get("", name: name)
+      end
+      alias find_by_name get_by_name
     end
   end
 end
