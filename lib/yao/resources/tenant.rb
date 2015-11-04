@@ -13,7 +13,7 @@ module Yao::Resources
       end
       alias find_by_name get_by_name
 
-      def granted
+      def accessible
         @admin = false
         tenants = self.list
         @admin = true
