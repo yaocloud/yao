@@ -50,7 +50,7 @@ module Yao::Resources
     # restful methods
     def list(query={})
       json = GET(resources_path, query).body
-      if @return_single_on_querying
+      if @return_single_on_querying && !query.empty?
         return_resource(json[resource_name_in_json])
       else
         return_resources(json[resources_name_in_json])
