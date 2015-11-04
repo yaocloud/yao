@@ -43,6 +43,17 @@ module Yao::Resources
       end
     end
 
+    def as_member(&blk)
+      if @admin
+        @admin = false
+        result = yield(blk)
+        @admin = true
+        result
+      else
+        yield blk
+      end
+    end
+
     # restful methods
     def list(query={})
       return_resources(GET(resources_path, query).body[resources_name_in_json])
