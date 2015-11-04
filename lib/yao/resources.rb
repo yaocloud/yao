@@ -16,6 +16,7 @@ module Yao
     autoload :Tenant,            "yao/resources/tenant"
     autoload :Host,              "yao/resources/host"
     autoload :User,              "yao/resources/user"
+    autoload :Role,              "yao/resources/role"
   end
 
   def self.const_missing(name)
