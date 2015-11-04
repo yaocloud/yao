@@ -27,6 +27,10 @@ module Yao::Resources
       @admin = bool
     end
 
+    def return_single_on_querying=(bool)
+      @return_single_on_querying = bool
+    end
+
     def resources_path
       @resources_path || resources_name
     end
@@ -56,7 +60,12 @@ module Yao::Resources
 
     # restful methods
     def list(query={})
-      return_resources(GET(resources_path, query).body[resources_name_in_json])
+      json = GET(resources_path, query).body
+      if @return_single_on_querying && !query.empty?
+        return_resource(json[resource_name_in_json])
+      else
+        return_resources(json[resources_name_in_json])
+      end
     end
 
     def list_detail(query={})

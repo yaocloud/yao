@@ -8,9 +8,13 @@ module Yao::Resources
     self.resource_name  = "user"
     self.resources_name = "users"
     self.admin          = true
+    self.return_single_on_querying = true
 
-    def self.get_by_name(name)
-      self.list.find {|user| user.name == name }
+    class << self
+      def get_by_name(name)
+        self.list(name: name)
+      end
+      alias find_by_name get_by_name
     end
   end
 end
