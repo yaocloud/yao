@@ -6,10 +6,11 @@ module Yao::Resources
     self.resource_name  = "tenant"
     self.resources_name = "tenants"
     self.admin          = true
+    self.return_single_on_querying = true
 
     class << self
       def get_by_name(name)
-        self.get("", name: name)
+        self.list(name: name)
       end
       alias find_by_name get_by_name
 
