@@ -14,11 +14,7 @@ module Yao::Resources
       alias find_by_name get_by_name
 
       def accessible
-        @admin = false
-        tenants = self.list
-        @admin = true
-
-        tenants
+        as_member { self.list }
       end
     end
   end
