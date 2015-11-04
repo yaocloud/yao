@@ -7,5 +7,12 @@ module Yao::Resources
     self.resources_name = "roles"
     self.resources_path = "/OS-KSADM/roles"
     self.admin          = true
+
+    class << self
+      def get_by_name(name)
+        self.list.find {|role| role.name == name }
+      end
+      alias find_by_name get_by_name
+    end
   end
 end
