@@ -1,6 +1,6 @@
 module Yao::Resources
   class Role < Base
-    friendly_attributes :name, :id
+    friendly_attributes :name, :description, :id
 
     self.service        = "identity"
     self.resource_name  = "role"
