@@ -5,5 +5,6 @@ module Yao::Resources
     self.service        = "identity"
     self.resource_name  = "tenant"
     self.resources_name = "tenants"
+    self.admin          = true
   end
 end
