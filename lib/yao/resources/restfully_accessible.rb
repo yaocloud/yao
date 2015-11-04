@@ -27,6 +27,14 @@ module Yao::Resources
       @admin = bool
     end
 
+    def resources_path
+      @resources_path || resources_name
+    end
+
+    def resources_path=(path)
+      @resources_path = path.sub(%r!^\/!, "")
+    end
+
     def client
       if @admin
         Yao.default_client.admin_pool[service]
@@ -37,18 +45,18 @@ module Yao::Resources
 
     # restful methods
     def list(query={})
-      return_resources(GET(resources_name, query).body[resources_name_in_json])
+      return_resources(GET(resources_path, query).body[resources_name_in_json])
     end
 
     def list_detail(query={})
-      return_resources(GET([resources_name, "detail"].join("/"), query).body[resources_name_in_json])
+      return_resources(GET([resources_path, "detail"].join("/"), query).body[resources_name_in_json])
     end
 
     def get(id_or_permalink, query={})
       res = if id_or_permalink =~ /^https?:\/\//
               GET(id_or_permalink, query)
             else
-              GET([resources_name, id_or_permalink].join("/"), query)
+              GET([resources_path, id_or_permalink].join("/"), query)
             end
       return_resource(res.body[resource_name_in_json])
     end
@@ -58,7 +66,7 @@ module Yao::Resources
       params = {
         resource_name_in_json => resource_params
       }
-      res = POST(resources_name) do |req|
+      res = POST(resources_path) do |req|
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
@@ -69,7 +77,7 @@ module Yao::Resources
       params = {
         resource_name_in_json => resource_params
       }
-      res = PUT([resources_name, id].join("/")) do |req|
+      res = PUT([resources_path, id].join("/")) do |req|
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
@@ -77,7 +85,7 @@ module Yao::Resources
     end
 
     def destroy(id)
-      res = DELETE([resources_name, id].join("/"))
+      res = DELETE([resources_path, id].join("/"))
       res.body
     end
 
