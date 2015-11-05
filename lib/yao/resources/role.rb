@@ -14,6 +14,14 @@ module Yao::Resources
       end
       alias find_by_name get_by_name
 
+      def list_for_user(user_name, on:)
+        user   = Yao::User.get_by_name(user_name)
+        tenant = Yao::Tenant.get_by_name(on)
+        path = ["tenants", tenant.id, "users", user.id, "roles"].join("/")
+
+        with_resources_path(path) { self.list }
+      end
+
       def grant(role_name, to:, on:)
         role   = Yao::Role.get_by_name(role_name)
         user   = Yao::User.get_by_name(to)
