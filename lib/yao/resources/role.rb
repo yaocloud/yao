@@ -19,9 +19,7 @@ module Yao::Resources
         user   = Yao::User.get_by_name(to)
         tenant = Yao::Tenant.get_by_name(on)
 
-        client.put path_for_grant_revoke(tenant, user, role) do |req|
-          req.headers['Content-Type'] = 'application/json'
-        end
+        PUT path_for_grant_revoke(tenant, user, role)
       end
 
       def revoke(role_name, from:, on:)
@@ -29,9 +27,7 @@ module Yao::Resources
         user   = Yao::User.get_by_name(from)
         tenant = Yao::Tenant.get_by_name(on)
 
-        client.delete path_for_grant_revoke(tenant, user, role) do |req|
-          req.headers['Content-Type'] = 'application/json'
-        end
+        DELETE path_for_grant_revoke(tenant, user, role)
       end
 
       private
