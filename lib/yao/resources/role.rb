@@ -13,6 +13,28 @@ module Yao::Resources
         self.list.find {|role| role.name == name }
       end
       alias find_by_name get_by_name
+
+      def grant(role_name, to:, on:)
+        role   = Yao::Role.get_by_name(role_name)
+        user   = Yao::User.get_by_name(to)
+        tenant = Yao::Tenant.get_by_name(on)
+
+        PUT path_for_grant_revoke(tenant, user, role)
+      end
+
+      def revoke(role_name, from:, on:)
+        role   = Yao::Role.get_by_name(role_name)
+        user   = Yao::User.get_by_name(from)
+        tenant = Yao::Tenant.get_by_name(on)
+
+        DELETE path_for_grant_revoke(tenant, user, role)
+      end
+
+      private
+
+      def path_for_grant_revoke(tenant, user, role)
+        ["tenants", tenant.id, "users", user.id, "roles", "OS-KSADM", role.id].join("/")
+      end
     end
   end
 end
