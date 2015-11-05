@@ -20,9 +20,16 @@ Faraday::Request.register_middleware os_token: -> { Faraday::Request::OSToken }
 class Faraday::Response::OSDumper < Faraday::Response::Middleware
   def on_complete(env)
     require 'pp'
+
+    body = if env.response_headers["content-type"] == "application/json"
+             JSON.parse(env.body)
+           else
+             env.body
+           end
+
     params = [
       env.url.to_s,
-      JSON.parse(env.body),
+      body,
       env.request_headers,
       env.response_headers,
       env.method,
