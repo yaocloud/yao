@@ -27,7 +27,12 @@ module Yao::Resources
         user   = Yao::User.get_by_name(from)
         tenant = Yao::Tenant.get_by_name(on)
 
-        DELETE path_for_grant_revoke(tenant, user, role)
+        begin
+          DELETE path_for_grant_revoke(tenant, user, role)
+        rescue JSON::ParserError
+          # ParserError raises on debug mode because this OpenStack API returns
+          # empty string as response body. But this is expected behavior.
+        end
       end
 
       private
