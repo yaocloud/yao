@@ -58,6 +58,15 @@ module Yao::Resources
       end
     end
 
+    def with_resources_path(path, &blk)
+      original = @resources_path
+      @resources_path = path
+      result = yield(blk)
+      @resources_path = original
+
+      result
+    end
+
     # restful methods
     def list(query={})
       json = GET(resources_path, query).body
