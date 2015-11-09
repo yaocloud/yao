@@ -1,4 +1,5 @@
 require 'yao/resources/metadata_available'
+require 'yao/resources/action'
 module Yao::Resources
   class Server < Base
     friendly_attributes :addresses, :metadata, :name, :progress,
@@ -21,6 +22,19 @@ module Yao::Resources
     self.resource_name  = "server"
     self.resources_name = "servers"
 
+    def self.shutoff(id)
+      action(id, "os-stop" => nil)
+    end
+
+    def self.reboot(id)
+      action(id,"reboot" => { "type" => "HARD" })
+    end
+
+    def self.resize(id, flavor_id)
+      action(id,"resize" => { "flavorRef" => flavor_id })
+    end
+
     extend MetadataAvailable
+    extend Action
   end
 end
