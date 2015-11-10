@@ -1,4 +1,3 @@
-require 'time'
 module Yao::Resources
   class Meter < Base
     friendly_attributes :meter_id, :name, :user_id, :resource_id, :project_id, :source, :type, :unit
@@ -8,15 +7,15 @@ module Yao::Resources
     end
 
     def resource
-      @resource ||= Yap::Resource.get(resource_id)
+      @resource ||= Yao::Resource.get(resource_id)
     end
 
     def tenant
-      @tenant ||= Yap::User.get(project_id)
+      @tenant ||= Yao::User.get(project_id)
     end
 
     def user
-      @user ||= Yap::User.get(user_id)
+      @user ||= Yao::User.get(user_id)
     end
 
     self.service        = "metering"

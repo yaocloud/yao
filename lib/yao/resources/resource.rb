@@ -11,11 +11,11 @@ module Yao::Resources
     end
 
     def tenant
-      @tenant ||= Yap::User.get(project_id)
+      @tenant ||= Yao::User.get(project_id)
     end
 
     def user
-      @user ||= Yap::User.get(user_id)
+      @user ||= Yao::User.get(user_id)
     end
 
     def last_sampled_at
@@ -24,6 +24,16 @@ module Yao::Resources
 
     def first_sampled_at
       Time.parse first_sample_timestamp
+    end
+
+    def get_meter(name)
+      if link = links.find{|l| l["rel"] == name }
+        Yao::Sample.list(link["href"])
+      end
+    end
+
+    def meters
+      links.map{|l| l["rel"] }.delete_if{|n| n == 'self' }
     end
 
     self.service        = "metering"

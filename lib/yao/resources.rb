@@ -19,6 +19,8 @@ module Yao
     autoload :Role,              "yao/resources/role"
 
     autoload :Resource,          "yao/resources/resource"
+    autoload :Meter,             "yao/resources/meter"
+    autoload :Sample,            "yao/resources/sample"
   end
 
   def self.const_missing(name)
