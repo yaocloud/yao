@@ -1,5 +1,18 @@
 require 'faraday'
 
+class Faraday::Request::Accept
+  def initialize(app, accept=nil)
+    @app = app
+    @accept = accept || 'application/json'
+  end
+
+  def call(env)
+    env[:request_headers]['Accept'] = @accept
+    @app.call(env)
+  end
+end
+Faraday::Request.register_middleware accept: -> { Faraday::Request::Accept }
+
 class Faraday::Request::OSToken
   def initialize(app, token)
     @app = app

@@ -44,8 +44,8 @@ module Yao
 
       def client_generator_hook
         lambda do |f, token|
+          f.request :accept, 'application/json'
           f.request :url_encoded
-          f.request :json
 
           if token
             f.request :os_token, token
