@@ -78,14 +78,18 @@ module Yao::Resources
     def list(query={})
       json = GET(resources_path, query).body
       if @return_single_on_querying && !query.empty?
-        return_resource(json[resource_name_in_json])
+        return_resource(resource_from_json(json))
       else
-        return_resources(json[resources_name_in_json])
+        return_resources(resources_from_json(json))
       end
     end
 
     def list_detail(query={})
-      return_resources(GET([resources_path, "detail"].join("/"), query).body[resources_name_in_json])
+      return_resources(
+        resources_from_json(
+          GET([resources_path, "detail"].join("/"), query).body
+        )
+      )
     end
 
     def get(id_or_permalink, query={})
@@ -94,7 +98,7 @@ module Yao::Resources
             else
               GET([resources_path, id_or_permalink].join("/"), query)
             end
-      return_resource(res.body[resource_name_in_json])
+      return_resource(resource_from_json(res.body))
     end
     alias find get
 
@@ -106,7 +110,7 @@ module Yao::Resources
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-      return_resource(res.body[resource_name_in_json])
+      return_resource(resource_from_json(res.body))
     end
 
     def update(id, resource_params)
@@ -117,7 +121,7 @@ module Yao::Resources
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-      return_resource(res.body[resource_name_in_json])
+      return_resource(resource_from_json(res.body))
     end
 
     def destroy(id)
@@ -126,12 +130,14 @@ module Yao::Resources
     end
 
     private
-    def resource_name_in_json
+    def resource_from_json(json)
       @resource_name_in_json  ||= resource_name.sub(/^os-/, "").tr("-", "_")
+      json[@resource_name_in_json]
     end
 
-    def resources_name_in_json
+    def resources_from_json(json)
       @resources_name_in_json ||= resources_name.sub(/^os-/, "").tr("-", "_")
+      json[@resources_name_in_json]
     end
 
     def return_resource(d)
