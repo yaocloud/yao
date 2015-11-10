@@ -18,10 +18,17 @@ module Yao::Resources
     def service=(name)
       @service = name
     end
+    attr_reader :service
 
-    def service
-      @service
+    def api_version=(v)
+      raise("Set api_version after service is declared") unless service
+      @api_version = v
+      if cli = client
+        cli.url_prefix.path = "/#{api_version}"
+      end
+      api_version
     end
+    attr_reader :api_version
 
     def admin=(bool)
       @admin = bool
