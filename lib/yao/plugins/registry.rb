@@ -17,9 +17,9 @@ module Yao::Plugins
       @types[type] ||= {}
       @types[type][name] = klass
     end
+  end
 
-    def self.register(*a)
-      instance.register(*a)
-    end
+  def self.register(*a)
+    Registry.instance.register(*a)
   end
 end

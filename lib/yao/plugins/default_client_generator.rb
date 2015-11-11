@@ -28,7 +28,7 @@ module Yao::Plugins
       f.adapter Faraday.default_adapter
     end
 
-    Registry.register(self, type: :client_generator)
+    Yao::Plugins.register(self, type: :client_generator)
 
     Yao.config.param :client_generator, :default do |v|
       raise("Invalid client_generator name %s.\nNote: name must be a Symbol" % v.inspect) unless Registry.instance[:client_generator][v]
