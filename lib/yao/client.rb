@@ -1,8 +1,7 @@
 require 'yao'
 require 'yao/config'
 require 'faraday'
-require 'faraday_middleware'
-require 'yao/faraday_middlewares'
+require 'yao/plugins/default_client_generator'
 
 module Yao
   module Client
@@ -42,34 +41,13 @@ module Yao
     class << self
       attr_accessor :default_client
 
-      def client_generator_hook
-        lambda do |f, token|
-          f.request :accept, 'application/json'
-          f.request :url_encoded
-
-          if token
-            f.request :os_token, token
-          end
-
-          f.response :os_error_detector
-          f.response :json, :content_type => /\bjson$/
-
-          if Yao.config.debug
-            f.response :logger
-            f.response :os_dumper
-          end
-
-          if Yao.config.debug_record_response
-            f.response :os_response_recorder
-          end
-
-          f.adapter Faraday.default_adapter
-        end
+      def client_generator
+        Plugins::Registry.instance[:client_generator][Yao.config.client_generator].new
       end
 
       def gen_client(endpoint, token: nil)
         Faraday.new( endpoint ) do |f|
-          client_generator_hook.call(f, token)
+          client_generator.call(f, token)
         end
       end
 
