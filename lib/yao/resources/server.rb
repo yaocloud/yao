@@ -37,6 +37,10 @@ module Yao::Resources
       action(id,"resize" => { "flavorRef" => flavor_id })
     end
 
+    class << self
+      alias :stop :shutoff
+    end
+
     extend MetadataAvailable
     extend Action
   end
