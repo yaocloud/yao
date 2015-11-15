@@ -21,6 +21,9 @@ module Yao::Resources
     self.service        = "compute"
     self.resource_name  = "server"
     self.resources_name = "servers"
+    def self.start(id)
+      action(id, "os-start" => nil)
+    end
 
     def self.shutoff(id)
       action(id, "os-stop" => nil)
