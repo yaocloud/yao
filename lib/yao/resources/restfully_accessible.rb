@@ -130,9 +130,12 @@ module Yao::Resources
     end
 
     private
+    def resource_name_in_json
+      @_resource_name_in_json ||= resource_name.sub(/^os-/, "").tr("-", "_")
+    end
+
     def resource_from_json(json)
-      @resource_name_in_json  ||= resource_name.sub(/^os-/, "").tr("-", "_")
-      json[@resource_name_in_json]
+      json[resource_name_in_json]
     end
 
     def resources_from_json(json)
