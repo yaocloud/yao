@@ -21,6 +21,9 @@ module Yao::Resources
     self.service        = "compute"
     self.resource_name  = "server"
     self.resources_name = "servers"
+    def self.start(id)
+      action(id, "os-start" => nil)
+    end
 
     def self.shutoff(id)
       action(id, "os-stop" => nil)
@@ -32,6 +35,10 @@ module Yao::Resources
 
     def self.resize(id, flavor_id)
       action(id,"resize" => { "flavorRef" => flavor_id })
+    end
+
+    class << self
+      alias :stop :shutoff
     end
 
     extend MetadataAvailable
