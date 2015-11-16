@@ -7,7 +7,9 @@ module Yao::Resources
     self.resources_name = "os-keypairs"
 
     def self.list(query={})
-      return_resources(GET(resources_name, query).body[resources_name_in_json].map{|r| r[resource_name_in_json] })
+      return_resources(
+        resources_from_json(GET(resources_name, query).body).map{|r| resource_params(r)}
+      )
     end
   end
 end
