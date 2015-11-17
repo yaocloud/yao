@@ -1,3 +1,7 @@
+## v0.2.2
+
+* Fix `resources_name_in_json` method caching again by @pyama86
+
 ## v0.2.1
 
 * Fix `resources_name_in_json` is still remaining by @pyama86
