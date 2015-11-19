@@ -1,5 +1,7 @@
 # Yao
 
+![Logo](./yao-logo.png)
+
 YAO is a Yet Another OpenStack API Wrapper that rocks!! [![Build Status](https://travis-ci.org/yaocloud/yao.svg)](https://travis-ci.org/yaocloud/yao)
 
 ## Installation
