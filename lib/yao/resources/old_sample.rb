@@ -1,5 +1,5 @@
 module Yao::Resources
-  class Sample < Base
+  class OldSample < Base
     friendly_attributes :counter_name, :counter_type, :counter_unit, :counter_volume,
                         :message_id, :project_id, :resource_id, :timestamp, :resource_metadata, :user_id
                         :source

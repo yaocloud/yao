@@ -20,7 +20,7 @@ module Yao
 
     autoload :Resource,          "yao/resources/resource"
     autoload :Meter,             "yao/resources/meter"
-    autoload :Sample,            "yao/resources/sample"
+    autoload :OldSample,         "yao/resources/old_sample"
   end
 
   def self.const_missing(name)
