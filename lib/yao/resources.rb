@@ -20,6 +20,7 @@ module Yao
 
     autoload :Resource,          "yao/resources/resource"
     autoload :Meter,             "yao/resources/meter"
+    autoload :OldSample,         "yao/resources/old_sample"
     autoload :Sample,            "yao/resources/sample"
   end
 
