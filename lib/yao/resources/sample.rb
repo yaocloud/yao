@@ -1,16 +1,15 @@
 module Yao::Resources
   class Sample < Base
-    friendly_attributes :counter_name, :counter_type, :counter_unit, :counter_volume,
-                        :message_id, :project_id, :resource_id, :timestamp, :resource_metadata, :user_id
-                        :source
+    friendly_attributes :id, :metadata, :meter,
+                        :source, :type, :unit, :volume
+                        :resouce_id, :tenant_id, :user_id
 
     def recorded_at
-      Time.parse(self["recorded_at"] || self["timestamp"])
+      Time.parse(self["recorded_at"])
     end
-    alias timestamp recorded_at
 
-    def id
-      meter_id
+    def timestamp
+      Time.parse(self["timestamp"])
     end
 
     def resource
@@ -18,7 +17,7 @@ module Yao::Resources
     end
 
     def tenant
-      @tenant ||= Yao::User.get(project_id)
+      @tenant ||= Yao::Tenant.get(project_id)
     end
 
     def user
@@ -27,17 +26,6 @@ module Yao::Resources
 
     self.service        = "metering"
     self.api_version    = "v2"
-
-    # get /v2/meters/{id} returns samples!
-    def self.list(id_or_url, query={})
-      json = if id_or_url =~ /^https?:\/\//
-               GET(id_or_url).body
-             else
-               GET("meters/#{id_or_url}", query).body
-             end
-      return_resources(json)
-    end
-
-    # TODO: implement `def self.create'
+    self.resources_name = "samples"
   end
 end

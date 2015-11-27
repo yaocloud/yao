@@ -8,6 +8,14 @@ module Yao::Resources
     self.admin          = true
     self.return_single_on_querying = true
 
+    def meters
+      @meters ||= Yao::Meter.list({'q.field': 'project_id', 'q.op': 'eq', 'q.value': id})
+    end
+
+    def meters_by_name(meter_name)
+      meters.select{|m| m.name == meter_name}
+    end
+
     class << self
       def get_by_name(name)
         self.list(name: name)

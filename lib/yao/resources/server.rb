@@ -21,6 +21,11 @@ module Yao::Resources
     self.service        = "compute"
     self.resource_name  = "server"
     self.resources_name = "servers"
+
+    def old_samples(counter_name: nil, query: {})
+      Yao::OldSample.list(counter_name, query).select{|os| os.resource_metadata["instance_id"] == id}
+    end
+
     def self.start(id)
       action(id, "os-start" => nil)
     end
