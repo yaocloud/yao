@@ -18,7 +18,7 @@ module Yao::Resources
     end
 
     def tenant
-      @tenant ||= Yao::User.get(project_id)
+      @tenant ||= Yao::Tenant.get(project_id)
     end
 
     def user
