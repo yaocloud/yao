@@ -8,6 +8,10 @@ module Yao::Resources
     self.admin          = true
     self.return_single_on_querying = true
 
+    def servers
+      @servers ||= Yao::Server.list(all_tenants: 1).select{|s| s.tenant_id == id }
+    end
+
     class << self
       def get_by_name(name)
         self.list(name: name)
