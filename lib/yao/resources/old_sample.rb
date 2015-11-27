@@ -29,12 +29,8 @@ module Yao::Resources
     self.api_version    = "v2"
 
     # get /v2/meters/{id} returns samples!
-    def self.list(id_or_url, query={})
-      json = if id_or_url =~ /^https?:\/\//
-               GET(id_or_url).body
-             else
-               GET("meters/#{id_or_url}", query).body
-             end
+    def self.list(meter_name, query={})
+      json = GET("meters/#{meter_name}", query).body
       return_resources(json)
     end
 
