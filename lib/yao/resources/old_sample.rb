@@ -30,8 +30,13 @@ module Yao::Resources
 
     # get /v2/meters/{id} returns samples!
     def self.list(meter_name, query={})
-      json = GET("meters/#{meter_name}", query).body
-      return_resources(json)
+      cache_key = query.values.join
+      cache[cache_key] = GET("meters/#{meter_name}", query).body unless cache[cache_key]
+      return_resources(cache[cache_key])
+    end
+
+    def self.cache
+      @@_cache ||= {}
     end
 
     # TODO: implement `def self.create'
