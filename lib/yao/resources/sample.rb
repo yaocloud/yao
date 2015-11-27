@@ -1,4 +1,4 @@
-module Yao::Resource
+module Yao::Resources
   class Sample < Base
     friendly_attributes :id, :metadata, :meter,
                         :source, :type, :unit, :volume
@@ -23,8 +23,8 @@ module Yao::Resource
       @user ||= Yao::User.get(user_id)
     end
 
-    self.service        = "samples"
+    self.service        = "metering"
     self.api_version    = "v2"
-
+    self.resources_name = "samples"
   end
 end
