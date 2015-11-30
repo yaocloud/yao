@@ -8,6 +8,9 @@ module Yao::Resources
     self.admin          = true
     self.return_single_on_querying = true
 
+    def servers
+      @servers ||= Yao::Server.list(all_tenants: 1).select{|s| s.tenant_id == id }
+
     def meters
       @meters ||= Yao::Meter.list({'q.field': 'project_id', 'q.op': 'eq', 'q.value': id})
     end
