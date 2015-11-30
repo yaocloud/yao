@@ -1,3 +1,9 @@
+## v0.2.3
+
+* Enhance ceilometer resources #33 by @hsbt
+* Add Tenant#servers #34 by @hsbt
+* Now tested against Ruby 2.3.0-preview1 by @udzura
+
 ## v0.2.2
 
 * Fix `resources_name_in_json` method caching again by @pyama86
