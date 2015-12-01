@@ -1,4 +1,9 @@
-## v0.2.3
+## v0.2.4
+
+* Fix syntax error by @hsbt
+  * Then, v0.2.3 is yanked
+
+## v0.2.3 (yanked)
 
 * Enhance ceilometer resources #33 by @hsbt
 * Add Tenant#servers #34 by @hsbt
