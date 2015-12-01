@@ -30,7 +30,7 @@ module Yao::Resources
 
     # get /v2/meters/{id} returns samples!
     def self.list(meter_name, query={})
-      cache_key = [meter_name, *query].values.join
+      cache_key = [meter_name, *query].join
       cache[cache_key] = GET("meters/#{meter_name}", query).body unless cache[cache_key]
       return_resources(cache[cache_key])
     end
