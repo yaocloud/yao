@@ -36,6 +36,12 @@ Yao::Network.list # list up networks...
 Yao::Server.list_detail # list up instances...
 ```
 
+## Support policy
+
+YAO supports rubies which are supported by Ruby Core Team. Please look into [`.travis.yml`](./.travis.yml) 's directive.
+
+If you want to use YAO's full functionality, e.g Ruby 2.0 or below, please create an issue or a PR first (PR Recommended ;) ).
+
 ## Pro tips
 
 You can use a prittier namespace:
