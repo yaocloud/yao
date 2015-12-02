@@ -13,7 +13,7 @@ module Yao::Resources
     end
 
     def meters
-      @meters ||= Yao::Meter.list({'q.field': 'project_id', 'q.op': 'eq', 'q.value': id})
+      @meters ||= Yao::Meter.list({'q.field' => 'project_id', 'q.op' => 'eq', 'q.value' => id})
     end
 
     def meters_by_name(meter_name)
