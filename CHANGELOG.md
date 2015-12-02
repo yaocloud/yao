@@ -1,3 +1,8 @@
+## v0.2.5
+
+* Fix query cache condition on `Yao::OldSample.list`. by @hsbt
+* Fix `Yao::Tenant#servers`. It returns always empty array. by @hsbt
+
 ## v0.2.4
 
 * Fix syntax error by @hsbt
