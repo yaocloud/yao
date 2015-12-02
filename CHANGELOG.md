@@ -1,3 +1,8 @@
+## v0.2.6
+
+* Fix a regression in Ruby 2.1 syntax by @hsbt
+* Supporting policy by @udzura
+
 ## v0.2.5
 
 * Fix query cache condition on `Yao::OldSample.list`. by @hsbt
