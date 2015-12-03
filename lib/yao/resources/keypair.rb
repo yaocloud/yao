@@ -8,7 +8,7 @@ module Yao::Resources
 
     def self.list(query={})
       return_resources(
-        resources_from_json(GET(resources_name, query).body).map{|r| resource_params(r)}
+        resources_from_json(GET(resources_name, query).body).map{|r| resource_from_json(r)}
       )
     end
   end
