@@ -3,6 +3,17 @@ module Yao::Resources
   class SecurityGroup < Base
     friendly_attributes :name, :description, :tenant_id
 
+    class << self
+      def all
+        self.list
+      end
+
+      def get_by_id(id)
+        self.list(id: id)
+      end
+      alias find_by_id get_by_id
+    end
+
     def rules
       self[["rules", SecurityGroupRule].join("__")] ||= (case self.class.service
       when "compute"
