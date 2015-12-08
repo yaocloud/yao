@@ -1,3 +1,7 @@
+## v0.2.7
+
+* Fix `Yao::Keypair.list` is broken by @udzura
+
 ## v0.2.6
 
 * Fix a regression in Ruby 2.1 syntax by @hsbt
