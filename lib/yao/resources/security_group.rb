@@ -8,10 +8,10 @@ module Yao::Resources
         self.list
       end
 
-      def get_by_id(id)
+      def get(id)
         self.list(id: id)
       end
-      alias find_by_id get_by_id
+      alias find get
     end
 
     def rules
