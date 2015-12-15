@@ -1,4 +1,5 @@
 require 'faraday'
+require 'yao/error'
 
 class Faraday::Request::Accept
   def initialize(app, accept=nil)
@@ -84,7 +85,6 @@ class Faraday::Response::OSResponseRecorder < Faraday::Response::Middleware
 end
 Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Response::OSResponseRecorder }
 
-require 'yao/server_error'
 class Faraday::Response::OSErrorDetector < Faraday::Response::Middleware
   # TODO: Better handling, respecting official doc
   def on_complete(env)
