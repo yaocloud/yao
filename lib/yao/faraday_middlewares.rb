@@ -31,7 +31,7 @@ class Faraday::Request::OSToken
 end
 Faraday::Request.register_middleware os_token: -> { Faraday::Request::OSToken }
 
-class Faraday::Request::GetOnly
+class Faraday::Request::ReadOnly
   def initialize(app)
     @app = app
   end
@@ -40,7 +40,7 @@ class Faraday::Request::GetOnly
     return @app.call(env) if allowed_request?(env)
 
     if Yao.config.raise_on_write
-      raise Yao::GetOnlyViolationError
+      raise Yao::ReadOnlyViolationError
     elsif Yao.config.noop_on_write
       env
     else
@@ -62,7 +62,7 @@ class Faraday::Request::GetOnly
     end
   end
 end
-Faraday::Request.register_middleware get_only: -> { Faraday::Request::GetOnly }
+Faraday::Request.register_middleware read_only: -> { Faraday::Request::ReadOnly }
 
 class Faraday::Response::OSDumper < Faraday::Response::Middleware
   def on_complete(env)

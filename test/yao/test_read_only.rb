@@ -32,7 +32,7 @@ class TestOnly < Test::Unit::TestCase
   end
 
   def test_read_only!
-    assert_raise Yao::GetOnlyViolationError do
+    assert_raise Yao::ReadOnlyViolationError do
       Yao.read_only! do
         Yao::User.get_by_name(@username)
         Yao::User.create(name: "foo", email: "bar", password: "baz")

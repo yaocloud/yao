@@ -1,5 +1,5 @@
 module Yao
-  class GetOnlyViolationError < ::StandardError; end
+  class ReadOnlyViolationError < ::StandardError; end
 
   class ServerError < ::StandardError
     def initialize(message, requested_env)
