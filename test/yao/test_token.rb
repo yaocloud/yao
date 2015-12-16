@@ -24,30 +24,6 @@ class TestToken < Test::Unit::TestCase
     assert { ! t.expired? }
   end
 
-  AUTH_JSON = \
-    "{\"auth\":{\"passwordCredentials\":{\"username\":\"udzura\",\"password\":\"XXXXXXXX\"},\"tenantName\":\"example\"}}"
-
-  def gen_response_json
-    <<-JSON
-{
-  "access": {
-    "token": {
-      "issued_at": "#{Time.now.iso8601}",
-      "expires": "#{(Time.now + 3600).utc.iso8601}",
-      "id": "aaaa166533fd49f3b11b1cdce2430000",
-      "tenant": {
-        "description": "Testing",
-        "enabled": true,
-        "id": "aaaa166533fd49f3b11b1cdce2430000",
-        "name": "example"
-      }
-    },
-    "serviceCatalog": []
-  }
-}
-    JSON
-  end
-
   def test_reflesh
     auth_url = "http://endpoint.example.com:12345"
     username = "udzura"
