@@ -13,6 +13,8 @@ module Yao::Plugins
         f.request :os_token, token
       end
 
+      f.request :get_only
+
       f.response :os_error_detector
       f.response :json, :content_type => /\bjson$/
 

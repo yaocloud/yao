@@ -31,6 +31,39 @@ class Faraday::Request::OSToken
 end
 Faraday::Request.register_middleware os_token: -> { Faraday::Request::OSToken }
 
+class Faraday::Request::GetOnly
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    return @app.call(env) if allowed_request?(env)
+
+    if Yao.config.raise_on_write
+      raise Yao::GetOnlyViolationError
+    elsif Yao.config.noop_on_write
+      env
+    else
+      @app.call(env)
+    end
+  end
+
+  private
+
+  def allowed_request?(env)
+    return true if env[:method] == :get
+
+    allowed_requests = [
+      {method: :post, path: "/v2.0/tokens"}
+    ]
+
+    allowed_requests.any? do |allowed|
+      env[:method] == allowed[:method] && env[:url].path == allowed[:path]
+    end
+  end
+end
+Faraday::Request.register_middleware get_only: -> { Faraday::Request::GetOnly }
+
 class Faraday::Response::OSDumper < Faraday::Response::Middleware
   def on_complete(env)
     require 'pp'
