@@ -108,6 +108,8 @@ class Faraday::Response::OSResponseRecorder < Faraday::Response::Middleware
   def on_complete(env)
     require 'pathname'
     root = Pathname.new(File.expand_path('../../../tmp', __FILE__))
+    Dir.mkdir(root) unless File.exist?(root)
+
     path = [env.method.to_s.upcase, env.url.path.gsub('/', '-')].join("-") + ".json"
 
     puts root.join(path)
