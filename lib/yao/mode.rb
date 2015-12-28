@@ -4,7 +4,7 @@ module Yao
       raise unless block_given?
 
       Yao.config.set :raise_on_write, true
-      yield(blk)
+      yield
       Yao.config.set :raise_on_write, false
     end
 
@@ -12,7 +12,7 @@ module Yao
       raise unless block_given?
 
       Yao.config.set :noop_on_write, true
-      yield(blk)
+      yield
       Yao.config.set :noop_on_write, false
     end
   end
