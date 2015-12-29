@@ -42,4 +42,29 @@ class TestOnly < Test::Unit::TestCase
     assert_requested @get_stub
     assert_not_requested @post_stub
   end
+
+  def test_read_only_flags_life_cycle
+    assert_false Yao.config.noop_on_write
+    assert_false Yao.config.raise_on_write
+
+    assert_raise RuntimeError do
+      Yao.read_only do
+        assert_true Yao.config.noop_on_write
+        raise
+      end
+    end
+
+    assert_false Yao.config.noop_on_write
+    assert_false Yao.config.raise_on_write
+
+    assert_raise RuntimeError do
+      Yao.read_only! do
+        assert_true Yao.config.raise_on_write
+        raise
+      end
+    end
+
+    assert_false Yao.config.noop_on_write
+    assert_false Yao.config.raise_on_write
+  end
 end
