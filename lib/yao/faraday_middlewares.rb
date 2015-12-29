@@ -50,14 +50,14 @@ class Faraday::Request::ReadOnly
 
   private
 
+  ALLOWED_REQUESTS = [
+    {method: :post, path: "/v2.0/tokens"}
+  ]
+
   def allowed_request?(env)
     return true if env[:method] == :get
 
-    allowed_requests = [
-      {method: :post, path: "/v2.0/tokens"}
-    ]
-
-    allowed_requests.any? do |allowed|
+    ALLOWED_REQUESTS.any? do |allowed|
       env[:method] == allowed[:method] && env[:url].path == allowed[:path]
     end
   end
