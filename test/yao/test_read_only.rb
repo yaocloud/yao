@@ -88,5 +88,27 @@ class TestOnly < Test::Unit::TestCase
 
       assert_true Yao.config.raise_on_write
     end
+
+    Yao.read_only! do
+      assert_true Yao.config.raise_on_write
+
+      Yao.read_only do
+        assert_true  Yao.config.noop_on_write
+        assert_false Yao.config.raise_on_write
+      end
+
+      assert_true Yao.config.raise_on_write
+    end
+
+    Yao.read_only do
+      assert_true Yao.config.noop_on_write
+
+      Yao.read_only! do
+        assert_true  Yao.config.raise_on_write
+        assert_false Yao.config.noop_on_write
+      end
+
+      assert_true Yao.config.noop_on_write
+    end
   end
 end
