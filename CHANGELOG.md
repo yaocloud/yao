@@ -1,3 +1,8 @@
+## v0.2.8
+
+* Introduction of `Yao.read_only` and `Yao.read_only!` by @Joe-noh (review by @hanazuki)
+  * See also issue #27
+
 ## v0.2.7
 
 * Fix `Yao::Keypair.list` is broken by @udzura
