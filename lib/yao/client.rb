@@ -69,6 +69,9 @@ module Yao
     Yao::Client.default_client
   end
 
+  Yao.config.param :noop_on_write, false
+  Yao.config.param :raise_on_write, false
+
   Yao.config.param :debug, false
   Yao.config.param :debug_record_response, false
 end

@@ -57,18 +57,18 @@ module Yao::Resources
     def as_member(&blk)
       if @admin
         @admin = false
-        result = yield(blk)
+        result = yield
         @admin = true
         result
       else
-        yield blk
+        yield
       end
     end
 
     def with_resources_path(path, &blk)
       original = @resources_path
       @resources_path = path
-      result = yield(blk)
+      result = yield
       @resources_path = original
 
       result

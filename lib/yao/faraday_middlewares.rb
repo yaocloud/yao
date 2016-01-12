@@ -1,4 +1,5 @@
 require 'faraday'
+require 'yao/error'
 
 class Faraday::Request::Accept
   def initialize(app, accept=nil)
@@ -29,6 +30,39 @@ class Faraday::Request::OSToken
   end
 end
 Faraday::Request.register_middleware os_token: -> { Faraday::Request::OSToken }
+
+class Faraday::Request::ReadOnly
+  def initialize(app)
+    @app = app
+  end
+
+  def call(env)
+    return @app.call(env) if allowed_request?(env)
+
+    if Yao.config.raise_on_write
+      raise Yao::ReadOnlyViolationError
+    elsif Yao.config.noop_on_write
+      env
+    else
+      @app.call(env)
+    end
+  end
+
+  private
+
+  ALLOWED_REQUESTS = [
+    {method: :post, path: "/v2.0/tokens"}
+  ]
+
+  def allowed_request?(env)
+    return true if env[:method] == :get
+
+    ALLOWED_REQUESTS.any? do |allowed|
+      env[:method] == allowed[:method] && env[:url].path == allowed[:path]
+    end
+  end
+end
+Faraday::Request.register_middleware read_only: -> { Faraday::Request::ReadOnly }
 
 class Faraday::Response::OSDumper < Faraday::Response::Middleware
   def on_complete(env)
@@ -74,6 +108,8 @@ class Faraday::Response::OSResponseRecorder < Faraday::Response::Middleware
   def on_complete(env)
     require 'pathname'
     root = Pathname.new(File.expand_path('../../../tmp', __FILE__))
+    Dir.mkdir(root) unless File.exist?(root)
+
     path = [env.method.to_s.upcase, env.url.path.gsub('/', '-')].join("-") + ".json"
 
     puts root.join(path)
@@ -84,7 +120,6 @@ class Faraday::Response::OSResponseRecorder < Faraday::Response::Middleware
 end
 Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Response::OSResponseRecorder }
 
-require 'yao/server_error'
 class Faraday::Response::OSErrorDetector < Faraday::Response::Middleware
   # TODO: Better handling, respecting official doc
   def on_complete(env)

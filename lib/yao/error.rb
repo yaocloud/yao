@@ -1,4 +1,6 @@
 module Yao
+  class ReadOnlyViolationError < ::StandardError; end
+
   class ServerError < ::StandardError
     def initialize(message, requested_env)
       @status = requested_env.status
