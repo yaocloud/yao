@@ -1,7 +1,7 @@
 module Yao::Resources
   class Sample < Base
     friendly_attributes :id, :metadata, :meter,
-                        :source, :type, :unit, :volume
+                        :source, :type, :unit, :volume,
                         :resouce_id, :tenant_id, :user_id
 
     def recorded_at
