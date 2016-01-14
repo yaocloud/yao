@@ -1,3 +1,8 @@
+## v0.2.9
+
+* Fix a syntax error in sample.rb vy @hsbt
+  * So added a simple syntax check loop by @udzura
+
 ## v0.2.8
 
 * Introduction of `Yao.read_only` and `Yao.read_only!` by @Joe-noh (review by @hanazuki)
