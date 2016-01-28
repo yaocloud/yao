@@ -49,4 +49,10 @@ class TestClient < Test::Unit::TestCase
     ]
     assert { cli.builder.handlers == handlers }
   end
+
+  def test_timeout
+    stub(Yao.config).timeout { 300 }
+    cli = Yao::Client.gen_client("http://cool-api.example.com:12345/v3.0")
+    assert { cli.options.timeout == 300 }
+  end
 end

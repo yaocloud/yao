@@ -55,6 +55,8 @@ OpenStack.configure do
   tenant_name "fooproject"
   username    "udzura"
   password    "tonk0tsu-r@men"
+  # timeout is optional
+  timeout     300
 end
 
 OpenStack::Server.list_detail # And let's go on
