@@ -5,7 +5,7 @@ require 'time'
 require 'yao/token'
 
 module Yao
-  %i(tenant_name username password).each do |name|
+  %i(tenant_name username password timeout).each do |name|
     Yao.config.param name, nil
   end
 
