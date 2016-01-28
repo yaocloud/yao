@@ -46,7 +46,7 @@ module Yao
       end
 
       def gen_client(endpoint, token: nil)
-        Faraday.new( endpoint ) do |f|
+        Faraday.new( endpoint, request: {timeout: 300} ) do |f|
           client_generator.call(f, token)
         end
       end
