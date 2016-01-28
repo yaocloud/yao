@@ -46,7 +46,7 @@ module Yao
       end
 
       def gen_client(endpoint, token: nil)
-        Faraday.new( endpoint ) do |f|
+        Faraday.new( endpoint, client_options ) do |f|
           client_generator.call(f, token)
         end
       end
@@ -55,6 +55,12 @@ module Yao
         set = ClientSet.new
         set.register_endpoints("default" => {public_url: new_endpoint || Yao.config.endpoint})
         self.default_client = set
+      end
+
+      def client_options
+        opt = {}
+        opt.merge!({ request: { timeout: Yao.config.timeout }}) if Yao.config.timeout
+        opt
       end
     end
 
