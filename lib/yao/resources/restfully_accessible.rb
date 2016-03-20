@@ -51,7 +51,7 @@ module Yao::Resources
         Yao.default_client.admin_pool[service]
       else
         Yao.default_client.pool[service]
-      end
+      end or raise "You do not have #{@admin ? 'admin' : 'public'} access to the #{service} service"
     end
 
     def as_member(&blk)
