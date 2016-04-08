@@ -33,8 +33,8 @@ module Yao
             }.to_h
           end
 
-          self.pool[type]       = Yao::Client.gen_client(urls[:public_url], token: token)
-          self.admin_pool[type] = Yao::Client.gen_client(urls[:admin_url],  token: token)
+          self.pool[type]       = Yao::Client.gen_client(urls[:public_url], token: token) if urls[:public_url]
+          self.admin_pool[type] = Yao::Client.gen_client(urls[:admin_url],  token: token) if urls[:admin_url]
         end
       end
     end
