@@ -1,3 +1,7 @@
+## v0.2.11
+
+* Some fixes by @hanazuki
+
 ## v0.2.9
 
 * Fix a syntax error in sample.rb vy @hsbt
