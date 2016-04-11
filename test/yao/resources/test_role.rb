@@ -1,5 +1,3 @@
-require 'pry'
-
 class TestRole < Test::Unit::TestCase
   def test_role_attributes
     params = {
