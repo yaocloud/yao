@@ -1,5 +1,3 @@
-require 'yao'
-
 module Yao
   class Config
     def _configuration_defaults

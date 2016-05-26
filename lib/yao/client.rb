@@ -1,4 +1,3 @@
-require 'yao'
 require 'yao/config'
 require 'faraday'
 require 'yao/plugins/default_client_generator'
