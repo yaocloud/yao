@@ -78,6 +78,6 @@ module Yao
   end
 
   def self.configure(&blk)
-    config &blk
+    config(&blk)
   end
 end
