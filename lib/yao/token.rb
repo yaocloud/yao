@@ -21,6 +21,7 @@ module Yao
       @token = token_data["id"]
       @issued_at = Time.parse(token_data["issued_at"]).localtime
       @expire_at = Time.parse(token_data["expires"]).localtime
+      Yao.current_tenant_id token_data["tenant"]["id"]
     end
 
     def expired?
@@ -35,7 +36,6 @@ module Yao
         req.body = auth_info.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-
       body = res.body["access"]
 
       register(body["token"])
@@ -58,5 +58,12 @@ module Yao
 
       Yao.default_client.register_endpoints(@endpoints, token: self)
     end
+  end
+
+  def self.current_tenant_id(id=nil)
+    if id
+      @__tenant_id = id
+    end
+    @__tenant_id
   end
 end
