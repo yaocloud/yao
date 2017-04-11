@@ -14,6 +14,9 @@ class TestAuth < Test::Unit::TestCase
   end
 
   def teardown
+    Yao.configure do
+      endpoints nil
+    end
   end
 
   def test_auth_successful
@@ -57,4 +60,17 @@ class TestAuth < Test::Unit::TestCase
     end
     assert_received(auth) {|a| a.new }
   end
+
+  def test_override_endpoint
+    Yao.configure do
+      auth_url    "http://endpoint.example.com:12345"
+      tenant_name "example"
+      username    "udzura"
+      password    "XXXXXXXX"
+      endpoints ({ identity: { public: "http://override-endpoint.example.com:35357/v3.0" } })
+    end
+    assert(Yao.default_client.pool["identity"].url_prefix.to_s, "http://override-endpoint.example.com:35357/v3.0")
+  end
+
+
 end

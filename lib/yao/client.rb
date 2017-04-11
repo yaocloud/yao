@@ -3,6 +3,8 @@ require 'faraday'
 require 'yao/plugins/default_client_generator'
 
 module Yao
+  Yao.config.param :endpoints, nil
+
   module Client
     class ClientSet
       def initialize
@@ -32,8 +34,11 @@ module Yao
             }.to_h
           end
 
-          self.pool[type]       = Yao::Client.gen_client(urls[:public_url], token: token) if urls[:public_url]
-          self.admin_pool[type] = Yao::Client.gen_client(urls[:admin_url],  token: token) if urls[:admin_url]
+          force_public_url = Yao.config.endpoints[type.to_sym][:public] rescue nil
+          force_admin_url = Yao.config.endpoints[type.to_sym][:admin] rescue nil
+
+          self.pool[type] = Yao::Client.gen_client(force_public_url || urls[:public_url], token: token) if force_public_url || urls[:public_url]
+          self.admin_pool[type] = Yao::Client.gen_client(force_admin_url || urls[:admin_url],  token: token) if force_admin_url || urls[:admin_url]
         end
       end
     end

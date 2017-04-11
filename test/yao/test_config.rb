@@ -56,7 +56,7 @@ class TestConfig < Test::Unit::TestCase
     mock(auth).try_new.times(count)
     Yao::Config::HOOK_RENEW_CLIENT_KEYS.each do |key|
       Yao.configure do
-        set key, "dummy"
+        set key, "http://dummy"
       end
     end
 

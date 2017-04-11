@@ -36,6 +36,18 @@ Yao::Network.list # list up networks...
 Yao::Server.list_detail # list up instances...
 ```
 
+If you want to override some of endpoints by service, you can do:
+
+```ruby
+Yao.configure do
+  auth_url    "http://endpoint.example.com:12345"
+  tenant_name "example"
+  username    "udzura"
+  password    "XXXXXXXX"
+  endpoints   identity: { public: "http://override-endpoint.example.com:35357/v3.0" }
+end
+```
+
 ## Support policy
 
 YAO supports rubies which are supported by Ruby Core Team. Please look into [`.travis.yml`](./.travis.yml) 's directive.
