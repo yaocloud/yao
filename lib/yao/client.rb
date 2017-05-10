@@ -65,6 +65,15 @@ module Yao
       def client_options
         opt = {}
         opt.merge!({ request: { timeout: Yao.config.timeout }}) if Yao.config.timeout
+        if Yao.config.client_cert && Yao.config.client_key
+          require 'openssl'
+          cert = OpenSSL::X509::Certificate.new(File.read(Yao.config.client_cert))
+          key  = OpenSSL::PKey.read(File.read(Yao.config.client_key))
+          opt.merge!(ssl: {
+            client_cert: cert,
+            client_key:  key,
+          })
+        end
         opt
       end
     end

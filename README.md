@@ -30,6 +30,13 @@ Yao.configure do
   tenant_name "fooproject"
   username    "udzura"
   password    "tonk0tsu-r@men"
+
+  # timeout is optional
+  timeout     300
+  
+  # If your endpoint requires cert & key
+  client_cert "/path/to/my.pem"
+  client_key "/path/to/my.key"
 end
 
 Yao::Network.list # list up networks...
@@ -67,8 +74,6 @@ OpenStack.configure do
   tenant_name "fooproject"
   username    "udzura"
   password    "tonk0tsu-r@men"
-  # timeout is optional
-  timeout     300
 end
 
 OpenStack::Server.list_detail # And let's go on

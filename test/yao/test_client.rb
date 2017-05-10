@@ -55,4 +55,16 @@ class TestClient < Test::Unit::TestCase
     cli = Yao::Client.gen_client("http://cool-api.example.com:12345/v3.0")
     assert { cli.options.timeout == 300 }
   end
+
+  def test_cert_key
+    stub(Yao.config).client_cert { File.expand_path("../../fixtures/dummy.pem", __FILE__) }
+    stub(Yao.config).client_key  { File.expand_path("../../fixtures/dummy.key", __FILE__) }
+    stub(OpenSSL::X509::Certificate).new { "DummyCert" }
+    stub(OpenSSL::PKey).read { "DummyKey" }
+
+    cli = Yao::Client.gen_client("http://cool-api.example.com:12345/v3.0")
+    ssl = cli.ssl
+    assert { ssl[:client_cert] == "DummyCert" }
+    assert { ssl[:client_key] == "DummyKey" }
+  end
 end
