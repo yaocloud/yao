@@ -18,6 +18,7 @@ module Yao
     autoload :Host,              "yao/resources/host"
     autoload :User,              "yao/resources/user"
     autoload :Role,              "yao/resources/role"
+    autoload :RoleAssignment,    "yao/resources/role_assignment"
 
     autoload :Resource,          "yao/resources/resource"
     autoload :Meter,             "yao/resources/meter"
