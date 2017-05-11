@@ -81,6 +81,10 @@ class TestAuth < Test::Unit::TestCase
       region_name "RegionTest"
     end
     assert { Yao.default_client.pool["identity"].url_prefix.to_s == "https://global-endpoint.example.com/api/keystone/" }
+  ensure
+    Yao.configure do
+      region_name "RegionOne"
+    end
   end
 
 end
