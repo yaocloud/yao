@@ -53,7 +53,7 @@ class TestAuth < Test::Unit::TestCase
     stub(auth).new
 
     Yao.configure do
-      auth_url    "http://endpoint.example.com:12345/2.0"
+      auth_url    "http://endpoint.example.com:12345/v2.0"
       tenant_name "example"
       username    "udzura"
       password    "XXXXXXXX"
