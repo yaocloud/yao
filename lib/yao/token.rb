@@ -48,11 +48,13 @@ module Yao
 
       _endpoints.each do |endpoint_data|
         type = endpoint_data["type"]
-        endpoint = endpoint_data["endpoints"].first
+        region_name = Yao.config.region_name ? Yao.config.region_name : 'RegionOne'
+        endpoint = endpoint_data["endpoints"].find { |ep| ep.has_value?(region_name) }
         urls = {}
-        urls[:public_url] = endpoint["publicURL"] if endpoint["publicURL"]
-        urls[:admin_url]  = endpoint["adminURL"]  if endpoint["adminURL"]
-
+        if endpoint
+          urls[:public_url] = endpoint["publicURL"] if endpoint["publicURL"]
+          urls[:admin_url]  = endpoint["adminURL"]  if endpoint["adminURL"]
+        end
         @endpoints[type] = urls
       end
 
