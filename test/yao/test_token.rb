@@ -30,7 +30,7 @@ class TestToken < Test::Unit::TestCase
     assert { ! t.expired? }
   end
 
-  def test_reflesh
+  def test_refresh
     auth_url = "http://endpoint.example.com:12345/v2.0"
     username = "udzura"
     tenant   = "example"
@@ -58,7 +58,7 @@ class TestToken < Test::Unit::TestCase
     stub_auth_request(auth_url, username, password, tenant)
 
     Yao.config.auth_url auth_url
-    t.reflesh(Yao.default_client.default)
+    t.refresh(Yao.default_client.default)
 
     assert { t.token == "aaaa166533fd49f3b11b1cdce2430000" }
   end
