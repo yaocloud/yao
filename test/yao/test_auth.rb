@@ -69,7 +69,7 @@ class TestAuth < Test::Unit::TestCase
       password    "XXXXXXXX"
       endpoints ({ identity: { public: "http://override-endpoint.example.com:35357/v3.0" } })
     end
-    assert(Yao.default_client.pool["identity"].url_prefix.to_s, "http://override-endpoint.example.com:35357/v3.0")
+    assert { Yao.default_client.pool["identity"].url_prefix.to_s == "http://override-endpoint.example.com:35357/v3.0" }
   end
 
 
