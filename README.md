@@ -26,7 +26,7 @@ Or install it yourself as:
 require 'yao'
 
 Yao.configure do
-  auth_url    "http://keystone.example.local:8080/v2.0/tokens"
+  auth_url    "http://keystone.example.local:8080/v2.0"
   tenant_name "fooproject"
   username    "udzura"
   password    "tonk0tsu-r@men"
@@ -47,7 +47,7 @@ If you want to override some of endpoints by service, you can do:
 
 ```ruby
 Yao.configure do
-  auth_url    "http://endpoint.example.com:12345"
+  auth_url    "http://endpoint.example.com:12345/v2.0"
   tenant_name "example"
   username    "udzura"
   password    "XXXXXXXX"
@@ -70,7 +70,7 @@ You can use a prittier namespace:
 require 'yao/is_openstack_client'
 
 OpenStack.configure do
-  auth_url    "http://keystone.example.local:8080/v2.0/tokens"
+  auth_url    "http://keystone.example.local:8080/v2.0"
   tenant_name "fooproject"
   username    "udzura"
   password    "tonk0tsu-r@men"
