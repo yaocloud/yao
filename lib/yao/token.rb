@@ -4,7 +4,7 @@ module Yao
   class Token
     def self.issue(cli, auth_info)
       t = new(auth_info)
-      t.reflesh(cli)
+      t.refresh(cli)
       t
     end
 
@@ -29,10 +29,10 @@ module Yao
       Time.now >= self.expire_at
     end
 
-    def reflesh(cli)
+    def refresh(cli)
       @endpoints.clear
 
-      res = cli.post('/v2.0/tokens') do |req|
+      res = cli.post("#{Yao.config.auth_url}/tokens") do |req|
         req.body = auth_info.to_json
         req.headers['Content-Type'] = 'application/json'
       end

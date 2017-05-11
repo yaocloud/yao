@@ -22,7 +22,7 @@ class Faraday::Request::OSToken
 
   def call(env)
     if @token.expired?
-      @token.reflesh(Yao.default_client.default)
+      @token.refresh(Yao.default_client.default)
     end
 
     env[:request_headers]['X-Auth-Token'] = @token.to_s
@@ -51,7 +51,7 @@ class Faraday::Request::ReadOnly
   private
 
   ALLOWED_REQUESTS = [
-    {method: :post, path: "/v2.0/tokens"}
+    {method: :post, path: "/tokens"}
   ]
 
   def allowed_request?(env)
