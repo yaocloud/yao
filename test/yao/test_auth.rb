@@ -2,7 +2,7 @@ class TestAuth < Test::Unit::TestCase
   include AuthStub
 
   def setup
-    @auth_url = "http://endpoint.example.com:12345"
+    @auth_url = "http://endpoint.example.com:12345/v2.0"
     username = "udzura"
     tenant   = "example"
     password = "XXXXXXXX"
@@ -21,7 +21,7 @@ class TestAuth < Test::Unit::TestCase
 
   def test_auth_successful
     cli = Yao.default_client.pool["default"]
-    assert { cli.url_prefix.to_s == "http://endpoint.example.com:12345/" }
+    assert { cli.url_prefix.to_s == "http://endpoint.example.com:12345/v2.0" }
   end
 
   def test_service_sclients_initialized
@@ -53,7 +53,7 @@ class TestAuth < Test::Unit::TestCase
     stub(auth).new
 
     Yao.configure do
-      auth_url    "http://endpoint.example.com:12345"
+      auth_url    "http://endpoint.example.com:12345/2.0"
       tenant_name "example"
       username    "udzura"
       password    "XXXXXXXX"
@@ -63,7 +63,7 @@ class TestAuth < Test::Unit::TestCase
 
   def test_override_endpoint
     Yao.configure do
-      auth_url    "http://endpoint.example.com:12345"
+      auth_url    "http://endpoint.example.com:12345/v2.0"
       tenant_name "example"
       username    "udzura"
       password    "XXXXXXXX"

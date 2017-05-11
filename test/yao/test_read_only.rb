@@ -2,7 +2,7 @@ class TestOnly < Test::Unit::TestCase
   include AuthStub
 
   def setup
-    auth_url = "http://endpoint.example.com:12345"
+    auth_url = "http://endpoint.example.com:12345/v2.0"
     username = "udzura"
     tenant   = "example"
     password = "XXXXXXXX"
@@ -17,8 +17,8 @@ class TestOnly < Test::Unit::TestCase
     end
 
     @username = username
-    @get_stub  = stub_request(:get,  "#{auth_url}/v2.0/users?name=#{username}")
-    @post_stub = stub_request(:post, "#{auth_url}/v2.0/users")
+    @get_stub  = stub_request(:get,  "#{auth_url}/users?name=#{username}")
+    @post_stub = stub_request(:post, "#{auth_url}/users")
   end
 
   def test_read_only

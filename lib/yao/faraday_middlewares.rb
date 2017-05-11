@@ -51,7 +51,7 @@ class Faraday::Request::ReadOnly
   private
 
   ALLOWED_REQUESTS = [
-    {method: :post, path: "/v2.0/tokens"}
+    {method: :post, path: "/tokens"}
   ]
 
   def allowed_request?(env)

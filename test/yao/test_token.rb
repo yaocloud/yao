@@ -31,7 +31,7 @@ class TestToken < Test::Unit::TestCase
   end
 
   def test_reflesh
-    auth_url = "http://endpoint.example.com:12345"
+    auth_url = "http://endpoint.example.com:12345/v2.0"
     username = "udzura"
     tenant   = "example"
     password = "XXXXXXXX"

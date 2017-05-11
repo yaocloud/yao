@@ -32,7 +32,7 @@ module Yao
     def reflesh(cli)
       @endpoints.clear
 
-      res = cli.post('/v2.0/tokens') do |req|
+      res = cli.post("#{Yao.config.auth_url}/tokens") do |req|
         req.body = auth_info.to_json
         req.headers['Content-Type'] = 'application/json'
       end

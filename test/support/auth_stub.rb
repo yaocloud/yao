@@ -1,6 +1,6 @@
 module AuthStub
   def stub_auth_request(auth_url, username, password, tenant)
-    stub_request(:post, "#{auth_url}/v2.0/tokens")
+    stub_request(:post, "#{auth_url}/tokens")
       .with(
         body: auth_json(username, password, tenant)
       ).to_return(
@@ -81,7 +81,7 @@ module AuthStub
       {
         "endpoints": [
           {
-            "adminURL": "#{auth_url}/v2.0",
+            "adminURL": "#{auth_url}",
             "region": "RegionOne",
             "internalURL": "http://endpoint.example.com:5000/v2.0",
             "id": "2b982236cc084128bf42b647c1b7fb49",
