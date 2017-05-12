@@ -28,8 +28,7 @@ module Yao
           # XXX: neutron just have v2.0 API and endpoint may not have version prefix
           if type == "network"
             urls = urls.map {|public_or_admin, url|
-              path = URI.parse(url).path
-              url = (path == '' || path == '/') ? File.join(url, "v2.0") : url
+              url = File.join(url, "v2.0")
               [public_or_admin, url]
             }.to_h
           end
