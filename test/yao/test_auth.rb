@@ -69,8 +69,22 @@ class TestAuth < Test::Unit::TestCase
       password    "XXXXXXXX"
       endpoints ({ identity: { public: "http://override-endpoint.example.com:35357/v3.0" } })
     end
-    assert(Yao.default_client.pool["identity"].url_prefix.to_s, "http://override-endpoint.example.com:35357/v3.0")
+    assert { Yao.default_client.pool["identity"].url_prefix.to_s == "http://override-endpoint.example.com:35357/v3.0" }
   end
 
+  def test_region
+    Yao.configure do
+      auth_url    "http://endpoint.example.com:12345/v2.0"
+      tenant_name "example"
+      username    "udzura"
+      password    "XXXXXXXX"
+      region_name "RegionTest"
+    end
+    assert { Yao.default_client.pool["identity"].url_prefix.to_s == "https://global-endpoint.example.com/api/keystone/" }
+  ensure
+    Yao.configure do
+      region_name "RegionOne"
+    end
+  end
 
 end

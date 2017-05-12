@@ -44,6 +44,13 @@ module AuthStub
             "internalURL": "http://nova-endpoint.example.com:8774/v2/b598bf98671c47e1b955f8c9660e3c44",
             "id": "1a66e6af97c440b2a7bbc4f9735923d9",
             "publicURL": "http://nova-endpoint.example.com:8774/v2/b598bf98671c47e1b955f8c9660e3c44"
+          },
+          {
+            "adminURL": "https://global-endpoint.example.com/api/nova/b598bf98671c47e1b955f8c9660e3c44",
+            "region": "RegionTest",
+            "internalURL": "http://192.168.10.52:8774/v2/b598bf98671c47e1b955f8c9660e3c44",
+            "id": "18df07456cda4af1a7031f0de68637ea",
+            "publicURL": "https://global-endpoint.example.com/api/nova/b598bf98671c47e1b955f8c9660e3c44"
           }
         ],
         "endpoints_links": [],
@@ -58,6 +65,13 @@ module AuthStub
             "internalURL": "http://neutron-endpoint.example.com:9696/",
             "id": "0418104da877468ca65d739142fa3454",
             "publicURL": "http://neutron-endpoint.example.com:9696/"
+          },
+          {
+            "adminURL": "https://global-endpoint.example.com/api/neutron/",
+            "region": "RegionTest",
+            "internalURL": "http://192.168.10.53:9696/",
+            "id": "5e5cf4ffecfa4ce1a956fe517baf3154",
+            "publicURL": "https://global-endpoint.example.com/api/neutron/"
           }
         ],
         "endpoints_links": [],
@@ -72,6 +86,13 @@ module AuthStub
             "internalURL": "http://glance-endpoint.example.com:9292",
             "id": "246f33509ff64802b86eb081307ecec0",
             "publicURL": "http://glance-endpoint.example.com:9292"
+          },
+          {
+            "adminURL": "https://global-endpoint.example.com/api/glance/",
+            "region": "RegionTest",
+            "internalURL": "http://192.168.10.54:9292/",
+            "id": "62d6f676ff0c491e9671a7ab6a596493",
+            "publicURL": "https://global-endpoint.example.com/api/glance/"
           }
         ],
         "endpoints_links": [],
@@ -86,6 +107,13 @@ module AuthStub
             "internalURL": "http://endpoint.example.com:5000/v2.0",
             "id": "2b982236cc084128bf42b647c1b7fb49",
             "publicURL": "http://endpoint.example.com:5000/v2.0"
+          },
+          {
+            "adminURL": "https://global-endpoint.example.com/api/admin/keystone/",
+            "region": "RegionTest",
+            "internalURL": "http://192.168.10.52:35357/v2.0",
+            "id": "11ae249e090d4b548ae992c08ea3b35a",
+            "publicURL": "https://global-endpoint.example.com/api/keystone/"
           }
         ],
         "endpoints_links": [],
