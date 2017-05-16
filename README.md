@@ -33,10 +33,13 @@ Yao.configure do
 
   # timeout is optional
   timeout     300
-  
+
   # If your endpoint requires cert & key
   client_cert "/path/to/my.pem"
   client_key "/path/to/my.key"
+
+  # If you want to change region
+  region_name "FukuokaRegion"
 end
 
 Yao::Network.list # list up networks...
