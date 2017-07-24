@@ -119,6 +119,27 @@ module AuthStub
         "endpoints_links": [],
         "type": "identity",
         "name": "keystone"
+      },
+      {
+        "endpoints": [
+          {
+            "adminURL": "#{auth_url}",
+            "region": "RegionOne",
+            "internalURL": "http://endpoint.example.com:9876",
+            "id": "bde3abca8864400a809f0089f025370a",
+            "publicURL": "http://endpoint.example.com:9876"
+          },
+          {
+            "adminURL": "https://global-endpoint.example.com/api/octavia/",
+            "region": "RegionTest",
+            "internalURL": "http://192.168.10.52:9876",
+            "id": "2c3197eb24ef433eb5d9386c46ff1eb0",
+            "publicURL": "https://global-endpoint.example.com/api/octavia/"
+          }
+        ],
+        "endpoints_links": [],
+        "type": "load-balancer",
+        "name": "octavia"
       }
     ],
     "user": {
