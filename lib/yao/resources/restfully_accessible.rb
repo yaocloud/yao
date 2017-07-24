@@ -24,7 +24,7 @@ module Yao::Resources
       raise("Set api_version after service is declared") unless service
       @api_version = v
       if cli = client
-        cli.url_prefix.path = "/#{api_version}"
+        cli.url_prefix.path += "/#{api_version}" unless cli.url_prefix.to_s.include?("/#{api_version}")
       end
       api_version
     end
