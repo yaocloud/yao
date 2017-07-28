@@ -14,12 +14,6 @@ class TestRole < Test::Unit::TestCase
         "cookie_name" => nil,
         "type" => "SOURCE_IP"
       },
-      "members" => [
-        {
-          "id" => "5bc73753-348f-4b5a-8f9c-10bd7b30dc35",
-          "id" => "692e8358-f8fd-4b92-bbca-6e4b97c75571"
-        }
-      ],
       "healthmonitor_id" => nil,
       "operating_status" => "ONLINE",
       "name" => "round_robin_pool"
@@ -37,12 +31,6 @@ class TestRole < Test::Unit::TestCase
         "cookie_name" => nil,
         "type" => "SOURCE_IP"
     })
-    assert_equal(pool.members, [
-      {
-        "id" => "5bc73753-348f-4b5a-8f9c-10bd7b30dc35",
-        "id" => "692e8358-f8fd-4b92-bbca-6e4b97c75571"
-      }
-    ])
     assert_equal(pool.healthmonitor_id, nil)
     assert_equal(pool.operating_status, "ONLINE")
     assert_equal(pool.name, "round_robin_pool")
