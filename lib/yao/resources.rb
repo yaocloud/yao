@@ -8,6 +8,7 @@ module Yao
     autoload :SecurityGroup,     "yao/resources/security_group"
     autoload :SecurityGroupRule, "yao/resources/security_group_rule"
     autoload :Hypervisor,        "yao/resources/hypervisor"
+    autoload :Aggregates,        "yao/resources/aggregates"
     autoload :Keypair,           "yao/resources/keypair"
     autoload :FloatingIP,        "yao/resources/floating_ip"
     autoload :Network,           "yao/resources/network"
