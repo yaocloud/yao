@@ -8,7 +8,6 @@ class TestRole < Test::Unit::TestCase
       "admin_state_up" => true,
       "provisioning_status" => "ACTIVE",
       "pools" => [{"id" => "pool"}],
-      "listeners" => [{"id" => "listener"}],
       "vip_address" => "198.51.100.1",
       "operationg_status" => "ONLINE",
       "name" => "greate loadbalancer",
@@ -22,7 +21,6 @@ class TestRole < Test::Unit::TestCase
     assert_equal(lb.admin_state_up, true)
     assert_equal(lb.provisioning_status, "ACTIVE")
     assert_equal(lb.pools, [{"id" => "pool"}])
-    assert_equal(lb.listeners, [{"id" => "listener"}])
     assert_equal(lb.vip_address, "198.51.100.1")
     assert_equal(lb.operationg_status, "ONLINE")
     assert_equal(lb.name, "greate loadbalancer")

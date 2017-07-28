@@ -3,7 +3,7 @@ require 'date'
 module Yao::Resources
   class LoadBalancer < Base
     friendly_attributes :provider, :description, :admin_state_up, :provisioning_status,
-                        :pools, :listeners, :vip_address,
+                        :pools, :vip_address,
                         :operationg_status, :name
 
     def created_at
@@ -28,6 +28,12 @@ module Yao::Resources
 
     def vip_subnet
       Yao::Subnet.find self["vip_subnet_id"]
+    end
+
+    def listeners
+      self["listeners"].map do |listener|
+        Yao::LoadBalancerListener.find listener["id"]
+      end
     end
 
     self.service        = "load-balancer"
