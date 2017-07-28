@@ -4,7 +4,7 @@ module Yao::Resources
     friendly_attributes :description, :admin_state_up,
                         :protocol, :protocol_port, :provisioning_status,
                         :default_tls_container_ref, :insert_headers,
-                        :operating_status, :default_pool_id, :sni_container_refs,
+                        :operating_status, :sni_container_refs,
                         :l7policies, :name
 
     def project
@@ -24,6 +24,11 @@ module Yao::Resources
     def updated_at
       Date.parse(self["updated_at"])
     end
+
+    def default_pool
+      Yao::LoadBalancerPool.find self["default_pool_id"]
+    end
+    alias pool default_pool
 
     self.service        = "load-balancer"
     self.api_version    = "v2.0"

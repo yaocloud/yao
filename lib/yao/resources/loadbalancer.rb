@@ -36,6 +36,12 @@ module Yao::Resources
       end
     end
 
+    def pools
+      self["pools"].map do |pool|
+        Yao::LoadBalancerPool.find pool["id"]
+      end
+    end
+
     self.service        = "load-balancer"
     self.api_version    = "v2.0"
     self.resource_name  = "loadbalancer"

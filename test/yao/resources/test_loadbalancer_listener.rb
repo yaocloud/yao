@@ -16,7 +16,6 @@ class TestRole < Test::Unit::TestCase
       "created_at" => "2017-02-28T00:42:44",
       "updated_at" => "2017-02-28T00:44:30",
       "operating_status" => "ONLINE",
-      "default_pool_id" => "ddb2b28f-89e9-45d3-a329-a359c3e39e4a",
       "sni_container_refs" => [
           "http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51",
           "http://198.51.100.10:9311/v1/containers/aaebb31e-7761-4826-8cb4-2b829caca3ee"
@@ -44,7 +43,6 @@ class TestRole < Test::Unit::TestCase
     assert_equal(listener.created_at, Date.parse("2017-02-28T00:42:44"))
     assert_equal(listener.updated_at, Date.parse("2017-02-28T00:44:30"))
     assert_equal(listener.operating_status, "ONLINE")
-    assert_equal(listener.default_pool_id, "ddb2b28f-89e9-45d3-a329-a359c3e39e4a")
     assert_equal(listener.sni_container_refs, [
       "http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51",
       "http://198.51.100.10:9311/v1/containers/aaebb31e-7761-4826-8cb4-2b829caca3ee"

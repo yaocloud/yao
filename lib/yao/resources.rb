@@ -17,6 +17,7 @@ module Yao
     autoload :Router,               "yao/resources/router"
     autoload :LoadBalancer,         "yao/resources/loadbalancer"
     autoload :LoadBalancerListener, "yao/resources/loadbalancer_listener"
+    autoload :LoadBalancerPool    , "yao/resources/loadbalancer_pool"
     autoload :Tenant,               "yao/resources/tenant"
     autoload :Host,                 "yao/resources/host"
     autoload :User,                 "yao/resources/user"
