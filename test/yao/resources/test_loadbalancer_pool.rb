@@ -14,7 +14,6 @@ class TestRole < Test::Unit::TestCase
         "cookie_name" => nil,
         "type" => "SOURCE_IP"
       },
-      "healthmonitor_id" => nil,
       "operating_status" => "ONLINE",
       "name" => "round_robin_pool"
     }
@@ -31,7 +30,6 @@ class TestRole < Test::Unit::TestCase
         "cookie_name" => nil,
         "type" => "SOURCE_IP"
     })
-    assert_equal(pool.healthmonitor_id, nil)
     assert_equal(pool.operating_status, "ONLINE")
     assert_equal(pool.name, "round_robin_pool")
   end
