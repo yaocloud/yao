@@ -3,8 +3,7 @@ module Yao::Resources
   class LoadBalancerPool < Base
     friendly_attributes :lb_algorithm, :protocol, :description,
                         :admin_state_up, :provisioning_status,
-                        :session_persistence, :healthmonitor_id,
-                        :operating_status, :name,
+                        :session_persistence, :operating_status, :name,
 
     def loadbalancers
       self["loadbalancers"].map do |loadbalancer|
@@ -34,6 +33,10 @@ module Yao::Resources
       self["members"].map do |member|
         Yao::LoadBalancerPoolMember.find(self,member["id"])
       end
+    end
+
+    def healthmonitor
+      Yao::LoadBalancerHealthMonitor.find self["healthmonitor_id"]
     end
 
     self.service        = "load-balancer"
