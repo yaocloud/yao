@@ -22,7 +22,11 @@ module Yao::Resources
       _name, klass = *k_and_v.to_a.first
       name = _name.to_s
       define_method(name) do
-        self[[name, klass].join("__")] ||= klass.new(self[name])
+        self[[name, klass].join("__")] ||= if self[name] && self[name].key?("id")
+                                             klass.get(self[name]["id"])
+                                           else
+                                             klass.get(self[name])
+                                           end
       end
     end
 
@@ -31,7 +35,11 @@ module Yao::Resources
       name = _name.to_s
       define_method(name) do
         self[[name, klass].join("__")] ||= self[name].map {|d|
-          klass.new(d)
+          if d.key?("id")
+            klass.get(d["id"])
+          else
+            klass.new(d)
+          end
         }
       end
     end
