@@ -44,6 +44,14 @@ module Yao::Resources
 
     class << self
       alias :stop :shutoff
+
+      def list_detail(query={})
+        return_resources(
+          resources_from_json(
+            GET([resources_path, "detail"].join("/"), query).body
+          )
+        )
+      end
     end
 
     extend MetadataAvailable
