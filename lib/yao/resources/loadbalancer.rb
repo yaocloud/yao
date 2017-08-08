@@ -5,6 +5,9 @@ module Yao::Resources
     friendly_attributes :provider, :description, :admin_state_up, :provisioning_status,
                         :vip_address, :operationg_status, :name
 
+    map_attribute_to_resources :listeners => LoadBalancerListener
+    map_attribute_to_resources :pools     => LoadBalancerListener
+
     def created_at
       Date.parse(self["created_at"])
     end
@@ -27,18 +30,6 @@ module Yao::Resources
 
     def vip_subnet
       Yao::Subnet.find self["vip_subnet_id"]
-    end
-
-    def listeners
-      self["listeners"].map do |listener|
-        Yao::LoadBalancerListener.find listener["id"]
-      end
-    end
-
-    def pools
-      self["pools"].map do |pool|
-        Yao::LoadBalancerPool.find pool["id"]
-      end
     end
 
     self.service        = "load-balancer"

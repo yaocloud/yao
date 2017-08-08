@@ -3,13 +3,10 @@ module Yao::Resources
   class LoadBalancerPool < Base
     friendly_attributes :lb_algorithm, :protocol, :description,
                         :admin_state_up, :provisioning_status,
-                        :session_persistence, :operating_status, :name,
+                        :session_persistence, :operating_status, :name
 
-    def loadbalancers
-      self["loadbalancers"].map do |loadbalancer|
-        Yao::LoadBalancer.find loadbalancer["id"]
-      end
-    end
+    map_attribute_to_resources :loadbalancers => LoadBalancer
+    map_attribute_to_resources :listeners     => LoadBalancerListener
 
     def created_at
       Date.parse(self["created_at"])
@@ -17,12 +14,6 @@ module Yao::Resources
 
     def updated_at
       Date.parse(self["updated_at"])
-    end
-
-    def listeners
-      self["listeners"].map do |listener|
-        Yao::LoadBalancerListener.find listener["id"]
-      end
     end
 
     def project

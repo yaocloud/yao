@@ -6,11 +6,7 @@ module Yao::Resources
                         :http_method, :timeout, :max_retries_down,
                         :url_path, :type, :operating_status
 
-    def pools
-      self["pools"].map do |pool|
-        Yao::LoadBalancerPool.find pool["id"]
-      end
-    end
+    map_attribute_to_resources :pools     => LoadBalancerListener
 
     def created_at
       Date.parse(self["created_at"])

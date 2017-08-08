@@ -7,14 +7,10 @@ module Yao::Resources
                         :operating_status, :sni_container_refs,
                         :l7policies, :name
 
+    map_attribute_to_resources :loadbalancers => LoadBalancer
+
     def project
       Yao::Tenant.find self["project_id"]
-    end
-
-    def loadbalancers
-      self["loadbalancers"].map do |loadbalancer|
-        Yao::LoadBalancer.get loadbalancer["id"]
-      end
     end
 
     def created_at
