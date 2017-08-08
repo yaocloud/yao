@@ -21,6 +21,7 @@ module Yao::Resources
         Yao::Tenant.find project_id
       end
     end
+    alias :tenant :project
 
     def members
       self["members"].map do |member|

@@ -21,6 +21,7 @@ module Yao::Resources
         Yao::Tenant.find project_id
       end
     end
+    alias :tenant :project
 
     def vip_network
       if vip_network_id = self["vip_network_id"]

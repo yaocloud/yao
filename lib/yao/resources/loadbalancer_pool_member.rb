@@ -11,6 +11,7 @@ module Yao::Resources
         Yao::Tenant.find project_id
       end
     end
+    alias :tenant :project
 
     def subnet
       if subnet_id = self["subnet_id"]

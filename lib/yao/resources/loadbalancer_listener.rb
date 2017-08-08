@@ -14,6 +14,7 @@ module Yao::Resources
         Yao::Tenant.find project_id
       end
     end
+    alias :tenant :project
 
     def created_at
       Date.parse(self["created_at"])
