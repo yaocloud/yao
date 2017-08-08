@@ -6,7 +6,7 @@ module Yao::Resources
     def self.friendly_attributes(*names)
       names.map(&:to_s).each do |name|
         define_method(name) do
-          if not @data.key?(name) && id
+          if !@data.key?(name) && id
             @data = self.class.get(id)
           end
           self[name]
