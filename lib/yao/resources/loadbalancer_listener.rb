@@ -10,7 +10,9 @@ module Yao::Resources
     map_attribute_to_resources :loadbalancers => LoadBalancer
 
     def project
-      Yao::Tenant.find self["project_id"]
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
+      end
     end
 
     def created_at
@@ -22,7 +24,9 @@ module Yao::Resources
     end
 
     def default_pool
-      Yao::LoadBalancerPool.find self["default_pool_id"]
+      if default_pool_id = self["default_pool_id"]
+        Yao::LoadBalancerPool.find default_pool_id
+      end
     end
     alias pool default_pool
 

@@ -17,19 +17,27 @@ module Yao::Resources
     end
 
     def project
-      Yao::Tenant.find self["project_id"]
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
+      end
     end
 
     def vip_network
-      Yao::Network.find self["vip_network_id"]
+      if vip_network_id = self["vip_network_id"]
+        Yao::Network.find vip_network_id
+      end
     end
 
     def vip_port
-      Yao::Port.find self["vip_port_id"]
+      if vip_port_id = self["vip_port_id"]
+        Yao::Port.find vip_port_id
+      end
     end
 
     def vip_subnet
-      Yao::Subnet.find self["vip_subnet_id"]
+      if vip_subnet_id = self["vip_subnet_id"]
+        Yao::Subnet.find vip_subnet_id
+      end
     end
 
     self.service        = "load-balancer"

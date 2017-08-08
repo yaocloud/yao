@@ -17,7 +17,9 @@ module Yao::Resources
     end
 
     def project
-      Yao::Tenant.find self["project_id"]
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
+      end
     end
 
     def members
@@ -27,7 +29,9 @@ module Yao::Resources
     end
 
     def healthmonitor
-      Yao::LoadBalancerHealthMonitor.find self["healthmonitor_id"]
+      if healthmonitor_id = self["healthmonitor_id"]
+        Yao::LoadBalancerHealthMonitor.find healthmonitor_id
+      end
     end
 
     self.service        = "load-balancer"
