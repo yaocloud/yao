@@ -18,7 +18,7 @@ class TestRole < Test::Unit::TestCase
       "name" => "round_robin_pool"
     }
 
-    pool = Yao::LoadBalancerPool.new(params)
+    pool = Yao::Resources::LoadBalancerPool.new(params)
     assert_equal(pool.lb_algorithm, "ROUND_ROBIN")
     assert_equal(pool.protocol, "HTTP")
     assert_equal(pool.description, "My round robin pool")

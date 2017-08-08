@@ -16,7 +16,7 @@ class TestRole < Test::Unit::TestCase
       "operating_status" => "NO_MONITOR"
     }
 
-    member = Yao::LoadBalancerPoolMember.new(params)
+    member = Yao::Resources::LoadBalancerPoolMember.new(params)
     assert_equal(member.monitor_port, 8080)
     assert_equal(member.name, "web-server-1")
     assert_equal(member.weight, 20)

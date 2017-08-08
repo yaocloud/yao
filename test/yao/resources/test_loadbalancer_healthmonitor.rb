@@ -19,7 +19,7 @@ class TestRole < Test::Unit::TestCase
       "operating_status" => "ONLINE"
     } 
 
-    healthmonitor = Yao::LoadBalancerHealthMonitor.new(params)
+    healthmonitor = Yao::Resources::LoadBalancerHealthMonitor.new(params)
     assert_equal(healthmonitor.name, "super-pool-health-monitor")
     assert_equal(healthmonitor.admin_state_up, true)
     assert_equal(healthmonitor.created_at, Date.parse("2017-05-11T23:53:47"))
