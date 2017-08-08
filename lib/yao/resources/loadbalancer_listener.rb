@@ -1,4 +1,3 @@
-require 'date'
 module Yao::Resources
   class LoadBalancerListener < Base
     friendly_attributes :description, :admin_state_up,
@@ -15,14 +14,6 @@ module Yao::Resources
       self["loadbalancers"].map do |loadbalancer|
         Yao::LoadBalancer.get loadbalancer["id"]
       end
-    end
-
-    def created_at
-      Date.parse(self["created_at"])
-    end
-
-    def updated_at
-      Date.parse(self["updated_at"])
     end
 
     def default_pool

@@ -1,3 +1,4 @@
+require "time"
 require "date"
 
 class TestRole < Test::Unit::TestCase
@@ -19,8 +20,8 @@ class TestRole < Test::Unit::TestCase
     assert_equal(aggregates.hosts, ["host1", "host2"])
     assert_equal(aggregates.metadata, {"foo" => "bar"})
     assert_equal(aggregates.name, "nova")
-    assert_equal(aggregates.created_at, Date.parse("2015-08-27T09:49:58-05:00"))
-    assert_equal(aggregates.created_at, Date.parse("2015-08-27T09:49:58-05:00"))
-    assert_equal(aggregates.created_at, Date.parse("2015-08-27T09:49:58-05:00"))
+    assert_equal(aggregates.created, Time.parse("2015-08-27T09:49:58-05:00"))
+    assert_equal(aggregates.updated, Time.parse("2015-08-27T09:49:58-05:00"))
+    assert_equal(aggregates.deleted_at, Date.parse("2015-08-27T09:49:58-05:00"))
   end
 end

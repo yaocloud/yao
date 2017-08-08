@@ -1,13 +1,13 @@
-require "date"
+require "time"
 
 class TestRole < Test::Unit::TestCase
   def test_loadbalancer_healtchmonitor
     params = {
       "name" => "super-pool-health-monitor",
       "admin_state_up" => true,
-      "created_at" => "2017-05-11T23 =>53 =>47",
+      "created_at" => "2017-05-11T23:53:47",
       "provisioning_status" => "ACTIVE",
-      "updated_at" => "2017-05-11T23 =>53 =>47",
+      "updated_at" => "2017-05-11T23:53:47",
       "delay" => 10,
       "expected_codes" => "200",
       "max_retries" => 1,
@@ -22,9 +22,9 @@ class TestRole < Test::Unit::TestCase
     healthmonitor = Yao::LoadBalancerHealthMonitor.new(params)
     assert_equal(healthmonitor.name, "super-pool-health-monitor")
     assert_equal(healthmonitor.admin_state_up, true)
-    assert_equal(healthmonitor.created_at, Date.parse("2017-05-11T23:53:47"))
+    assert_equal(healthmonitor.created, Time.parse("2017-05-11T23:53:47"))
     assert_equal(healthmonitor.provisioning_status, "ACTIVE")
-    assert_equal(healthmonitor.updated_at, Date.parse("2017-05-11T23:53:47"))
+    assert_equal(healthmonitor.updated, Time.parse("2017-05-11T23:53:47"))
     assert_equal(healthmonitor.delay, 10)
     assert_equal(healthmonitor.expected_codes, "200")
     assert_equal(healthmonitor.max_retries, 1)
