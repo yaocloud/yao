@@ -16,6 +16,12 @@ module Yao::Resources
       Date.parse(self["updated_at"])
     end
 
+    def project
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
+      end
+    end
+
     self.service        = "load-balancer"
     self.api_version    = "v2.0"
     self.resource_name  = "healthmonitor"
