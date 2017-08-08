@@ -3,8 +3,7 @@ require 'date'
 module Yao::Resources
   class LoadBalancer < Base
     friendly_attributes :provider, :description, :admin_state_up, :provisioning_status,
-                        :pools, :vip_address,
-                        :operationg_status, :name
+                        :vip_address, :operationg_status, :name
 
     def created_at
       Date.parse(self["created_at"])
