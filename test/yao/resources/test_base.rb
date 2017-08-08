@@ -7,5 +7,9 @@ class TestResourceBase < Test::Unit::TestCase
     base = Yao::Resources::Base.new({"id" => "foor"})
     base.class.friendly_attributes(:name)
     assert_equal(base.name, "bar")
+
+    base = Yao::Resources::Base.new({"name" => "bar"})
+    base.class.friendly_attributes(:name)
+    assert_equal(base.name, "bar")
   end
 end
