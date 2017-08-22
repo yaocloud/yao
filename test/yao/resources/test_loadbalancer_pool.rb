@@ -1,4 +1,4 @@
-require "date"
+require "time"
 
 class TestRole < Test::Unit::TestCase
   def test_loadbalancer_pool
@@ -23,9 +23,9 @@ class TestRole < Test::Unit::TestCase
     assert_equal(pool.protocol, "HTTP")
     assert_equal(pool.description, "My round robin pool")
     assert_equal(pool.admin_state_up, true)
-    assert_equal(pool.created_at, Date.parse("2017-04-13T18:14:44"))
+    assert_equal(pool.created, Time.parse("2017-04-13T18:14:44"))
     assert_equal(pool.provisioning_status, "ACTIVE")
-    assert_equal(pool.updated_at, Date.parse("2017-04-13T23:08:12"))
+    assert_equal(pool.updated, Time.parse("2017-04-13T23:08:12"))
     assert_equal(pool.session_persistence, {
         "cookie_name" => nil,
         "type" => "SOURCE_IP"

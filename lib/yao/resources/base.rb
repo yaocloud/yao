@@ -56,13 +56,13 @@ module Yao::Resources
     end
 
     def created
-      if date = self["created"]
+      if date = self["created"] || self["created_at"]
         Time.parse(date)
       end
     end
 
     def updated
-      if date = self["updated"]
+      if date = self["updated"] || self["updated_at"]
         Time.parse(date)
       end
     end

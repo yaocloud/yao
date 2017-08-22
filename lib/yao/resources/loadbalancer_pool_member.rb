@@ -1,4 +1,3 @@
-require 'date'
 module Yao::Resources
   class LoadBalancerPoolMember < Base
     friendly_attributes :monitor_port, :name, :weight,
@@ -12,14 +11,6 @@ module Yao::Resources
 
     def subnet
       Yao::Subnet.find self["subnet_id"]
-    end
-
-    def created_at
-      Date.parse(self["created_at"])
-    end
-
-    def updated_at
-      Date.parse(self["updated_at"])
     end
 
     self.service        = "load-balancer"

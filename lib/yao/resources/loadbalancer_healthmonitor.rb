@@ -1,4 +1,3 @@
-require 'date'
 module Yao::Resources
   class LoadBalancerHealthMonitor < Base
     friendly_attributes :name, :admin_state_up, :provisioning_status,
@@ -10,14 +9,6 @@ module Yao::Resources
       self["pools"].map do |pool|
         Yao::LoadBalancerPool.find pool["id"]
       end
-    end
-
-    def created_at
-      Date.parse(self["created_at"])
-    end
-
-    def updated_at
-      Date.parse(self["updated_at"])
     end
 
     self.service        = "load-balancer"
