@@ -9,6 +9,10 @@ module Yao::Resources
       JSON.parse self["cpu_info"]
     end
 
+    def enabled?
+      self['status'] == 'enabled'
+    end
+
     alias hostname hypervisor_hostname
     alias type     hypervisor_hostname
     alias version  hypervisor_version
