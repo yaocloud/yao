@@ -6,7 +6,7 @@ class TestHypervisor < Test::Unit::TestCase
       "status" => "enabled"
     }
 
-    host = Yao::Hyppervisor.new(params)
+    host = Yao::Hypervisor.new(params)
     assert_equal(host.enabled?, true)
   end
 end
