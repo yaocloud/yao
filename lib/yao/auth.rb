@@ -2,9 +2,11 @@ require 'json'
 require 'time'
 
 require 'yao/token'
+require 'yao/tokenv3'
 
 module Yao
-  %i(tenant_name username password timeout client_cert client_key region_name).each do |name|
+  %i(tenant_name username password timeout client_cert client_key region_name
+     identity_api_version user_domain_id user_domain_name project_domain_id project_domain_name).each do |name|
     Yao.config.param name, nil
   end
 
@@ -19,18 +21,57 @@ module Yao
       def new(
           tenant_name: Yao.config.tenant_name,
           username: Yao.config.username,
-          password: Yao.config.password
+          password: Yao.config.password,
+          identity_api_version: Yao.config.identity_api_version,
+          user_domain_id: Yao.config.user_domain_id,
+          user_domain_name: Yao.config.user_domain_name,
+          project_domain_id: Yao.config.project_domain_id,
+          project_domain_name: Yao.config.project_domain_name
       )
-        auth_info = {
-          auth: {
-            passwordCredentials: {
-              username: username, password: password
+        if identity_api_version.to_i == 3
+          identity = {
+            methods: ["password"],
+            password: {
+              user: { name: username, password: password }
             }
           }
-        }
-        auth_info[:auth][:tenantName] = tenant_name if tenant_name
+          if user_domain_id
+            identity[:password][:user][:domain] = { id: user_domain_id }
+          elsif user_domain_name
+            identity[:password][:user][:domain] = { name: user_domain_name }
+          end
 
-        return Token.issue(Yao.default_client.default, auth_info)
+          scope = {
+            project: { name: tenant_name }
+          }
+          if project_domain_id
+            scope[:project][:domain] = { id: project_domain_id }
+          elsif project_domain_name
+            scope[:project][:domain] = { name: project_domain_name }
+          end
+
+          auth_info = {
+            auth: {
+              identity: identity,
+              scope: scope
+            }
+          }
+
+          issue = TokenV3.issue(Yao.default_client.default, auth_info)
+        else
+          auth_info = {
+            auth: {
+              passwordCredentials: {
+                username: username, password: password
+              }
+            }
+          }
+          auth_info[:auth][:tenantName] = tenant_name if tenant_name
+
+          issue = Token.issue(Yao.default_client.default, auth_info)
+        end
+
+        return issue
       end
     end
   end
