@@ -6,9 +6,6 @@ rvm:
   - 2.4.1
   - ruby-head
 
-before_install:
-  - gem update --system --no-document
-
 install: bundle install --path vendor/bundle
 
 cache:
