@@ -7,6 +7,9 @@ rvm:
   - 2.5.0
   - ruby-head
 
+before_install:
+  - ruby -rrubygems -rrubygems/commands/setup_command -e "Gem::Commands::SetupCommand.new.install_default_bundler_gem"
+
 install: bundle install --path vendor/bundle
 
 cache:
