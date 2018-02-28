@@ -1,10 +1,14 @@
 language: ruby
 
 rvm:
-  - 2.2.7
-  - 2.3.4
-  - 2.4.1
+  - 2.2.9
+  - 2.3.5
+  - 2.4.3
+  - 2.5.0
   - ruby-head
+
+before_install:
+  - ruby -rrubygems -rrubygems/commands/setup_command -e "Gem::Commands::SetupCommand.new.install_default_bundler_gem"
 
 install: bundle install --path vendor/bundle
 
