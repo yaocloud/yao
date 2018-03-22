@@ -84,8 +84,8 @@ module Yao::Resources
       end
     end
 
-    def get(id_or_permalink, query={})
-      res = if id_or_permalink =~ /^https?:\/\//
+    def get(id_or_name_or_permalink, query={})
+      res = if id_or_name_or_permalink =~ /^https?:\/\//
               GET(id_or_permalink, query)
             elsif uuid?(id_or_name_or_permalink)
                GET([resources_path, id_or_name_or_permalink].join("/"), query)
