@@ -87,4 +87,10 @@ class TestAuth < Test::Unit::TestCase
     end
   end
 
+  def test_build_auth_info
+    auth_info = Yao::Auth.build_auth_info("example", "udzura", "XXXXXXXX")
+    assert { auth_info[:auth][:tenantName] == "example" }
+    assert { auth_info[:auth][:passwordCredentials][:username] == "udzura" }
+    assert { auth_info[:auth][:passwordCredentials][:password] == "XXXXXXXX" }
+  end
 end
