@@ -1,4 +1,4 @@
-require "date"
+require "time"
 
 class TestRole < Test::Unit::TestCase
   def test_loadbalancer_listener
@@ -40,8 +40,8 @@ class TestRole < Test::Unit::TestCase
       "X-Forwarded-Port" => "true",
       "X-Forwarded-For" => "true"
     })
-    assert_equal(listener.created_at, Date.parse("2017-02-28T00:42:44"))
-    assert_equal(listener.updated_at, Date.parse("2017-02-28T00:44:30"))
+    assert_equal(listener.created, Time.parse("2017-02-28T00:42:44"))
+    assert_equal(listener.updated, Time.parse("2017-02-28T00:44:30"))
     assert_equal(listener.operating_status, "ONLINE")
     assert_equal(listener.sni_container_refs, [
       "http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51",

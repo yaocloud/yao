@@ -1,4 +1,4 @@
-require "date"
+require "time"
 
 class TestRole < Test::Unit::TestCase
   def test_loadbalancer
@@ -22,7 +22,7 @@ class TestRole < Test::Unit::TestCase
     assert_equal(lb.vip_address, "198.51.100.1")
     assert_equal(lb.operationg_status, "ONLINE")
     assert_equal(lb.name, "greate loadbalancer")
-    assert_equal(lb.created_at, Date.parse("2017-02-28T00:41:44"))
-    assert_equal(lb.updated_at, Date.parse("2017-02-28T00:43:30"))
+    assert_equal(lb.created, Time.parse("2017-02-28T00:41:44"))
+    assert_equal(lb.updated, Time.parse("2017-02-28T00:43:30"))
   end
 end

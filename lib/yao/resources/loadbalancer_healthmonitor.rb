@@ -1,4 +1,3 @@
-require 'date'
 module Yao::Resources
   class LoadBalancerHealthMonitor < Base
     friendly_attributes :name, :admin_state_up, :provisioning_status,

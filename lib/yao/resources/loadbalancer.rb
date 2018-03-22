@@ -1,5 +1,3 @@
-require 'date'
-
 module Yao::Resources
   class LoadBalancer < Base
     friendly_attributes :provider, :description, :admin_state_up, :provisioning_status,
@@ -7,14 +5,6 @@ module Yao::Resources
 
     map_attribute_to_resources :listeners => LoadBalancerListener
     map_attribute_to_resources :pools     => LoadBalancerListener
-
-    def created_at
-      Date.parse(self["created_at"])
-    end
-
-    def updated_at
-      Date.parse(self["updated_at"])
-    end
 
     def project
       if project_id = self["project_id"]

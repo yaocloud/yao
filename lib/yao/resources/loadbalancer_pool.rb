@@ -1,4 +1,3 @@
-require 'date'
 module Yao::Resources
   class LoadBalancerPool < Base
     friendly_attributes :lb_algorithm, :protocol, :description,
@@ -14,6 +13,12 @@ module Yao::Resources
 
     def updated_at
       Date.parse(self["updated_at"])
+    end
+
+    def listeners
+      self["listeners"].map do |listener|
+        Yao::LoadBalancerListener.find listener["id"]
+      end
     end
 
     def project
