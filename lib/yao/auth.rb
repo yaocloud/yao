@@ -42,7 +42,7 @@ module Yao
             scope[:project][:domain] = { name: project_domain_name }
           end
 
-          return {
+          {
             auth: {
               identity: identity,
               scope: scope
@@ -83,7 +83,7 @@ module Yao
           issue = Token.issue(Yao.default_client.default, auth_info)
         end
 
-        return issue
+        issue
       end
     end
   end
