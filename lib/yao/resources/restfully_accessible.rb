@@ -88,7 +88,7 @@ module Yao::Resources
       res = if id_or_name_or_permalink =~ /^https?:\/\//
               GET(id_or_permalink, query)
             elsif uuid?(id_or_name_or_permalink)
-               GET([resources_path, id_or_name_or_permalink].join("/"), query)
+              GET([resources_path, id_or_name_or_permalink].join("/"), query)
             else
               find_by_name(id_or_name_or_permalink, query)
             end
