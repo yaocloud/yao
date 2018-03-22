@@ -45,7 +45,7 @@ class TestAuth < Test::Unit::TestCase
   def test_token_is_valid
     assert { @token.token == "aaaa166533fd49f3b11b1cdce2430000" }
     assert { @token.expire_at - @token.issued_at == 3600 }
-    assert { @token.endpoints.size == 4 }
+    assert { @token.endpoints.size == 5 }
   end
 
   def test_hooked_by_configure_block
