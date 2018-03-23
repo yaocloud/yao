@@ -5,9 +5,6 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
 
-Rails:
-  Enabled: true
-
 Style/HashSyntax:
   Enabled: true
 
