@@ -21,7 +21,7 @@ class TestClientPlugin < Test::Unit::TestCase
 
   class ::Yao::Plugins::TestCustomClientGenerator
     def call(f, t)
-      f.response :xml, :content_type => /\/xml$/
+      f.response :xml, content_type: /\/xml$/
     end
     ::Yao::Plugins.register self, type: :client_generator, name: :test_custom
   end

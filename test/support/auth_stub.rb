@@ -4,9 +4,9 @@ module AuthStub
       .with(
         body: auth_json(username, password, tenant)
       ).to_return(
-        :status => 200,
-        :body => response_json(auth_url, username, tenant),
-        :headers => {'Content-Type' => 'application/json'}
+        status: 200,
+        body: response_json(auth_url, username, tenant),
+        headers: {'Content-Type' => 'application/json'}
       )
   end
 

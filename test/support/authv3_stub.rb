@@ -4,9 +4,9 @@ module AuthV3Stub
       .with(
         body: auth_json(username, password, tenant, user_domain_name, project_domain_name)
       ).to_return(
-        :status => 200,
-        :body => response_json(auth_url, username, tenant, user_domain_name, project_domain_name),
-        :headers => {
+        status: 200,
+        body: response_json(auth_url, username, tenant, user_domain_name, project_domain_name),
+        headers: {
           'Content-Type' => 'application/json',
           'X-Subject-Token' => 'aaaa166533fd49f3b11b1cdce2430000'
         }

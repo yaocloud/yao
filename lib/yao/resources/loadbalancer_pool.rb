@@ -4,8 +4,8 @@ module Yao::Resources
                         :admin_state_up, :provisioning_status,
                         :session_persistence, :operating_status, :name
 
-    map_attribute_to_resources :loadbalancers => LoadBalancer
-    map_attribute_to_resources :listeners     => LoadBalancerListener
+    map_attribute_to_resources loadbalancers: LoadBalancer
+    map_attribute_to_resources listeners: LoadBalancerListener
 
     def created_at
       Date.parse(self["created_at"])

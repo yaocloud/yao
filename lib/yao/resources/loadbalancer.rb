@@ -3,8 +3,8 @@ module Yao::Resources
     friendly_attributes :provider, :description, :admin_state_up, :provisioning_status,
                         :vip_address, :operationg_status, :name
 
-    map_attribute_to_resources :listeners => LoadBalancerListener
-    map_attribute_to_resources :pools     => LoadBalancerListener
+    map_attribute_to_resources listeners: LoadBalancerListener
+    map_attribute_to_resources pools: LoadBalancerListener
 
     def project
       if project_id = self["project_id"]

@@ -55,7 +55,7 @@ class TestTokenV3 < Test::Unit::TestCase
         identity: {
           methods: ["password"],
           password: {
-            user: { 
+            user: {
               name: username, password: password,
               domain: { name: user_domain_name },
             }

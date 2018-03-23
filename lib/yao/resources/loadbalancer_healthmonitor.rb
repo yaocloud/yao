@@ -5,7 +5,7 @@ module Yao::Resources
                         :http_method, :timeout, :max_retries_down,
                         :url_path, :type, :operating_status
 
-    map_attribute_to_resources :pools     => LoadBalancerListener
+    map_attribute_to_resources pools: LoadBalancerListener
 
     def created_at
       Date.parse(self["created_at"])

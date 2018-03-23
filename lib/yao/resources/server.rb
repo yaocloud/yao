@@ -4,10 +4,10 @@ module Yao::Resources
   class Server < Base
     friendly_attributes :addresses, :metadata, :name, :progress,
                         :status, :tenant_id, :user_id, :key_name
-    map_attribute_to_attribute :hostId => :host_id
-    map_attribute_to_resource  :flavor => Flavor
-    map_attribute_to_resource  :image  => Image
-    map_attribute_to_resources :security_groups => SecurityGroup
+    map_attribute_to_attribute hostId: :host_id
+    map_attribute_to_resource  flavor: Flavor
+    map_attribute_to_resource  image: Image
+    map_attribute_to_resources security_groups: SecurityGroup
 
     map_attribute_to_attribute 'OS-EXT-AZ:availability_zone'         => :availability_zone
     map_attribute_to_attribute 'OS-DCF:diskConfig'                   => :dcf_disk_config

@@ -17,7 +17,7 @@ class TestRole < Test::Unit::TestCase
       "url_path" => "/",
       "type" => "HTTP",
       "operating_status" => "ONLINE"
-    } 
+    }
 
     healthmonitor = Yao::Resources::LoadBalancerHealthMonitor.new(params)
     assert_equal(healthmonitor.name, "super-pool-health-monitor")
