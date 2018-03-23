@@ -1,34 +1,33 @@
 module Yao::Resources
   class LoadBalancer < Base
     friendly_attributes :provider, :description, :admin_state_up, :provisioning_status,
-                        :pools, :vip_address,
-                        :operationg_status, :name
+                        :vip_address, :operationg_status, :name
+
+    map_attribute_to_resources :listeners => LoadBalancerListener
+    map_attribute_to_resources :pools     => LoadBalancerListener
 
     def project
-      Yao::Tenant.find self["project_id"]
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
+      end
     end
+    alias :tenant :project
 
     def vip_network
-      Yao::Network.find self["vip_network_id"]
-    end
-
-    def vip_port
-      Yao::Port.find self["vip_port_id"]
-    end
-
-    def vip_subnet
-      Yao::Subnet.find self["vip_subnet_id"]
-    end
-
-    def listeners
-      self["listeners"].map do |listener|
-        Yao::LoadBalancerListener.find listener["id"]
+      if vip_network_id = self["vip_network_id"]
+        Yao::Network.find vip_network_id
       end
     end
 
-    def pools
-      self["pools"].map do |pool|
-        Yao::LoadBalancerPool.find pool["id"]
+    def vip_port
+      if vip_port_id = self["vip_port_id"]
+        Yao::Port.find vip_port_id
+      end
+    end
+
+    def vip_subnet
+      if vip_subnet_id = self["vip_subnet_id"]
+        Yao::Subnet.find vip_subnet_id
       end
     end
 

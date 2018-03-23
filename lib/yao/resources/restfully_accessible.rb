@@ -84,15 +84,21 @@ module Yao::Resources
       end
     end
 
-    def get(id_or_permalink, query={})
-      res = if id_or_permalink =~ /^https?:\/\//
+    def get(id_or_name_or_permalink, query={})
+      res = if id_or_name_or_permalink =~ /^https?:\/\//
               GET(id_or_permalink, query)
+            elsif uuid?(id_or_name_or_permalink)
+              GET([resources_path, id_or_name_or_permalink].join("/"), query)
             else
-              GET([resources_path, id_or_permalink].join("/"), query)
+              find_by_name(id_or_name_or_permalink, query)
             end
       return_resource(resource_from_json(res.body))
     end
     alias find get
+
+    def find_by_name(name, query={})
+      list(query.merge({"name" => name}))
+    end
 
     def create(resource_params)
       params = {
@@ -141,6 +147,10 @@ module Yao::Resources
 
     def return_resources(arr)
       arr.map{|d| return_resource(d) }
+    end
+
+    def uuid?(str)
+      /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/ === str
     end
   end
 end

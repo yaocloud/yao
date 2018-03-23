@@ -14,7 +14,7 @@ class TestRole < Test::Unit::TestCase
       "updated_at" => "2017-02-28T00:43:30",
     }
 
-    lb = Yao::LoadBalancer.new(params)
+    lb = Yao::Resources::LoadBalancer.new(params)
     assert_equal(lb.provider, "octavia")
     assert_equal(lb.description, "greate loadbalancer")
     assert_equal(lb.admin_state_up, true)
