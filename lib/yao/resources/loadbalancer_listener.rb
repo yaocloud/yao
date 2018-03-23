@@ -6,7 +6,7 @@ module Yao::Resources
                         :operating_status, :sni_container_refs,
                         :l7policies, :name
 
-    map_attribute_to_resources :loadbalancers => LoadBalancer
+    map_attribute_to_resources loadbalancers: LoadBalancer
 
     def project
       if project_id = self["project_id"]
