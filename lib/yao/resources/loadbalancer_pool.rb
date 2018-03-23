@@ -2,12 +2,17 @@ module Yao::Resources
   class LoadBalancerPool < Base
     friendly_attributes :lb_algorithm, :protocol, :description,
                         :admin_state_up, :provisioning_status,
-                        :session_persistence, :operating_status, :name,
+                        :session_persistence, :operating_status, :name
 
-    def loadbalancers
-      self["loadbalancers"].map do |loadbalancer|
-        Yao::LoadBalancer.find loadbalancer["id"]
-      end
+    map_attribute_to_resources :loadbalancers => LoadBalancer
+    map_attribute_to_resources :listeners     => LoadBalancerListener
+
+    def created_at
+      Date.parse(self["created_at"])
+    end
+
+    def updated_at
+      Date.parse(self["updated_at"])
     end
 
     def listeners
@@ -17,8 +22,11 @@ module Yao::Resources
     end
 
     def project
-      Yao::Tenant.find self["project_id"]
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
+      end
     end
+    alias :tenant :project
 
     def members
       self["members"].map do |member|
@@ -27,7 +35,9 @@ module Yao::Resources
     end
 
     def healthmonitor
-      Yao::LoadBalancerHealthMonitor.find self["healthmonitor_id"]
+      if healthmonitor_id = self["healthmonitor_id"]
+        Yao::LoadBalancerHealthMonitor.find healthmonitor_id
+      end
     end
 
     self.service        = "load-balancer"

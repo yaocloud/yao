@@ -29,7 +29,7 @@ class TestRole < Test::Unit::TestCase
       "name" => "great_tls_listener"
     }
 
-    listener = Yao::LoadBalancerListener.new(params)
+    listener = Yao::Resources::LoadBalancerListener.new(params)
     assert_equal(listener.description, "A great TLS listener")
     assert_equal(listener.admin_state_up, true)
     assert_equal(listener.protocol, "TERMINATED_HTTPS")

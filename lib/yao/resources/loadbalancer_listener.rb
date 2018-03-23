@@ -6,18 +6,19 @@ module Yao::Resources
                         :operating_status, :sni_container_refs,
                         :l7policies, :name
 
-    def project
-      Yao::Tenant.find self["project_id"]
-    end
+    map_attribute_to_resources :loadbalancers => LoadBalancer
 
-    def loadbalancers
-      self["loadbalancers"].map do |loadbalancer|
-        Yao::LoadBalancer.get loadbalancer["id"]
+    def project
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
       end
     end
+    alias :tenant :project
 
     def default_pool
-      Yao::LoadBalancerPool.find self["default_pool_id"]
+      if default_pool_id = self["default_pool_id"]
+        Yao::LoadBalancerPool.find default_pool_id
+      end
     end
     alias pool default_pool
 

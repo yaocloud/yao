@@ -6,11 +6,16 @@ module Yao::Resources
                         :protocol_port, :operating_status
 
     def project
-      Yao::Tenant.find self["project_id"]
+      if project_id = self["project_id"]
+        Yao::Tenant.find project_id
+      end
     end
+    alias :tenant :project
 
     def subnet
-      Yao::Subnet.find self["subnet_id"]
+      if subnet_id = self["subnet_id"]
+        Yao::Subnet.find subnet_id
+      end
     end
 
     self.service        = "load-balancer"
