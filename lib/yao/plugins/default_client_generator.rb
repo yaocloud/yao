@@ -16,7 +16,7 @@ module Yao::Plugins
       f.request :read_only
 
       f.response :os_error_detector
-      f.response :json, :content_type => /\bjson$/
+      f.response :json, content_type: /\bjson$/
 
       if Yao.config.debug
         f.response :logger

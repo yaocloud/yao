@@ -12,6 +12,7 @@ cache:
   directories: vendor/bundle
 
 script:
+  - bundle exec rubocop
   - bundle exec rake test
   - find lib -name '*.rb' | xargs -i ruby -wc {}
 

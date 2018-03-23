@@ -12,7 +12,7 @@ module Yao::Resources
       @project ||= Yao::Tenant.get(scope["project"]["id"])
     end
 
-    map_attribute_to_resource  :role => Role
-    map_attribute_to_resource  :user => User
+    map_attribute_to_resource  role: Role
+    map_attribute_to_resource  user: User
   end
 end
