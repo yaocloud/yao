@@ -7,7 +7,9 @@ rvm:
   - 2.5.1
   - ruby-head
 
-before_install: gem update --system
+before_install:
+  - gem update --system --no-document
+  - gem i bundler --no-document
 install: bundle install --path vendor/bundle
 
 cache:
