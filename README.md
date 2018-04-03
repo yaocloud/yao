@@ -62,7 +62,7 @@ end
 
 YAO supports rubies which are supported by Ruby Core Team. Please look into [`.travis.yml`](./.travis.yml) 's directive.
 
-If you want to use YAO's full functionality, e.g Ruby 2.2 or below, please create an issue or a PR first (PR Recommended ;) ).
+If you want to use YAO's full functionality, e.g Ruby 2.3 or below, please create an issue or a PR first (PR Recommended ;) ).
 
 ## Pro tips
 
