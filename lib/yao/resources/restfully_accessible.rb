@@ -90,7 +90,17 @@ module Yao::Resources
             elsif uuid?(id_or_name_or_permalink)
               GET([resources_path, id_or_name_or_permalink].join("/"), query)
             else
-              find_by_name(id_or_name_or_permalink, query)
+              # At first, search by ID. If nothing is found, search by name.
+              begin
+                GET([resources_path, id_or_name_or_permalink].join("/"), query)
+              rescue Yao::ItemNotFound
+                item = find_by_name(id_or_name_or_permalink)
+                p item
+                if item.size > 1
+                  raise "More than one resource exists with the name '#{id_or_name_or_permalink}'"
+                end
+                GET([resources_path, item.first.id].join("/"), query)
+              end
             end
       return_resource(resource_from_json(res.body))
     end
