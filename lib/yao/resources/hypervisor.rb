@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module Yao::Resources
   class Hypervisor < Base
     friendly_attributes :hypervisor_hostname, :hypervisor_type, :hypervisor_version, :running_vms, :current_workload,
@@ -29,7 +31,13 @@ module Yao::Resources
           )
         )
       end
+
+      def statistics
+        json = GET([resources_path, "statistics"].join("/")).body
+        Yao::Resources::Hypervisor::Statistics.new(json["hypervisor_statistics"])
+      end
     end
-    
+
+    class Statistics < OpenStruct; end
   end
 end

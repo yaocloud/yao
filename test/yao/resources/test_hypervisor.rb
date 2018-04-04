@@ -30,4 +30,34 @@ class TestHypervisor < Test::Unit::TestCase
     h = Yao::Resources::Hypervisor.list_detail
     assert_equal(h.first.id, "dummy")
   end
+
+  def test_statistics
+    stub_request(:get, "https://example.com:12345/os-hypervisors/statistics")
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.12.2'})
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "hypervisor_statistics": {
+            "count": 1,
+            "current_workload": 0,
+            "disk_available_least": 0,
+            "free_disk_gb": 1028,
+            "free_ram_mb": 7680,
+            "local_gb": 1028,
+            "local_gb_used": 0,
+            "memory_mb": 8192,
+            "memory_mb_used": 512,
+            "running_vms": 0,
+            "vcpus": 2,
+            "vcpus_used": 0
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    s = Yao::Resources::Hypervisor.statistics
+    assert_equal(s.count, 1)
+  end
 end
