@@ -161,7 +161,7 @@ module Yao::Resources
       rescue Yao::ItemNotFound
         item = find_by_name(name)
         if item.size > 1
-          raise "More than one resource exists with the name '#{name}'"
+          raise Yao::TooManyItemFonud.new("More than one resource exists with the name '#{name}'")
         end
         GET([resources_path, item.first.id].join("/"), query)
       end
