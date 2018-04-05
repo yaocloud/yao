@@ -1,5 +1,6 @@
 module Yao
   class ReadOnlyViolationError < ::StandardError; end
+  class TooManyItemFonud       < ::StandardError; end
 
   class ServerError < ::StandardError
     def initialize(message, requested_env)
