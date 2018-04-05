@@ -36,8 +36,16 @@ module Yao::Resources
         json = GET([resources_path, "statistics"].join("/")).body
         Yao::Resources::Hypervisor::Statistics.new(json["hypervisor_statistics"])
       end
+
+      def uptime(id)
+        res = resource_from_json(
+                GET([resources_path, id, "uptime"].join("/")).body
+              )
+        Yao::Resources::Hypervisor::Uptime.new(res)
+      end
     end
 
     class Statistics < OpenStruct; end
+    class Uptime     < OpenStruct; end
   end
 end

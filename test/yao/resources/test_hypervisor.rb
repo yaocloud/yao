@@ -60,4 +60,27 @@ class TestHypervisor < Test::Unit::TestCase
     s = Yao::Resources::Hypervisor.statistics
     assert_equal(s.count, 1)
   end
+
+  def test_uptime
+    stub_request(:get, "https://example.com:12345/os-hypervisors/1/uptime")
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.12.2'})
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+            "hypervisor": {
+                "hypervisor_hostname": "fake-mini",
+                "id": 1,
+                "state": "up",
+                "status": "enabled",
+                "uptime": " 08:32:11 up 93 days, 18:25, 12 users,  load average: 0.20, 0.12, 0.14"
+            }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    u = Yao::Resources::Hypervisor.uptime(1)
+    assert_equal(u.uptime, " 08:32:11 up 93 days, 18:25, 12 users,  load average: 0.20, 0.12, 0.14")
+  end
 end
