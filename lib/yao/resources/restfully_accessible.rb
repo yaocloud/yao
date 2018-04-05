@@ -95,7 +95,6 @@ module Yao::Resources
                 GET([resources_path, id_or_name_or_permalink].join("/"), query)
               rescue Yao::ItemNotFound
                 item = find_by_name(id_or_name_or_permalink)
-                p item
                 if item.size > 1
                   raise "More than one resource exists with the name '#{id_or_name_or_permalink}'"
                 end
