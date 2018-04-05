@@ -90,17 +90,9 @@ module Yao::Resources
             elsif uuid?(id_or_name_or_permalink)
               GET([resources_path, id_or_name_or_permalink].join("/"), query)
             else
-              # At first, search by ID. If nothing is found, search by name.
-              begin
-                GET([resources_path, id_or_name_or_permalink].join("/"), query)
-              rescue Yao::ItemNotFound
-                item = find_by_name(id_or_name_or_permalink)
-                if item.size > 1
-                  raise "More than one resource exists with the name '#{id_or_name_or_permalink}'"
-                end
-                GET([resources_path, item.first.id].join("/"), query)
-              end
+              get_by_name(id_or_name_or_permalink, query)
             end
+
       return_resource(resource_from_json(res.body))
     end
     alias find get
@@ -160,6 +152,19 @@ module Yao::Resources
 
     def uuid?(str)
       /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/ === str
+    end
+
+    def get_by_name(name, query={})
+      # At first, search by ID. If nothing is found, search by name.
+      begin
+        GET([resources_path, name].join("/"), query)
+      rescue Yao::ItemNotFound
+        item = find_by_name(name)
+        if item.size > 1
+          raise "More than one resource exists with the name '#{name}'"
+        end
+        GET([resources_path, item.first.id].join("/"), query)
+      end
     end
   end
 end
