@@ -76,7 +76,7 @@ module Yao::Resources
 
     # restful methods
     def list(query={})
-      json = GET([api_version, resources_path], query).body
+      json = GET([api_version, resources_path].join('/'), query).body
       if @return_single_on_querying && !query.empty?
         return_resource(resource_from_json(json))
       else
@@ -86,7 +86,7 @@ module Yao::Resources
 
     def get(id_or_name_or_permalink, query={})
       res = if id_or_name_or_permalink.start_with?("http://", "https://")
-              GET(api_version, id_or_name_or_permalink, query)
+              GET([api_version, id_or_name_or_permalink].join('/'), query)
             elsif uuid?(id_or_name_or_permalink)
               GET([api_version, resources_path, id_or_name_or_permalink].join("/"), query)
             else
@@ -105,7 +105,7 @@ module Yao::Resources
       params = {
         resource_name_in_json => resource_params
       }
-      res = POST([api_version, resources_path]) do |req|
+      res = POST([api_version, resources_path].join('/')) do |req|
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
