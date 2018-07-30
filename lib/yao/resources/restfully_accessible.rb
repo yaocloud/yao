@@ -29,7 +29,6 @@ module Yao::Resources
       @api_version = v
       api_version
     end
-    attr_reader :api_version
 
     def admin=(bool)
       @admin = bool
