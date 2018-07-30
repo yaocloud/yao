@@ -76,7 +76,7 @@ module Yao::Resources
 
     # restful methods
     def list(query={})
-      json = GET([api_version, resources_path].join('/'), query).body
+      json = GET([api_version, resources_path].select{|s| s != ''}.join('/'), query).body
       if @return_single_on_querying && !query.empty?
         return_resource(resource_from_json(json))
       else
