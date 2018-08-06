@@ -14,7 +14,7 @@ class TestHypervisor < Test::Unit::TestCase
 
   def test_list_detail
     stub_request(:get, "https://example.com:12345/os-hypervisors/detail")
-      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.12.2'})
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -33,7 +33,7 @@ class TestHypervisor < Test::Unit::TestCase
 
   def test_statistics
     stub_request(:get, "https://example.com:12345/os-hypervisors/statistics")
-      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.12.2'})
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -63,7 +63,7 @@ class TestHypervisor < Test::Unit::TestCase
 
   def test_uptime
     stub_request(:get, "https://example.com:12345/os-hypervisors/1/uptime")
-      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>'Faraday v0.12.2'})
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
       .to_return(
         status: 200,
         body: <<-JSON,
