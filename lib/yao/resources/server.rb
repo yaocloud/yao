@@ -46,6 +46,10 @@ module Yao::Resources
       action(server_id, {"addSecurityGroup": {"name": security_group_name}})
     end
 
+    def self.remove_security_group(server_id, security_group_name)
+      action(server_id, {"removeSecurityGroup": {"name": security_group_name}})
+    end
+
     class << self
       alias :stop :shutoff
 
