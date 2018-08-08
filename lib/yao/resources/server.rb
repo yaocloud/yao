@@ -42,6 +42,14 @@ module Yao::Resources
       action(id,"resize" => { "flavorRef" => flavor_id })
     end
 
+    def self.add_security_group(id, sg_name)
+      action(id, {"addSecurityGroup": {"name": sg_name}})
+    end
+
+    def self.remove_security_group(id, sg_name)
+      action(id, {"removeSecurityGroup": {"name": sg_name}})
+    end
+
     class << self
       alias :stop :shutoff
 
