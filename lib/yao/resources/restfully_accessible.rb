@@ -162,7 +162,8 @@ module Yao::Resources
       # At first, search by ID. If nothing is found, search by name.
       begin
         GET(create_url([api_version, resources_path, name]), query)
-      rescue Yao::ItemNotFound
+      rescue => e
+        raise e unless e.class == Yao::ItemNotFound || e.class == Yao::NotFound
         item = find_by_name(name)
         if item.size > 1
           raise Yao::TooManyItemFonud.new("More than one resource exists with the name '#{name}'")
