@@ -4,7 +4,7 @@ module Yao::Resources
 
     map_attribute_to_attribute 'os-vol-tenant-attr:tenant_id' => :tenant_id
 
-    self.service        = "volumev2"
+    self.service        = "volumev3"
     self.resource_name  = "volume"
     self.resources_name = "volumes"
 
