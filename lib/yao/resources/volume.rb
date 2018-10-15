@@ -1,6 +1,6 @@
 module Yao::Resources
   class Volume < Base
-    friendly_attributes :name, :size
+    friendly_attributes :name, :size, :volume_type
 
     map_attribute_to_attribute 'os-vol-tenant-attr:tenant_id' => :tenant_id
 
