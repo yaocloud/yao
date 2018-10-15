@@ -25,6 +25,7 @@ module Yao
     autoload :User,                      "yao/resources/user"
     autoload :Role,                      "yao/resources/role"
     autoload :RoleAssignment,            "yao/resources/role_assignment"
+    autoload :Volume,                    "yao/resources/volume"
 
     autoload :Resource,                  "yao/resources/resource"
     autoload :Meter,                     "yao/resources/meter"
