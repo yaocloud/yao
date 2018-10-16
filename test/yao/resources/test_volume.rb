@@ -1,6 +1,3 @@
-require "time"
-require "date"
-
 class TestRole < Test::Unit::TestCase
   def test_volume
     params = {
