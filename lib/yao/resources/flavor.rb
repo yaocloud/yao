@@ -17,5 +17,15 @@ module Yao::Resources
     self.service        = "compute"
     self.resource_name  = "flavor"
     self.resources_name = "flavors"
+
+    class << self
+      def list_detail(query={})
+        return_resources(
+          resources_from_json(
+            GET([resources_path, "detail"].join("/"), query).body
+          )
+        )
+      end
+    end
   end
 end
