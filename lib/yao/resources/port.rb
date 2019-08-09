@@ -17,6 +17,10 @@ module Yao::Resources
       Yao::Network.find network_id
     end
 
+    def tenant
+      Yao::Tenant.find tenant_id
+    end
+
     self.service        = "network"
     self.resource_name  = "port"
     self.resources_name = "ports"
