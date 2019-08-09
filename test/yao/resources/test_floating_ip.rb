@@ -1,4 +1,9 @@
 class TestRole < Test::Unit::TestCase
+
+  def setup
+    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
+  end
+
   def test_floating_ip
     params = {
       "router_id" => "d23abc8d-2991-4a55-ba98-2aaea84cc72f",
@@ -56,5 +61,67 @@ class TestRole < Test::Unit::TestCase
         "device_id" => "8e3941b4-a6e9-499f-a1ac-2a4662025cba"
     })
     assert_equal(fip.port_forwardings, [])
+  end
+
+  def test_floating_ip_to_router
+
+    stub_request(:get, "http://neutron-endpoint.example.com:9696/v2.0/routers/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "routers": [{
+            "id": "0123456789abcdef0123456789abcdef"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    fip = Yao::FloatingIP.new("router_id" => "00000000-0000-0000-0000-000000000000")
+    assert { fip.router.is_a? Yao::Router }
+  end
+
+  def test_floating_to_tenant
+
+    stub_request(:get, "http://endpoint.example.com:12345/v2.0/tenants/0123456789abcdef0123456789abcdef")
+      .to_return(
+         status: 200,
+         body: <<-JSON,
+        {
+          "tenants": [{
+            "id": "0123456789abcdef0123456789abcdef"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    fip = Yao::FloatingIP.new(
+      "project_id" => "0123456789abcdef0123456789abcdef",
+      "tenant_id"  => "0123456789abcdef0123456789abcdef",
+    )
+
+    assert { fip.tenant.is_a? Yao::Tenant }
+    assert { fip.project.is_a? Yao::Tenant }
+  end
+
+  def test_floating_ip_to_router
+
+    stub_request(:get, "http://neutron-endpoint.example.com:9696/v2.0/ports/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "ports": [{
+            "id": "0123456789abcdef0123456789abcdef"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    fip = Yao::FloatingIP.new("port_id" => "00000000-0000-0000-0000-000000000000")
+    assert { fip.port.is_a? Yao::Port }
   end
 end
