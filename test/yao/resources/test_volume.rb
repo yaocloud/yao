@@ -1,4 +1,4 @@
-class TestRole < Test::Unit::TestCase
+class TestVolume < Test::Unit::TestCase
   def test_volume
     params = {
         'name' => 'cinder',
