@@ -79,4 +79,27 @@ class TestMeter < Test::Unit::TestCase
     assert { meter.tenant.instance_of?(Yao::Tenant) }
     assert_equal(meter.tenant.id, "00000000-0000-0000-0000-000000000000")
   end
+
+  def test_user
+    stub_request(:get, "https://example.com:12345/users/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "user": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "user_id" => "00000000-0000-0000-0000-000000000000",
+    }
+
+    meter  = Yao::Meter.new(params)
+    assert { meter.user.instance_of?(Yao::User) }
+    assert_equal(meter.user.id, "00000000-0000-0000-0000-000000000000")
+  end
 end
