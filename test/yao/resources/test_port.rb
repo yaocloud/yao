@@ -1,5 +1,9 @@
 class TestPort < Test::Unit::TestCase
 
+  def setup
+    Yao.default_client.pool["network"] = Yao::Client.gen_client("https://example.com:12345")
+  end
+
   def test_port
 
     # https://docs.openstack.org/api-ref/network/v2/?expanded=list-floating-ips-detail,show-port-details-detail#ports
@@ -90,5 +94,34 @@ class TestPort < Test::Unit::TestCase
 
     port = Yao::Port.new(params)
     assert_equal(port.primary_ip, "10.0.0.1")
+  end
+
+  def test_primary_subnet
+
+    stub_request(:get, "https://example.com:12345/subnets/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "subnet": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "fixed_ips" => [
+        {
+          "ip_address" => "10.0.0.1",
+          "subnet_id" => "00000000-0000-0000-0000-000000000000"
+        }
+      ],
+    }
+
+    port = Yao::Port.new(params)
+    assert{ port.primary_subnet.instance_of?(Yao::Subnet) }
+    assert_equal(port.primary_subnet.id, "00000000-0000-0000-0000-000000000000")
   end
 end
