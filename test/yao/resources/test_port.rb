@@ -72,5 +72,23 @@ class TestPort < Test::Unit::TestCase
 
     # map_attribute_to_attribute
     assert_equal(port.host_id, "compute-000")
+
+    # primary_ip
+    assert_equal(port.primary_ip, "10.0.0.1")
+  end
+
+  def test_primary_ip
+
+    params = {
+      "fixed_ips" => [
+        {
+          "ip_address" => "10.0.0.1",
+          "subnet_id" => "a0304c3a-4f08-4c43-88af-d796509c97d2"
+        }
+      ],
+    }
+
+    port = Yao::Port.new(params)
+    assert_equal(port.primary_ip, "10.0.0.1")
   end
 end
