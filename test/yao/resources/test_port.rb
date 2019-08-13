@@ -124,4 +124,28 @@ class TestPort < Test::Unit::TestCase
     assert{ port.primary_subnet.instance_of?(Yao::Subnet) }
     assert_equal(port.primary_subnet.id, "00000000-0000-0000-0000-000000000000")
   end
+
+  def test_network
+
+    stub_request(:get, "https://example.com:12345/networks/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "network": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "network_id" => "00000000-0000-0000-0000-000000000000",
+    }
+
+    port = Yao::Port.new(params)
+    assert{ port.network.instance_of?(Yao::Network) }
+    assert_equal(port.network.id, "00000000-0000-0000-0000-000000000000")
+  end
 end
