@@ -1,7 +1,9 @@
 class TestMeter < Test::Unit::TestCase
 
   def setup
-    Yao.default_client.pool["metering"] = Yao::Client.gen_client("https://example.com:12345")
+    Yao.default_client.pool["metering"]       = Yao::Client.gen_client("https://example.com:12345")
+    # notice: admin_pool を指定するあたりでハマったので注意
+    Yao.default_client.admin_pool["identity"] = Yao::Client.gen_client("https://example.com:12345")
   end
 
   def test_meter
@@ -53,5 +55,28 @@ class TestMeter < Test::Unit::TestCase
     resource = meter.resource
     assert { resource.instance_of?(Yao::Resource) }
     assert_equal(resource.resource_id, "00000000-0000-0000-0000-000000000000")
+  end
+
+  def test_tenant
+    stub_request(:get, "https://example.com:12345/tenants/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "tenant": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "project_id" => "00000000-0000-0000-0000-000000000000",
+    }
+
+    meter  = Yao::Meter.new(params)
+    assert { meter.tenant.instance_of?(Yao::Tenant) }
+    assert_equal(meter.tenant.id, "00000000-0000-0000-0000-000000000000")
   end
 end
