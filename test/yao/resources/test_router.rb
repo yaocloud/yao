@@ -1,5 +1,9 @@
 class TestRouter < Test::Unit::TestCase
 
+  def setup
+    Yao.default_client.pool["network"] = Yao::Client.gen_client("https://example.com:12345")
+  end
+
   def test_router
 
     # https://docs.openstack.org/api-ref/network/v2/?expanded=list-subnets-detail,list-routers-detail#list-routers
@@ -101,5 +105,29 @@ class TestRouter < Test::Unit::TestCase
     assert_equal(router.external_fixed_ips '')
     assert_equal(router.destination '')
     assert_equal(router.nexthop '')
+  end
+
+  def test_iterfaces
+    stub_request(:get, "https://example.com:12345/ports?device_id=00000000-0000-0000-0000-000000000000")
+    .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "ports": [{
+            "id": "00000000-0000-0000-0000-000000000000"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "id" => "00000000-0000-0000-0000-000000000000",
+    }
+
+    router = Yao::Router.new(params)
+    port   = router.interfaces.first
+    assert_instance_of(Yao::Port, port)
+    assert_equal(port.id, "00000000-0000-0000-0000-000000000000")
   end
 end
