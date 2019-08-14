@@ -79,7 +79,7 @@ class TestRole < Test::Unit::TestCase
       )
 
     fip = Yao::FloatingIP.new("router_id" => "00000000-0000-0000-0000-000000000000")
-    assert { fip.router.is_a? Yao::Router }
+    assert_instance_of(Yao::Router, fip.router)
   end
 
   def test_floating_to_tenant
@@ -102,8 +102,8 @@ class TestRole < Test::Unit::TestCase
       "tenant_id"  => "0123456789abcdef0123456789abcdef",
     )
 
-    assert { fip.tenant.is_a? Yao::Tenant }
-    assert { fip.project.is_a? Yao::Tenant }
+    assert_instance_of(Yao::Tenant, fip.tenant)
+    assert_instance_of(Yao::Tenant, fip.project)
   end
 
   def test_floating_ip_to_router
@@ -122,6 +122,6 @@ class TestRole < Test::Unit::TestCase
       )
 
     fip = Yao::FloatingIP.new("port_id" => "00000000-0000-0000-0000-000000000000")
-    assert { fip.port.is_a? Yao::Port }
+    assert_instance_of(Yao::Port, fip.port)
   end
 end
