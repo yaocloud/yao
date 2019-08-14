@@ -145,7 +145,7 @@ class TestPort < Test::Unit::TestCase
     }
 
     port = Yao::Port.new(params)
-    assert{ port.network.instance_of?(Yao::Network) }
+    assert_instance_of(Yao::Network, port.network)
     assert_equal(port.network.id, "00000000-0000-0000-0000-000000000000")
   end
 end
