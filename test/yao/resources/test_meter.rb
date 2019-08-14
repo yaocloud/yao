@@ -53,7 +53,7 @@ class TestMeter < Test::Unit::TestCase
 
     meter    = Yao::Meter.new(params)
     resource = meter.resource
-    assert { resource.instance_of?(Yao::Resource) }
+    assert_instance_of(Yao::Resource, resource)
     assert_equal(resource.resource_id, "00000000-0000-0000-0000-000000000000")
   end
 
@@ -76,7 +76,7 @@ class TestMeter < Test::Unit::TestCase
     }
 
     meter  = Yao::Meter.new(params)
-    assert { meter.tenant.instance_of?(Yao::Tenant) }
+    assert_instance_of(Yao::Tenant, meter.tenant)
     assert_equal(meter.tenant.id, "00000000-0000-0000-0000-000000000000")
   end
 
@@ -99,7 +99,7 @@ class TestMeter < Test::Unit::TestCase
     }
 
     meter  = Yao::Meter.new(params)
-    assert { meter.user.instance_of?(Yao::User) }
+    assert_instance_of(Yao::User, meter.user)
     assert_equal(meter.user.id, "00000000-0000-0000-0000-000000000000")
   end
 end
