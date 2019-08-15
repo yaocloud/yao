@@ -106,7 +106,7 @@ class TestServer < Test::Unit::TestCase
           "version" => 4
         }
       ]
-                 })
+    })
     assert_equal(server.metadata, { "My Server Name" => "Apache1" })
     assert_equal(server.name, "new-server-test")
     assert_equal(server.progress, 0)
