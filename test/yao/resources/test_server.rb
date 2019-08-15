@@ -1,5 +1,9 @@
 class TestServer < Test::Unit::TestCase
 
+  def setup
+    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
+  end
+
   def test_server
 
     # https://docs.openstack.org/api-ref/compute/?expanded=list-servers-detail,list-servers-detailed-detail#list-servers
@@ -136,5 +140,25 @@ class TestServer < Test::Unit::TestCase
     assert_equal(server.ext_sts_power_state, 1)
     assert_equal(server.ext_sts_task_state, nil)
     assert_equal(server.ext_sts_vm_state, "active")
+  end
+
+  def test_list_detail
+    stub_request(:get, "https://example.com:12345/servers/detail")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "servers": [{
+            "id": "dummy"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    servers = Yao::Server.list_detail
+    assert_instance_of(Array, servers)
+    assert_instance_of(Yao::Server, servers.first)
+    assert_equal(servers.first.id, 'dummy')
   end
 end
