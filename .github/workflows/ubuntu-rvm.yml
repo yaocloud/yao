@@ -21,8 +21,6 @@ jobs:
     - name: Install dependencies
       run: |
         source $HOME/.rvm/scripts/rvm
-      run: |
-        source $HOME/.rvm/scripts/rvm
         gem install bundler --no-document
         bundle install
     - name: Run test
