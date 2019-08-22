@@ -1,6 +1,6 @@
 require "time"
 
-class TestRole < Test::Unit::TestCase
+class TestLoadBalancerHealthMonitor < Test::Unit::TestCase
   def test_loadbalancer_healtchmonitor
     params = {
       "name" => "super-pool-health-monitor",
