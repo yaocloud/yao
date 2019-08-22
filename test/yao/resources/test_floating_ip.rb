@@ -1,7 +1,9 @@
 class TestFloatingIP < Test::Unit::TestCase
 
   def setup
-    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
+    Yao.default_client.admin_pool["identity"] = Yao::Client.gen_client("https://example.com:12345")
+    Yao.default_client.pool["network"]  = Yao::Client.gen_client("https://example.com:12345")
+    Yao.default_client.pool["compute"]  = Yao::Client.gen_client("https://example.com:12345")
   end
 
   def test_floating_ip
@@ -65,7 +67,7 @@ class TestFloatingIP < Test::Unit::TestCase
 
   def test_floating_ip_to_router
 
-    stub_request(:get, "http://neutron-endpoint.example.com:9696/v2.0/routers/00000000-0000-0000-0000-000000000000")
+    stub_request(:get, "https://example.com:12345/routers/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -84,7 +86,7 @@ class TestFloatingIP < Test::Unit::TestCase
 
   def test_floating_to_tenant
 
-    stub_request(:get, "http://endpoint.example.com:12345/v2.0/tenants/0123456789abcdef0123456789abcdef")
+    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
          status: 200,
          body: <<-JSON,
@@ -108,7 +110,7 @@ class TestFloatingIP < Test::Unit::TestCase
 
   def test_floating_ip_to_port
 
-    stub_request(:get, "http://neutron-endpoint.example.com:9696/v2.0/ports/00000000-0000-0000-0000-000000000000")
+    stub_request(:get, "https://example.com:12345/ports/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
