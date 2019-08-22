@@ -1,6 +1,6 @@
 require "time"
 
-class TestRole < Test::Unit::TestCase
+class TestLoadBalancerPool < Test::Unit::TestCase
   def test_loadbalancer_pool
     params = {
       "lb_algorithm" => "ROUND_ROBIN",

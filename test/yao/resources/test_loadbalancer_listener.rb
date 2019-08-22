@@ -1,6 +1,6 @@
 require "time"
 
-class TestRole < Test::Unit::TestCase
+class TestLoadBalancerListener < Test::Unit::TestCase
   def test_loadbalancer_listener
     params = {
       "description" => "A great TLS listener",
