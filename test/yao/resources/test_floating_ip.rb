@@ -1,4 +1,4 @@
-class TestRole < Test::Unit::TestCase
+class TestFloatingIP < Test::Unit::TestCase
 
   def setup
     Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
