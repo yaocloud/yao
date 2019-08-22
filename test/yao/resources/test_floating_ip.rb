@@ -106,7 +106,7 @@ class TestFloatingIP < Test::Unit::TestCase
     assert_instance_of(Yao::Tenant, fip.project)
   end
 
-  def test_floating_ip_to_router
+  def test_floating_ip_to_port
 
     stub_request(:get, "http://neutron-endpoint.example.com:9696/v2.0/ports/00000000-0000-0000-0000-000000000000")
       .to_return(
