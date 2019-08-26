@@ -50,16 +50,29 @@ class TestConfig < Test::Unit::TestCase
     assert { hooked_value == "test 2" }
   end
 
-  def test_auth_is_hooked
-    auth = Yao::Auth
-    count = Yao::Config::HOOK_RENEW_CLIENT_KEYS.size
-    mock(auth).try_new.times(count)
-    Yao::Config::HOOK_RENEW_CLIENT_KEYS.each do |key|
-      Yao.configure do
-        set key, "http://dummy"
+  sub_test_case 'setting Yao.configure' do
+
+    def test_auth_is_hooked
+      auth = Yao::Auth
+      count = Yao::Config::HOOK_RENEW_CLIENT_KEYS.size
+      mock(auth).try_new.times(count)
+      Yao::Config::HOOK_RENEW_CLIENT_KEYS.each do |key|
+        # configurations have side effects !!!!
+        Yao.configure do
+          set key, "http://dummy"
+        end
       end
+
+      assert_received(auth) {|a| a.try_new.times(count) }
     end
 
-    assert_received(auth) {|a| a.try_new.times(count) }
+    # reset configurations of Yao.configure
+    def teardown
+      Yao::Config::HOOK_RENEW_CLIENT_KEYS.each do |key|
+        Yao.configure do
+          set key, nil
+        end
+      end
+    end
   end
 end
