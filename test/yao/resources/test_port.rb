@@ -116,21 +116,6 @@ class TestPort < Test::Unit::TestCase
     assert_equal(port.primary_ip, "10.0.0.1")
   end
 
-  def test_primary_ip
-
-    params = {
-      "fixed_ips" => [
-        {
-          "ip_address" => "10.0.0.1",
-          "subnet_id" => "a0304c3a-4f08-4c43-88af-d796509c97d2"
-        }
-      ],
-    }
-
-    port = Yao::Port.new(params)
-    assert_equal(port.primary_ip, "10.0.0.1")
-  end
-
   def test_primary_subnet
 
     stub_request(:get, "https://example.com:12345/subnets/00000000-0000-0000-0000-000000000000")
