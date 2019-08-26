@@ -7,7 +7,7 @@ class TestPort < Test::Unit::TestCase
 
   def test_port
 
-    # https://docs.openstack.org/api-ref/network/v2/?expanded=list-floating-ips-detail,show-poart-details-detail#ports
+    # https://docs.openstack.org/api-ref/network/v2/?expanded=list-floating-ips-detail,show-port-details-detail#ports
     params = {
       "admin_state_up" => true,
       "allowed_address_pairs" => [],
