@@ -106,9 +106,10 @@ Faraday::Response.register_middleware os_dumper: -> { Faraday::Response::OSDumpe
 
 class Faraday::Response::OSResponseRecorder < Faraday::Response::Middleware
   def on_complete(env)
-    require 'pathname'
-    root = Pathname.new(File.expand_path('../../../tmp', __FILE__))
-    Dir.mkdir(root) unless File.exist?(root)
+    require 'tmpdir'
+
+    @@tmpdir ||= Dir.mktmpdir('yao-')
+    root = Pathname.new(@@tmpdir)
 
     path = [env.method.to_s.upcase, env.url.path.gsub('/', '-')].join("-") + ".json"
 

@@ -2,11 +2,12 @@ class TestPort < Test::Unit::TestCase
 
   def setup
     Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
+    Yao.default_client.pool["network"] = Yao::Client.gen_client("https://example.com:12345")
   end
 
   def test_port
 
-    # https://docs.openstack.org/api-ref/network/v2/?expanded=list-floating-ips-detail,show-port-details-detail#ports
+    # https://docs.openstack.org/api-ref/network/v2/?expanded=list-floating-ips-detail,show-poart-details-detail#ports
     params = {
       "admin_state_up" => true,
       "allowed_address_pairs" => [],
@@ -76,6 +77,9 @@ class TestPort < Test::Unit::TestCase
 
     # map_attribute_to_attribute
     assert_equal(port.host_id, "compute-000")
+
+    # primary_ip
+    assert_equal(port.primary_ip, "10.0.0.1")
   end
 
   def test_port_to_tenant
@@ -95,5 +99,88 @@ class TestPort < Test::Unit::TestCase
 
     port = Yao::Port.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert { port.tenant.is_a? Yao::Tenant }
+  end
+
+  def test_primary_ip
+
+    params = {
+      "fixed_ips" => [
+        {
+          "ip_address" => "10.0.0.1",
+          "subnet_id" => "a0304c3a-4f08-4c43-88af-d796509c97d2"
+        }
+      ],
+    }
+
+    port = Yao::Port.new(params)
+    assert_equal(port.primary_ip, "10.0.0.1")
+  end
+
+  def test_primary_ip
+
+    params = {
+      "fixed_ips" => [
+        {
+          "ip_address" => "10.0.0.1",
+          "subnet_id" => "a0304c3a-4f08-4c43-88af-d796509c97d2"
+        }
+      ],
+    }
+
+    port = Yao::Port.new(params)
+    assert_equal(port.primary_ip, "10.0.0.1")
+  end
+
+  def test_primary_subnet
+
+    stub_request(:get, "https://example.com:12345/subnets/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "subnet": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "fixed_ips" => [
+        {
+          "ip_address" => "10.0.0.1",
+          "subnet_id" => "00000000-0000-0000-0000-000000000000"
+        }
+      ],
+    }
+
+    port = Yao::Port.new(params)
+    assert{ port.primary_subnet.instance_of?(Yao::Subnet) }
+    assert_equal(port.primary_subnet.id, "00000000-0000-0000-0000-000000000000")
+  end
+
+  def test_network
+
+    stub_request(:get, "https://example.com:12345/networks/00000000-0000-0000-0000-000000000000")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "network": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "network_id" => "00000000-0000-0000-0000-000000000000",
+    }
+
+    port = Yao::Port.new(params)
+    assert_instance_of(Yao::Network, port.network)
+    assert_equal(port.network.id, "00000000-0000-0000-0000-000000000000")
   end
 end
