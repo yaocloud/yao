@@ -1,7 +1,7 @@
 require "time"
 require "date"
 
-class TestRole < Test::Unit::TestCase
+class TestAggregates < Test::Unit::TestCase
   def test_server_aggregates
     params = {
       "availability_zone" => "nova",

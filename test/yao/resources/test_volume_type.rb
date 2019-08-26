@@ -1,4 +1,4 @@
-class TestRole < Test::Unit::TestCase
+class TestVolumeType < Test::Unit::TestCase
   def test_volume
     params = {
         'name' => 'test_volume',

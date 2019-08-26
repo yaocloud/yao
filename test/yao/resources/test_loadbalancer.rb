@@ -1,6 +1,6 @@
 require "time"
 
-class TestRole < Test::Unit::TestCase
+class TestLoadBalancer < Test::Unit::TestCase
   def test_loadbalancer
     params = {
       "provider" => "octavia",
