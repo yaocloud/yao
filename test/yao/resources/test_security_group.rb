@@ -22,4 +22,24 @@ class TestSecurityGroup < Test::Unit::TestCase
     assert_equal(sg.description, "test_description_1")
     assert(sg.rules[0].instance_of?(Yao::SecurityGroupRule))
   end
+
+  def test_sg_to_tenant
+
+    stub_request(:get, "http://endpoint.example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "tenant": {
+            "id": "0123456789abcdef0123456789abcdef"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    sg = Yao::SecurityGroup.new('tenant_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Tenant, sg.tenant)
+    assert_equal(sg.tenant.id, '0123456789abcdef0123456789abcdef')
+  end
 end
