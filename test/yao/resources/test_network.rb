@@ -35,4 +35,30 @@ class TestNetwork < Test::Unit::TestCase
     assert_equal(network.type, "vlan")
     assert_equal(network.segmentation_id, 1000)
   end
+
+  def test_network_to_tenant
+
+    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+      .to_return(
+         status: 200,
+         body: <<-JSON,
+        {
+          "tenant": {
+            "id": "0123456789abcdef0123456789abcdef"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    network = Yao::Network.new(
+      "project_id" => "0123456789abcdef0123456789abcdef",
+      "tenant_id"  => "0123456789abcdef0123456789abcdef",
+    )
+
+    assert_instance_of(Yao::Tenant, network.tenant)
+    assert_instance_of(Yao::Tenant, network.project)
+
+    assert_equal(network.tenant.id, '0123456789abcdef0123456789abcdef')
+  end
 end
