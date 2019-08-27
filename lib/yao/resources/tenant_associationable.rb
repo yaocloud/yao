@@ -8,7 +8,7 @@ module Yao
       end
 
       def tenant
-        Yao::Tenant.find tenant_id
+        Yao::Tenant.find(project_id || tenant_id)
       end
 
       alias :project :tenant
