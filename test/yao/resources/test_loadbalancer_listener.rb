@@ -22,7 +22,6 @@ class TestLoadBalancerListener < Test::Unit::TestCase
       ],
       "l7policies" => [
           {
-              "id" => "58284ac9-673e-47ff-9dcb-09871a1956c4",
               "id" => "5e618272-339d-4a80-8d14-dbc093091bb1"
           }
       ],
@@ -49,7 +48,6 @@ class TestLoadBalancerListener < Test::Unit::TestCase
     ])
     assert_equal(listener.l7policies, [
         {
-            "id" => "58284ac9-673e-47ff-9dcb-09871a1956c4",
             "id" => "5e618272-339d-4a80-8d14-dbc093091bb1"
         }
     ])
