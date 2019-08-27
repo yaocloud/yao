@@ -91,9 +91,9 @@ class TestFloatingIP < Test::Unit::TestCase
          status: 200,
          body: <<-JSON,
         {
-          "tenants": [{
+          "tenant": {
             "id": "0123456789abcdef0123456789abcdef"
-          }]
+          }
         }
         JSON
         headers: {'Content-Type' => 'application/json'}
@@ -106,6 +106,8 @@ class TestFloatingIP < Test::Unit::TestCase
 
     assert_instance_of(Yao::Tenant, fip.tenant)
     assert_instance_of(Yao::Tenant, fip.project)
+
+    assert_equal(fip.tenant.id, '0123456789abcdef0123456789abcdef')
   end
 
   def test_floating_ip_to_port
