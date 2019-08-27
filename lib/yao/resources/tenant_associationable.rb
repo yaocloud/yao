@@ -3,8 +3,8 @@ module Yao
     module TenantAssociationable
 
       def self.included(base)
-        base.friendly_attributes :tenant_id
         base.friendly_attributes :project_id
+        base.friendly_attributes :tenant_id
       end
 
       def tenant
