@@ -130,4 +130,24 @@ class TestRouter < Test::Unit::TestCase
     assert_instance_of(Yao::Port, port)
     assert_equal(port.id, "00000000-0000-0000-0000-000000000000")
   end
+
+  def test_router_tenant
+
+    stub_request(:get, "http://endpoint.example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "tenant": {
+            "id": "0123456789abcdef0123456789abcdef"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    router = Yao::Router.new('tenant_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Tenant, router.tenant)
+    assert_equal(router.tenant.id, '0123456789abcdef0123456789abcdef')
+  end
 end
