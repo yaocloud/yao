@@ -84,7 +84,7 @@ class TestFloatingIP < Test::Unit::TestCase
     assert_instance_of(Yao::Router, fip.router)
   end
 
-  def test_floating_to_tenant
+  def test_tenant
 
     stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(

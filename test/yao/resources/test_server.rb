@@ -162,7 +162,7 @@ class TestServer < Test::Unit::TestCase
     assert_equal(servers.first.id, 'dummy')
   end
 
-  def test_port_to_tenant
+  def test_tenant
 
     stub_request(:get, "http://endpoint.example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(

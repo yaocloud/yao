@@ -81,7 +81,7 @@ class TestPort < Test::Unit::TestCase
     assert_equal(port.primary_ip, "10.0.0.1")
   end
 
-  def test_port_to_tenant
+  def test_tenant
 
     stub_request(:get, "http://endpoint.example.com:12345/v2.0/tenants/0123456789abcdef0123456789abcdef")
       .to_return(

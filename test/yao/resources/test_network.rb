@@ -36,7 +36,7 @@ class TestNetwork < Test::Unit::TestCase
     assert_equal(network.segmentation_id, 1000)
   end
 
-  def test_network_to_tenant
+  def test_tenant
 
     stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
