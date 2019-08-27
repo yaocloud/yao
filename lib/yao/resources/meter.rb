@@ -1,6 +1,9 @@
 module Yao::Resources
   class Meter < Base
-    friendly_attributes :meter_id, :name, :user_id, :resource_id, :project_id, :source, :type, :unit
+
+    include TenantAssociationable
+
+    friendly_attributes :meter_id, :name, :user_id, :resource_id, :source, :type, :unit
 
     def id
       meter_id
@@ -8,10 +11,6 @@ module Yao::Resources
 
     def resource
       @resource ||= Yao::Resource.get(resource_id)
-    end
-
-    def tenant
-      @tenant ||= Yao::Tenant.get(project_id)
     end
 
     def user

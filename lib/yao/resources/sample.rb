@@ -2,7 +2,7 @@ module Yao::Resources
   class Sample < Base
     friendly_attributes :id, :metadata, :meter,
                         :source, :type, :unit, :volume,
-                        :resouce_id, :tenant_id, :user_id
+                        :resouce_id, :user_id
 
     def recorded_at
       Time.parse(self["recorded_at"])
@@ -14,10 +14,6 @@ module Yao::Resources
 
     def resource
       @resource ||= Yao::Resource.get(resource_id)
-    end
-
-    def tenant
-      @tenant ||= Yao::Tenant.get(project_id)
     end
 
     def user

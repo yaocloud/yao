@@ -1,6 +1,8 @@
 module Yao::Resources
   class Subnet < Base
-    friendly_attributes :name, :cidr, :gateway_ip, :network_id, :tenant_id, :ip_version,
+    include TenantAssociationable
+
+    friendly_attributes :name, :cidr, :gateway_ip, :network_id, :ip_version,
                         :dns_nameservers, :host_routes, :enable_dhcp
 
     def allocation_pools
