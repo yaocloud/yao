@@ -88,16 +88,17 @@ class TestPort < Test::Unit::TestCase
         status: 200,
         body: <<-JSON,
         {
-          "tenants": [{
+          "tenant": {
             "id": "0123456789abcdef0123456789abcdef"
-          }]
+          }
         }
         JSON
         headers: {'Content-Type' => 'application/json'}
       )
 
     port = Yao::Port.new('tenant_id' => '0123456789abcdef0123456789abcdef')
-    assert { port.tenant.is_a? Yao::Tenant }
+    assert_instance_of(Yao::Tenant, port.tenant)
+    assert_equal(port.tenant.id, '0123456789abcdef0123456789abcdef')
   end
 
   def test_primary_ip
