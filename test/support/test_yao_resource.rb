@@ -31,7 +31,7 @@ class TestYaoResouce < Test::Unit::TestCase
     Yao.default_client.pool["metering"]       = client
   end
 
-  # 他のテストで副作用を出さないように Yao::Client.default_client を nil でリセットしておきますa
+  # 他のテストで副作用を出さないように Yao::Client.default_client, Yao::Conig を nil でリセットしておきます
   def reset_test_client!
     Yao::Client.default_client = nil
 
