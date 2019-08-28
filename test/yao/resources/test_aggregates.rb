@@ -1,6 +1,3 @@
-require "time"
-require "date"
-
 class TestAggregates < Test::Unit::TestCase
   def test_server_aggregates
     params = {

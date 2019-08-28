@@ -1,5 +1,3 @@
-require "time"
-
 class TestLoadBalancerPool < Test::Unit::TestCase
   def test_loadbalancer_pool
     params = {
