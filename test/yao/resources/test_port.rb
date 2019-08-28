@@ -3,7 +3,7 @@ class TestPort < Test::Unit::TestCase
   include AuthStub
 
   def setup
-    stub_client
+    initialize_test_client!
   end
 
   def test_port

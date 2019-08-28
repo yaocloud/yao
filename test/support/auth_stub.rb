@@ -2,7 +2,7 @@ module AuthStub
 
   # Yao::Resources::* のテストで Yao.default.pool の設定を都度都度 記述しなくていいよういするヘルパー
   # endpoint の URL がマチマチだとテストを記述するのが面倒なので example.com で統一している
-  def stub_client
+  def initialize_test_client!
     auth_url = "http://example.com:12345"
     username = "yao"
     tenant   = "default"
