@@ -28,6 +28,7 @@ module Yao
     autoload :RoleAssignment,            "yao/resources/role_assignment"
     autoload :Volume,                    "yao/resources/volume"
     autoload :VolumeType,                "yao/resources/volume_type"
+    autoload :ComputeServices,           "yao/resources/compute_services"
 
     autoload :Resource,                  "yao/resources/resource"
     autoload :Meter,                     "yao/resources/meter"
