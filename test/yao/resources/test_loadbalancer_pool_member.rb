@@ -1,6 +1,6 @@
 require "time"
 
-class TestLoadBalancerPoolMember < Test::Unit::TestCase
+class TestLoadBalancerPoolMember < TestYaoResouce
   def test_loadbalancer_pool_member
     params = {
       "monitor_port" => 8080,

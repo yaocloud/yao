@@ -1,4 +1,4 @@
-class TestNetwork < Test::Unit::TestCase
+class TestNetwork < TestYaoResouce
 
   def test_network
 

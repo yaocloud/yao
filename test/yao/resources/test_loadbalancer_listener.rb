@@ -1,6 +1,6 @@
 require "time"
 
-class TestLoadBalancerListener < Test::Unit::TestCase
+class TestLoadBalancerListener < TestYaoResouce
   def test_loadbalancer_listener
     params = {
       "description" => "A great TLS listener",
