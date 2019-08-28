@@ -160,7 +160,7 @@ class TestServer < TestYaoResouce
 
   def test_tenant
 
-    stub_request(:get, "http://endpoint.example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
