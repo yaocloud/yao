@@ -1,4 +1,11 @@
 class TestHypervisor < Test::Unit::TestCase
+
+  include AuthStub
+
+  def setup
+    stub_client
+  end
+
   def test_hypervisor
     params = {
       "status" => "enabled"
@@ -6,10 +13,6 @@ class TestHypervisor < Test::Unit::TestCase
 
     host = Yao::Hypervisor.new(params)
     assert_equal(host.enabled?, true)
-  end
-
-  def setup
-    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
   end
 
   def test_list_detail

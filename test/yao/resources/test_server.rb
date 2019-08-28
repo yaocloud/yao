@@ -1,7 +1,9 @@
 class TestServer < Test::Unit::TestCase
 
+  include AuthStub
+
   def setup
-    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
+    stub_client
   end
 
   def test_server

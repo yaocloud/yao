@@ -1,9 +1,9 @@
 class TestMeter < Test::Unit::TestCase
 
+  include AuthStub
+
   def setup
-    Yao.default_client.pool["metering"]       = Yao::Client.gen_client("https://example.com:12345")
-    # notice: admin_pool を指定するあたりでハマったので注意
-    Yao.default_client.admin_pool["identity"] = Yao::Client.gen_client("https://example.com:12345")
+    stub_client
   end
 
   def test_meter
