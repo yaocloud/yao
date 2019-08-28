@@ -77,4 +77,23 @@ class TestSubnet < Test::Unit::TestCase
     assert_instance_of(Yao::Resources::Network, subnet.network)
     assert_equal(subnet.network.id, "00000000-0000-0000-0000-000000000000")
   end
+
+  def test_tenant
+    stub_request(:get, "http://endpoint.example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "tenant": {
+            "id": "0123456789abcdef0123456789abcdef"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    subnet = Yao::Subnet.new('tenant_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Tenant, subnet.tenant)
+    assert_equal(subnet.tenant.id, '0123456789abcdef0123456789abcdef')
+  end
 end

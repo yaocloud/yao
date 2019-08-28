@@ -1,7 +1,10 @@
 module Yao::Resources
   class FloatingIP < Base
+
+    include TenantAssociationable
+
     friendly_attributes :router_id, :description, :dns_domain, :dns_name,
-                        :revision_number, :project_id, :tenant_id,
+                        :revision_number,
                         :floating_network_id, :fixed_ip_address,
                         :floating_ip_address, :port_id,
                         :status, :port_details, :tags, :port_forwardings

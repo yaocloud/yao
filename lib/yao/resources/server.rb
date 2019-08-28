@@ -2,8 +2,10 @@ require 'yao/resources/metadata_available'
 require 'yao/resources/action'
 module Yao::Resources
   class Server < Base
+    include TenantAssociationable
+
     friendly_attributes :addresses, :metadata, :name, :progress,
-                        :status, :tenant_id, :user_id, :key_name
+                        :status, :user_id, :key_name
     map_attribute_to_attribute hostId: :host_id
     map_attribute_to_resource  flavor: Flavor
     map_attribute_to_resource  image: Image
