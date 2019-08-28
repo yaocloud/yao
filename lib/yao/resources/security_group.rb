@@ -1,7 +1,9 @@
 require 'yao/resources/security_group_rule'
 module Yao::Resources
   class SecurityGroup < Base
-    friendly_attributes :name, :description, :tenant_id
+    include TenantAssociationable
+
+    friendly_attributes :name, :description
 
     def rules
       self[["rules", SecurityGroupRule].join("__")] ||= (case self.class.service

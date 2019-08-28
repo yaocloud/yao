@@ -1,6 +1,3 @@
-require "time"
-require "date"
-
 class TestAggregates < TestYaoResouce
   def test_server_aggregates
     params = {

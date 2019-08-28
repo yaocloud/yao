@@ -1,17 +1,15 @@
 require 'time'
 module Yao::Resources
   class Resource < Base
-    friendly_attributes :user_id, :resource_id, :project_id,
+    include TenantAssociationable
+
+    friendly_attributes :user_id, :resource_id,
                         :last_sample_timestamp, :first_sample_timestamp,
                         :metadata,
                         :links
 
     def id
       resource_id
-    end
-
-    def tenant
-      @tenant ||= Yao::User.get(project_id)
     end
 
     def user

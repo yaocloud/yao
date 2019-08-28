@@ -1,5 +1,3 @@
-require "time"
-
 class TestLoadBalancerListener < TestYaoResouce
   def test_loadbalancer_listener
     params = {

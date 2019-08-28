@@ -1,7 +1,9 @@
 module Yao::Resources
   class OldSample < Base
+    include TenantAssociationable
+
     friendly_attributes :counter_name, :counter_type, :counter_unit, :counter_volume,
-                        :message_id, :project_id, :resource_id, :timestamp, :resource_metadata, :user_id,
+                        :message_id, :resource_id, :timestamp, :resource_metadata, :user_id,
                         :source
 
     def recorded_at
@@ -15,10 +17,6 @@ module Yao::Resources
 
     def resource
       @resource ||= Yao::Resource.get(resource_id)
-    end
-
-    def tenant
-      @tenant ||= Yao::Tenant.get(project_id)
     end
 
     def user

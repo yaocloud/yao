@@ -1,6 +1,8 @@
 module Yao::Resources
   class Router < Base
-    friendly_attributes :tenant_id, :project_id, :name, :description, :admin_state_up, :status, :external_gateway_info,
+    include TenantAssociationable
+
+    friendly_attributes :name, :description, :admin_state_up, :status, :external_gateway_info,
                         :network_id, :enable_snat, :external_fixed_ips, :routes, :destination, :nexthop, :distributed,
                         :ha, :availability_zone_hints, :availability_zones
 

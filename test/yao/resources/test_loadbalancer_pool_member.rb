@@ -1,5 +1,3 @@
-require "time"
-
 class TestLoadBalancerPoolMember < TestYaoResouce
   def test_loadbalancer_pool_member
     params = {

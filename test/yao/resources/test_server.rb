@@ -157,4 +157,24 @@ class TestServer < TestYaoResouce
     assert_instance_of(Yao::Server, servers.first)
     assert_equal(servers.first.id, 'dummy')
   end
+
+  def test_tenant
+
+    stub_request(:get, "http://endpoint.example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "tenant": {
+            "id": "0123456789abcdef0123456789abcdef"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    server = Yao::Server.new('tenant_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Tenant, server.tenant)
+    assert_equal(server.tenant.id, '0123456789abcdef0123456789abcdef')
+  end
 end

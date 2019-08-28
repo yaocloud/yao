@@ -1,5 +1,3 @@
-require "time"
-
 class TestLoadBalancerHealthMonitor < TestYaoResouce
   def test_loadbalancer_healtchmonitor
     params = {
