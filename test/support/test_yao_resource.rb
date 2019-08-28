@@ -34,5 +34,11 @@ class TestYaoResouce < Test::Unit::TestCase
   # 他のテストで副作用を出さないように Yao::Client.default_client を nil でリセットしておきますa
   def reset_test_client!
     Yao::Client.default_client = nil
+
+    Yao::Config::HOOK_RENEW_CLIENT_KEYS.each do |key|
+      Yao.configure do
+        set key, nil
+      end
+    end
   end
 end
