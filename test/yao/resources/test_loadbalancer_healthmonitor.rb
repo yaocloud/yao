@@ -1,5 +1,3 @@
-require "time"
-
 class TestLoadBalancerHealthMonitor < Test::Unit::TestCase
   def test_loadbalancer_healtchmonitor
     params = {
