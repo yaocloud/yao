@@ -5,6 +5,10 @@ class TestYaoResouce < Test::Unit::TestCase
     initialize_test_client!
   end
 
+  def teardown
+    reset_test_client!
+  end
+
   private
 
   # Yao::Resources::* のテストで Yao.default.pool の設定を都度都度 記述しなくていいよういするヘルパー
@@ -25,5 +29,10 @@ class TestYaoResouce < Test::Unit::TestCase
     Yao.default_client.pool["network"]        = client
     Yao.default_client.pool["compute"]        = client
     Yao.default_client.pool["metering"]       = client
+  end
+
+  # 他のテストで副作用を出さないように Yao::Client.default_client を nil でリセットしておきますa
+  def reset_test_client!
+    Yao::Client.default_client = nil
   end
 end
