@@ -40,5 +40,9 @@ class TestYaoResouce < Test::Unit::TestCase
         set key, nil
       end
     end
+
+    # https://github.com/bblimke/webmock/wiki/Clear-stubs-and-request-history
+    # 他のテストに作用しないように stub_request を reset する
+    WebMock.reset!
   end
 end
