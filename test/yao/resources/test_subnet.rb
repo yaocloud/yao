@@ -1,10 +1,4 @@
-class TestSubnet < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestSubnet < TestYaoResouce
 
   def test_subnet
     # https://docs.openstack.org/api-ref/network/v2/#subnets

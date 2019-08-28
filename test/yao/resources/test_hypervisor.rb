@@ -1,10 +1,4 @@
-class TestHypervisor < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestHypervisor < TestYaoResouce
 
   def test_hypervisor
     params = {

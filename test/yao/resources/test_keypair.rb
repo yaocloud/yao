@@ -1,10 +1,4 @@
-class TestKeypair < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestKeypair < TestYaoResouce
 
   def test_keypair
     # https://docs.openstack.org/api-ref/compute/?expanded=list-keypairs-detail#list-keypairs

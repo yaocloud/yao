@@ -1,10 +1,4 @@
-class TestFlavor < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestFlavor < TestYaoResouce
 
   def test_flavor
     # https://docs.openstack.org/api-ref/compute/?expanded=list-flavors-detail,list-flavors-with-details-detail#list-flavors-with-details

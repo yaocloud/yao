@@ -1,10 +1,4 @@
-class TestFloatingIP < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestFloatingIP < TestYaoResouce
 
   def test_floating_ip
     params = {

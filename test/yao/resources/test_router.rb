@@ -1,10 +1,4 @@
-class TestRouter < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestRouter < TestYaoResouce
 
   def test_router
 

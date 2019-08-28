@@ -1,10 +1,4 @@
-class TestMeter < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestMeter < TestYaoResouce
 
   def test_meter
     # https://docs.openstack.org/ceilometer/pike/webapi/v2.html

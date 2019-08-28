@@ -1,10 +1,4 @@
-class TestRoleAssignment < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestRoleAssignment < TestYaoResouce
 
   def test_role_assignment
 

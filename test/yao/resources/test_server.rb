@@ -1,10 +1,4 @@
-class TestServer < Test::Unit::TestCase
-
-  include AuthStub
-
-  def setup
-    initialize_test_client!
-  end
+class TestServer < TestYaoResouce
 
   def test_server
 
