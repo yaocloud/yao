@@ -23,7 +23,7 @@ class TestOldSample < Test::Unit::TestCase
 
     sample = Yao::Resources::OldSample.new(params)
 
-
+    assert_equal(sample.id, "5460acce-4fd6-480d-ab18-9735ec7b1996")
     assert_equal(sample.message_id, "5460acce-4fd6-480d-ab18-9735ec7b1996")
 
     assert_equal(sample.counter_name, "instance")
@@ -44,9 +44,6 @@ class TestOldSample < Test::Unit::TestCase
 
     assert_instance_of(Time, sample.recorded_at)
     assert_equal(sample.recorded_at.to_s, "2015-01-01 12:00:00 +0900")
-
-    pend 'meter_id is not id!'
-    assert_equal(sample.id, "5460acce-4fd6-480d-ab18-9735ec7b1996")
   end
 
   def test_resource
