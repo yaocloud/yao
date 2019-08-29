@@ -72,9 +72,9 @@ class TestFloatingIP < Test::Unit::TestCase
         status: 200,
         body: <<-JSON,
         {
-          "routers": [{
+          "router": {
             "id": "0123456789abcdef0123456789abcdef"
-          }]
+          }
         }
         JSON
         headers: {'Content-Type' => 'application/json'}
@@ -82,6 +82,7 @@ class TestFloatingIP < Test::Unit::TestCase
 
     fip = Yao::FloatingIP.new("router_id" => "00000000-0000-0000-0000-000000000000")
     assert_instance_of(Yao::Router, fip.router)
+    assert_equal(fip.router.id, "0123456789abcdef0123456789abcdef")
   end
 
   def test_tenant
