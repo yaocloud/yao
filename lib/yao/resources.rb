@@ -2,6 +2,7 @@ module Yao
   module Resources
     require "yao/resources/base"
     require "yao/resources/tenant_associationable"
+    require "yao/resources/router_associationable"
 
     autoload :Server,                    "yao/resources/server"
     autoload :Flavor,                    "yao/resources/flavor"
