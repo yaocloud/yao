@@ -117,9 +117,9 @@ class TestFloatingIP < Test::Unit::TestCase
         status: 200,
         body: <<-JSON,
         {
-          "ports": [{
+          "port": {
             "id": "0123456789abcdef0123456789abcdef"
-          }]
+          }
         }
         JSON
         headers: {'Content-Type' => 'application/json'}
@@ -127,5 +127,6 @@ class TestFloatingIP < Test::Unit::TestCase
 
     fip = Yao::FloatingIP.new("port_id" => "00000000-0000-0000-0000-000000000000")
     assert_instance_of(Yao::Port, fip.port)
+    assert_equal(fip.port.id, "0123456789abcdef0123456789abcdef")
   end
 end
