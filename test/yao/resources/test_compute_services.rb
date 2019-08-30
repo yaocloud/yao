@@ -29,4 +29,71 @@ class TestComputeServices < Test::Unit::TestCase
     assert_equal(compute_service.forced_down, false)
     assert_equal(compute_service.zone, "internal")
   end
+
+  def test_enable
+    stub = stub_request(:put, "https://example.com:12345/os-services/enable").
+      with(
+        body: <<~JSON.chomp
+        {"host":"host1","binary":"nova-compute"}
+        JSON
+      ).to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+            "service": {
+                "binary": "nova-compute",
+                "host": "host1",
+                "status": "enabled"
+            }
+        }
+        JSON
+      )
+
+    Yao::ComputeServices.enable('host1', 'nova-compute')
+    assert_requested stub
+  end
+
+  def test_disable
+    stub = stub_request(:put, "https://example.com:12345/os-services/disable").
+      with(
+        body: <<~JSON.chomp
+        {"host":"host1","binary":"nova-compute"}
+        JSON
+      ).to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "service": {
+          "binary": "nova-compute",
+          "host": "host1",
+          "status": "disabled"
+         }
+        }
+        JSON
+    )
+
+    Yao::ComputeServices.disable('host1', 'nova-compute')
+    assert_requested stub
+  end
+
+  def test_disable_with_reason
+    stub = stub_request(:put, "https://example.com:12345/os-services/disable-log-reason").
+      with(
+        body: <<~JSON.chomp
+        {"host":"host1","binary":"nova-compute","disabled_reason":"test2"}
+        JSON
+      ).to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+            "host": "host1",
+            "binary": "nova-compute",
+            "disabled_reason": "test2"
+        }
+        JSON
+    )
+
+    Yao::ComputeServices.disable('host1', 'nova-compute', 'test2')
+    assert_requested stub
+  end
 end
