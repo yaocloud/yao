@@ -47,9 +47,15 @@ class TestComputeServices < Test::Unit::TestCase
             }
         }
         JSON
+        headers: {'Content-Type' => 'application/json'}
       )
 
-    Yao::ComputeServices.enable('host1', 'nova-compute')
+    compute_service = Yao::ComputeServices.enable('host1', 'nova-compute')
+
+    assert_equal(compute_service.host, "host1")
+    assert_equal(compute_service.binary, "nova-compute")
+    assert_equal(compute_service.status, "enabled")
+
     assert_requested stub
   end
 
@@ -63,16 +69,22 @@ class TestComputeServices < Test::Unit::TestCase
         status: 200,
         body: <<-JSON,
         {
-          "service": {
-          "binary": "nova-compute",
-          "host": "host1",
-          "status": "disabled"
-         }
+            "service": {
+                "binary": "nova-compute",
+                "host": "host1",
+                "status": "disabled"
+           }
         }
         JSON
+        headers: {'Content-Type' => 'application/json'}
     )
 
-    Yao::ComputeServices.disable('host1', 'nova-compute')
+    compute_service = Yao::ComputeServices.disable('host1', 'nova-compute')
+
+    assert_equal(compute_service.host, "host1")
+    assert_equal(compute_service.binary, "nova-compute")
+    assert_equal(compute_service.status, "disabled")
+
     assert_requested stub
   end
 
@@ -86,14 +98,24 @@ class TestComputeServices < Test::Unit::TestCase
         status: 200,
         body: <<-JSON,
         {
-            "host": "host1",
-            "binary": "nova-compute",
-            "disabled_reason": "test2"
+            "service": {
+                "binary": "nova-compute",
+                "disabled_reason": "test2",
+                "host": "host1",
+                "status": "disabled"
+            }
         }
         JSON
+        headers: {'Content-Type' => 'application/json'}
     )
 
-    Yao::ComputeServices.disable('host1', 'nova-compute', 'test2')
+    compute_service = Yao::ComputeServices.disable('host1', 'nova-compute', 'test2')
+
+    assert_equal(compute_service.host, "host1")
+    assert_equal(compute_service.binary, "nova-compute")
+    assert_equal(compute_service.status, "disabled")
+    assert_equal(compute_service.disabled_reason, "test2")
+
     assert_requested stub
   end
 end
