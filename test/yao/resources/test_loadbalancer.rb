@@ -1,4 +1,4 @@
-class TestLoadBalancer < Test::Unit::TestCase
+class TestLoadBalancer < TestYaoResouce
   def test_loadbalancer
     params = {
       "provider" => "octavia",

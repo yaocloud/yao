@@ -1,10 +1,4 @@
-class TestFloatingIP < Test::Unit::TestCase
-
-  def setup
-    Yao.default_client.admin_pool["identity"] = Yao::Client.gen_client("https://example.com:12345")
-    Yao.default_client.pool["network"]  = Yao::Client.gen_client("https://example.com:12345")
-    Yao.default_client.pool["compute"]  = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestFloatingIP < TestYaoResouce
 
   def test_floating_ip
     params = {

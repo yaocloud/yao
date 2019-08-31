@@ -1,4 +1,4 @@
-class TestVolume < Test::Unit::TestCase
+class TestVolume < TestYaoResouce
   def test_volume
     params = {
         'name' => 'cinder',
