@@ -43,7 +43,7 @@ class TestOldSample < TestYaoResouce
 
   def test_resource
     # https://docs.openstack.org/ceilometer/pike/webapi/v2.html
-    stub_request(:get, "https://example.com:12345/v2/resources/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/v2/resources/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -55,13 +55,16 @@ class TestOldSample < TestYaoResouce
       )
 
     sample = Yao::Resources::OldSample.new( 'resource_id' => '00000000-0000-0000-0000-000000000000' )
+
     assert_instance_of(Yao::Resources::Resource, sample.resource)
     assert_equal(sample.resource.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 
   def test_user
 
-    stub_request(:get, "https://example.com:12345/users/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/users/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -77,5 +80,7 @@ class TestOldSample < TestYaoResouce
     meter  = Yao::OldSample.new( "user_id" => "00000000-0000-0000-0000-000000000000" )
     assert_instance_of(Yao::User, meter.user)
     assert_equal(meter.user.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 end

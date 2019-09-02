@@ -39,9 +39,8 @@ class TestSample < TestYaoResouce
   end
 
   def test_resource
-
     # https://docs.openstack.org/ceilometer/pike/webapi/v2.html
-    stub_request(:get, "https://example.com:12345/v2/resources/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/v2/resources/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -53,7 +52,10 @@ class TestSample < TestYaoResouce
       )
 
     sample = Yao::Resources::Sample.new( 'resource_id' => '00000000-0000-0000-0000-000000000000' )
+
     assert_instance_of(Yao::Resources::Resource, sample.resource)
     assert_equal(sample.resource.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 end
