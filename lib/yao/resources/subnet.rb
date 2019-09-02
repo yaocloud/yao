@@ -12,7 +12,7 @@ module Yao::Resources
     end
 
     def network
-      Yao::Network.find network_id
+      @network ||= Yao::Network.find network_id
     end
 
     alias dhcp_enabled? enable_dhcp

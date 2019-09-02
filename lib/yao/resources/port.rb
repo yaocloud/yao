@@ -13,11 +13,11 @@ module Yao::Resources
     end
 
     def primary_subnet
-      Yao::Subnet.find fixed_ips.first["subnet_id"]
+      @subnet ||= Yao::Subnet.find fixed_ips.first["subnet_id"]
     end
 
     def network
-      Yao::Network.find network_id
+      @network ||= Yao::Network.find network_id
     end
 
     self.service        = "network"
