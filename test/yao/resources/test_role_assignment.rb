@@ -1,8 +1,4 @@
-class TestRoleAssignment < Test::Unit::TestCase
-
-  def setup
-    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestRoleAssignment < TestYaoResouce
 
   def test_role_assignment
 
@@ -37,7 +33,7 @@ class TestRoleAssignment < Test::Unit::TestCase
   end
 
   def test_project
-    stub_request(:get, "http://endpoint.example.com:12345/tenants/456789").
+    stub_request(:get, "http://example.com:12345/tenants/456789").
       to_return(
         status: 200,
         body: <<-JSON,

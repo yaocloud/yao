@@ -1,4 +1,4 @@
-class TestImage < Test::Unit::TestCase
+class TestImage < TestYaoResouce
 
   def test_image
 

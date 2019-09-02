@@ -1,4 +1,5 @@
 module AuthStub
+
   def stub_auth_request(auth_url, username, password, tenant)
     stub_request(:post, "#{auth_url}/tokens")
       .with(

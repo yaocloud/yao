@@ -1,4 +1,4 @@
-class TestHost < Test::Unit::TestCase
+class TestHost < TestYaoResouce
 
   def test_host
     # https://docs.openstack.org/api-ref/compute/?expanded=list-flavors-detail,list-flavors-with-details-detail,list-hosts-detail#hosts-os-hosts-deprecated
