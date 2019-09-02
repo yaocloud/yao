@@ -1,7 +1,4 @@
-class TestComputeServices < Test::Unit::TestCase
-  def setup
-    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestComputeServices < TestYaoResouce
 
   def test_compute_services
 
