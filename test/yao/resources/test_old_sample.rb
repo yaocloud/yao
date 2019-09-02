@@ -1,4 +1,4 @@
-class TestOldSample < Test::Unit::TestCase
+class TestOldSample < TestYaoResouce
 
   def test_old_sample
 

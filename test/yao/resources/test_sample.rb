@@ -1,8 +1,4 @@
-class TestSample < Test::Unit::TestCase
-
-  def setup
-    Yao.default_client.pool["metering"] = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestSample < TestYaoResouce
 
   def test_sample
 

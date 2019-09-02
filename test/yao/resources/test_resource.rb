@@ -1,4 +1,4 @@
-class TestResource < Test::Unit::TestCase
+class TestResource < TestYaoResouce
 
   def test_resource
 
