@@ -1,4 +1,4 @@
-class TestVolumeType < Test::Unit::TestCase
+class TestVolumeType < TestYaoResouce
   def test_volume
     params = {
         'name' => 'test_volume',

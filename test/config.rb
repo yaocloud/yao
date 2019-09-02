@@ -6,6 +6,7 @@ require 'yao'
 require 'support/auth_stub'
 require 'support/authv3_stub'
 require 'support/restfully_accesible_stub'
+require 'support/test_yao_resource'
 
 require 'webmock/test_unit'
 
