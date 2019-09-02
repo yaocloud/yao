@@ -1,8 +1,4 @@
-class TestKeypair < Test::Unit::TestCase
-
-  def setup
-    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestKeypair < TestYaoResouce
 
   def test_keypair
     # https://docs.openstack.org/api-ref/compute/?expanded=list-keypairs-detail#list-keypairs

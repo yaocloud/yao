@@ -1,10 +1,4 @@
-class TestMeter < Test::Unit::TestCase
-
-  def setup
-    Yao.default_client.pool["metering"]       = Yao::Client.gen_client("https://example.com:12345")
-    # notice: admin_pool を指定するあたりでハマったので注意
-    Yao.default_client.admin_pool["identity"] = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestMeter < TestYaoResouce
 
   def test_meter
     # https://docs.openstack.org/ceilometer/pike/webapi/v2.html

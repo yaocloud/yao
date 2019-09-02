@@ -1,8 +1,4 @@
-class TestFlavor < Test::Unit::TestCase
-
-  def setup
-    Yao.default_client.pool["compute"] = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestFlavor < TestYaoResouce
 
   def test_flavor
     # https://docs.openstack.org/api-ref/compute/?expanded=list-flavors-detail,list-flavors-with-details-detail#list-flavors-with-details

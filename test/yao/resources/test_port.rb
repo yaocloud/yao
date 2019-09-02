@@ -1,8 +1,4 @@
-class TestPort < Test::Unit::TestCase
-
-  def setup
-    Yao.default_client.pool["network"] = Yao::Client.gen_client("https://example.com:12345")
-  end
+class TestPort < TestYaoResouce
 
   def test_port
 
@@ -83,7 +79,7 @@ class TestPort < Test::Unit::TestCase
 
   def test_tenant
 
-    stub_request(:get, "http://endpoint.example.com:12345/v2.0/tenants/0123456789abcdef0123456789abcdef")
+    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
