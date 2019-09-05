@@ -40,7 +40,7 @@ class TestRole < TestYaoResouce
     end
   end
 
-  sub_test_case 'with keystone v3.0' do
+  sub_test_case 'with keystone v3' do
 
     def setup
       super
