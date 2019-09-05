@@ -37,6 +37,7 @@ class TestUser < TestYaoResouce
 
         roles = Yao::User.find_by_name("test_user")
         assert_instance_of(Array, roles)
+        assert_equal(roles.first.id, "u1000")
         assert_requested(stub)
     end
   end
@@ -77,6 +78,7 @@ class TestUser < TestYaoResouce
 
         roles = Yao::User.find_by_name("test_user")
         assert_instance_of(Array, roles)
+        assert_equal(roles.first.id, "2844b2a08be147a08ef58317d6471f1f")
         assert_requested(stub)
     end
   end
