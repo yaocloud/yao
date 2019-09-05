@@ -74,7 +74,9 @@ module Yao::Resources
       result
     end
 
-    # restful methods
+    # @param query [Hash]
+    # @return [Yao::Resources::*]
+    # @return [Array<Yao::Resources::*]
     def list(query={})
       json = GET(create_url, query).body
       if @return_single_on_querying && !query.empty?
@@ -84,6 +86,9 @@ module Yao::Resources
       end
     end
 
+    # @param id_or_name_or_permalink [Stirng]
+    # @param query [Hash]
+    # @return [Yao::Resources::*]
     def get(id_or_name_or_permalink, query={})
       res = if id_or_name_or_permalink.start_with?("http://", "https://")
               GET(id_or_name_or_permalink, query)
@@ -101,6 +106,8 @@ module Yao::Resources
       list(query.merge({"name" => name}))
     end
 
+    # @param resource_params [Hash]
+    # @return [Yao::Resources::*]
     def create(resource_params)
       params = {
         resource_name_in_json => resource_params
@@ -112,6 +119,8 @@ module Yao::Resources
       return_resource(resource_from_json(res.body))
     end
 
+    # @param id [String]
+    # @return [Yao::Resources::*]
     def update(id, resource_params)
       params = {
         resource_name_in_json => resource_params
@@ -123,6 +132,8 @@ module Yao::Resources
       return_resource(resource_from_json(res.body))
     end
 
+    # @param id [String]
+    # @return [String]
     def destroy(id)
       res = DELETE(create_url(id))
       res.body
@@ -131,7 +142,8 @@ module Yao::Resources
     private
 
     # returns pathname of resource URL
-    # @param [String] subpath
+    # @param subpath [String]
+    # @return [String]
     def create_url(subpath='')
       paths = [ api_version, resources_path, subpath ]
       paths.select{|s| s != ''}.join('/')
@@ -162,8 +174,12 @@ module Yao::Resources
       /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/ === str
     end
 
+    # At first, search by ID. If nothing is found, search by name.
+    # @param name [String]
+    # @param query [Hash]
+    # @return [Yao::Resources::*]
     def get_by_name(name, query={})
-      # At first, search by ID. If nothing is found, search by name.
+
       begin
         GET(create_url(name), query)
       rescue => e
