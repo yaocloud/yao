@@ -8,13 +8,19 @@ module Yao::Resources
     self.resource_name  = "user"
     self.resources_name = "users"
     self.admin          = true
-    self.return_single_on_querying = true
+
+    if self.client.url_prefix.to_s.match?(/v2\.0/)
+      self.return_single_on_querying = true
+    end
 
     class << self
-      def get_by_name(name)
-        self.list(name: name)
+      def find_by_name(name, query={})
+        if client.url_prefix.to_s.match?(/v2\.0/)
+          [super]
+        else
+          super
+        end
       end
-      alias find_by_name get_by_name
     end
   end
 end
