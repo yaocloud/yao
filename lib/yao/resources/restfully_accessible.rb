@@ -76,7 +76,7 @@ module Yao::Resources
 
     # restful methods
     def list(query={})
-      json = GET(create_url([api_version, resources_path]), query).body
+      json = GET(create_url, query).body
       if @return_single_on_querying && !query.empty?
         return_resource(resource_from_json(json))
       else
@@ -88,7 +88,7 @@ module Yao::Resources
       res = if id_or_name_or_permalink.start_with?("http://", "https://")
               GET(id_or_name_or_permalink, query)
             elsif uuid?(id_or_name_or_permalink)
-              GET(create_url([api_version, resources_path, id_or_name_or_permalink]), query)
+              GET(create_url(id_or_name_or_permalink), query)
             else
               get_by_name(id_or_name_or_permalink, query)
             end
@@ -105,7 +105,7 @@ module Yao::Resources
       params = {
         resource_name_in_json => resource_params
       }
-      res = POST(create_url([api_version, resources_path])) do |req|
+      res = POST(create_url) do |req|
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
@@ -116,7 +116,7 @@ module Yao::Resources
       params = {
         resource_name_in_json => resource_params
       }
-      res = PUT(create_url([api_version, resources_path, id])) do |req|
+      res = PUT(create_url(id)) do |req|
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
@@ -124,12 +124,16 @@ module Yao::Resources
     end
 
     def destroy(id)
-      res = DELETE(create_url([api_version, resources_path, id]))
+      res = DELETE(create_url(id))
       res.body
     end
 
     private
-    def create_url(paths)
+
+    # returns pathname of resource URL
+    # @param [String] subpath
+    def create_url(subpath='')
+      paths = [ api_version, resources_path, subpath ]
       paths.select{|s| s != ''}.join('/')
     end
 
@@ -161,14 +165,14 @@ module Yao::Resources
     def get_by_name(name, query={})
       # At first, search by ID. If nothing is found, search by name.
       begin
-        GET(create_url([api_version, resources_path, name]), query)
+        GET(create_url(name), query)
       rescue => e
         raise e unless e.class == Yao::ItemNotFound || e.class == Yao::NotFound
         item = find_by_name(name)
         if item.size > 1
           raise Yao::TooManyItemFonud.new("More than one resource exists with the name '#{name}'")
         end
-        GET(create_url([api_version, resources_path, item.first.id]), query)
+        GET(create_url(item.first.id), query)
       end
     end
   end
