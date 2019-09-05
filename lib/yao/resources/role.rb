@@ -5,14 +5,21 @@ module Yao::Resources
     self.service        = "identity"
     self.resource_name  = "role"
     self.resources_name = "roles"
-
-    if self.client.url_prefix .to_s =~ /v2\.0/
-      self.resources_path = "/OS-KSADM/roles"
-    end
-
     self.admin          = true
 
     class << self
+
+      # override Yao::Resources::RestfullyAccessible#resources_path
+      # This is workaround of keystone versioning v2.0/v3.
+      # @return [String]
+      def resources_path
+        if api_version_v2?
+          "OS-KSADM/roles"
+        else
+          resources_name
+        end
+      end
+
       def get_by_name(name)
         self.list.find {|role| role.name == name }
       end
@@ -43,6 +50,12 @@ module Yao::Resources
       end
 
       private
+
+      # workaround of keystone versioning v2.0/v3
+      # @return [Bool]
+      def api_version_v2?
+        client.url_prefix.to_s =~ /v2\.0/
+      end
 
       def path_for_grant_revoke(tenant, user, role)
         ["tenants", tenant.id, "users", user.id, "roles", "OS-KSADM", role.id].join("/")
