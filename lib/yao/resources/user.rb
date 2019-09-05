@@ -9,13 +9,17 @@ module Yao::Resources
     self.resources_name = "users"
     self.admin          = true
 
-    if self.client.url_prefix.to_s.match?(/v2\.0/)
+    def self.keystone_v2?
+      self.client.url_prefix.to_s.match?(/v2\.0/)
+    end
+
+    if self.keystone_v2?
       self.return_single_on_querying = true
     end
 
     class << self
       def find_by_name(name, query={})
-        if client.url_prefix.to_s.match?(/v2\.0/)
+        if keystone_v2?
           [super]
         else
           super
