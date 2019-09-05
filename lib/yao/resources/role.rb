@@ -5,7 +5,11 @@ module Yao::Resources
     self.service        = "identity"
     self.resource_name  = "role"
     self.resources_name = "roles"
-    self.resources_path = "/OS-KSADM/roles"
+
+    if self.client.url_prefix .to_s =~ /v2\.0/
+      self.resources_path = "/OS-KSADM/roles"
+    end
+
     self.admin          = true
 
     class << self
