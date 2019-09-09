@@ -38,7 +38,7 @@ module Yao::Resources
           req.body = params.to_json
           req.headers['Content-Type'] = 'application/json'
         end
-        return_resource(resource_from_json(res.body))
+        resource_from_json(res.body)
       end
     end
 

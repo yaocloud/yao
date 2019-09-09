@@ -24,11 +24,11 @@ module Yao::Resources
     class << self
       private
       def resource_from_json(json)
-        json
+        new(json)
       end
 
       def resources_from_json(json)
-        json
+        new(json)
       end
     end
   end
