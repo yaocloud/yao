@@ -32,16 +32,17 @@ module Yao::Resources
         )
       end
 
+      # @return [Yao::Resources::Hypervisor::Statistics]
       def statistics
         json = GET([resources_path, "statistics"].join("/")).body
         Yao::Resources::Hypervisor::Statistics.new(json["hypervisor_statistics"])
       end
 
+      # @param id [String]
+      # @return [Yao::Resources::Hypervisor::Uptime]
       def uptime(id)
-        res = resource_from_json(
-                GET([resources_path, id, "uptime"].join("/")).body
-              )
-        Yao::Resources::Hypervisor::Uptime.new(res)
+        json = GET([resources_path, id, "uptime"].join("/")).body
+        Yao::Resources::Hypervisor::Uptime.new(json["hypervisor"])
       end
     end
 

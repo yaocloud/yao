@@ -30,7 +30,7 @@ module Yao::Resources
     def self.list(meter_name, query={})
       cache_key = [meter_name, *query].join
       cache[cache_key] = GET("#{self.api_version}/meters/#{meter_name}", query).body unless cache[cache_key]
-      return_resources(cache[cache_key])
+      new(cache[cache_key])
     end
 
     def self.cache

@@ -40,12 +40,19 @@ module Yao::Resources
 
     class << self
       private
+
+      # override Yao::Resources::RestfullyAccessible.resource_from_json
+      # @param [Hash]
+      # @return [Yao::Resources::Resource]
       def resource_from_json(json)
-        json
+        new(json)
       end
 
+      # override Yao::Resources::RestfullyAccessible.resources_from_json
+      # @param [Hash]
+      # @return [Yao::Resources::Resource]
       def resources_from_json(json)
-        json
+        new(json)
       end
     end
   end
