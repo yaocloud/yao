@@ -139,7 +139,7 @@ class TestServer < TestYaoResouce
   end
 
   def test_list_detail
-    stub_request(:get, "https://example.com:12345/servers/detail")
+    stub = stub_request(:get, "https://example.com:12345/servers/detail")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -156,11 +156,13 @@ class TestServer < TestYaoResouce
     assert_instance_of(Array, servers)
     assert_instance_of(Yao::Server, servers.first)
     assert_equal(servers.first.id, 'dummy')
+
+    assert_requested(stub)
   end
 
   def test_tenant
 
-    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -176,5 +178,7 @@ class TestServer < TestYaoResouce
     server = Yao::Server.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, server.tenant)
     assert_equal(server.tenant.id, '0123456789abcdef0123456789abcdef')
+
+    assert_requested(stub)
   end
 end
