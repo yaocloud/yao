@@ -1,5 +1,7 @@
 module Yao::Resources
   class Subnet < Base
+
+    include NetworkAssociationable
     include TenantAssociationable
 
     friendly_attributes :name, :cidr, :gateway_ip, :network_id, :ip_version,
@@ -9,10 +11,6 @@ module Yao::Resources
       self["allocation_pools"].map do |pool|
         pool["start"]..pool["end"]
       end
-    end
-
-    def network
-      @network ||= Yao::Network.find network_id
     end
 
     alias dhcp_enabled? enable_dhcp

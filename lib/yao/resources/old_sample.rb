@@ -12,7 +12,7 @@ module Yao::Resources
     alias timestamp recorded_at
 
     def id
-      meter_id
+      message_id
     end
 
     def resource
