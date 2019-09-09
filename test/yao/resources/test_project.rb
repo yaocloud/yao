@@ -1,4 +1,4 @@
-class TestProject < TestYaoResouce
+class TestProject < TestYaoResource
   def setup
     super
     Yao.default_client.admin_pool["identity"] = Yao::Client.gen_client("https://example.com:12345/v2.0")
