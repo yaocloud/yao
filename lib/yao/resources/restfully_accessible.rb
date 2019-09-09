@@ -34,6 +34,10 @@ module Yao::Resources
       @admin = bool
     end
 
+    def return_single_on_querying
+      @return_single_on_querying
+    end
+
     def return_single_on_querying=(bool)
       @return_single_on_querying = bool
     end
@@ -79,7 +83,7 @@ module Yao::Resources
     # @return [Array<Yao::Resources::*]
     def list(query={})
       json = GET(create_url, query).body
-      if @return_single_on_querying && !query.empty?
+      if return_single_on_querying && !query.empty?
         return_resource(resource_from_json(json))
       else
         return_resources(resources_from_json(json))

@@ -79,7 +79,7 @@ class TestPort < TestYaoResouce
 
   def test_tenant
 
-    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -95,6 +95,8 @@ class TestPort < TestYaoResouce
     port = Yao::Port.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, port.tenant)
     assert_equal(port.tenant.id, '0123456789abcdef0123456789abcdef')
+
+    assert_requested(stub)
   end
 
   def test_primary_ip
@@ -114,7 +116,7 @@ class TestPort < TestYaoResouce
 
   def test_primary_subnet
 
-    stub_request(:get, "https://example.com:12345/subnets/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/subnets/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -139,11 +141,13 @@ class TestPort < TestYaoResouce
     port = Yao::Port.new(params)
     assert{ port.primary_subnet.instance_of?(Yao::Subnet) }
     assert_equal(port.primary_subnet.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 
   def test_network
 
-    stub_request(:get, "https://example.com:12345/networks/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/networks/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -163,5 +167,7 @@ class TestPort < TestYaoResouce
     port = Yao::Port.new(params)
     assert_instance_of(Yao::Network, port.network)
     assert_equal(port.network.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 end
