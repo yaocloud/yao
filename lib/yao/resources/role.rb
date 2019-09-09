@@ -31,26 +31,49 @@ module Yao::Resources
         end
       end
 
+      # @param user_name [String]
+      # @param on [String]
+      # @return [Array<Yao::Resources::Role>]
       def list_for_user(user_name, on:)
-        user   = Yao::User.get_by_name(user_name)
-        tenant = Yao::Tenant.get_by_name(on)
+        user   = Yao::User.get(user_name)
+        tenant = if api_version_v2?
+                   Yao::Tenant.find_by_name(on)
+                 else
+                   Yao::Project.get(on)
+                 end
         path = ["tenants", tenant.id, "users", user.id, "roles"].join("/")
 
         with_resources_path(path) { self.list }
       end
 
+      # @param role_name [String]
+      # @param to: [String]
+      # @param on: [String]
+      # @return [Faraday::Response]
       def grant(role_name, to:, on:)
-        role   = Yao::Role.get_by_name(role_name)
-        user   = Yao::User.get_by_name(to)
-        tenant = Yao::Tenant.get_by_name(on)
+        role   = Yao::Role.get(role_name)
+        user   = Yao::User.get(to)
+        tenant = if api_version_v2?
+                   Yao::Tenant.find_by_name(on)
+                 else
+                   Yao::Project.get(on)
+                 end
 
         PUT path_for_grant_revoke(tenant, user, role)
       end
 
+      # @param role_name [String]
+      # @param from: [String]
+      # @param on: [String]
+      # @return [Faraday::Response]
       def revoke(role_name, from:, on:)
-        role   = Yao::Role.get_by_name(role_name)
-        user   = Yao::User.get_by_name(from)
-        tenant = Yao::Tenant.get_by_name(on)
+        role   = Yao::Role.get(role_name)
+        user   = Yao::User.get(from)
+        tenant = if api_version_v2?
+                   Yao::Tenant.find_by_name(on)
+                 else
+                   Yao::Project.get(on)
+                 end
 
         DELETE path_for_grant_revoke(tenant, user, role)
       end
