@@ -1,4 +1,4 @@
-class TestAggregates < TestYaoResouce
+class TestAggregates < TestYaoResource
   def test_server_aggregates
     params = {
       "availability_zone" => "nova",

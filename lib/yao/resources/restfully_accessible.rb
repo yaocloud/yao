@@ -34,6 +34,10 @@ module Yao::Resources
       @admin = bool
     end
 
+    def return_single_on_querying
+      @return_single_on_querying
+    end
+
     def return_single_on_querying=(bool)
       @return_single_on_querying = bool
     end
@@ -74,26 +78,31 @@ module Yao::Resources
       result
     end
 
-    # restful methods
+    # @param query [Hash]
+    # @return [Yao::Resources::*]
+    # @return [Array<Yao::Resources::*]
     def list(query={})
-      json = GET(create_url([api_version, resources_path]), query).body
-      if @return_single_on_querying && !query.empty?
-        return_resource(resource_from_json(json))
+      json = GET(create_url, query).body
+      if return_single_on_querying && !query.empty?
+        resource_from_json(json)
       else
         return_resources(resources_from_json(json))
       end
     end
 
+    # @param id_or_name_or_permalink [Stirng]
+    # @param query [Hash]
+    # @return [Yao::Resources::*]
     def get(id_or_name_or_permalink, query={})
       res = if id_or_name_or_permalink.start_with?("http://", "https://")
               GET(id_or_name_or_permalink, query)
             elsif uuid?(id_or_name_or_permalink)
-              GET(create_url([api_version, resources_path, id_or_name_or_permalink]), query)
+              GET(create_url(id_or_name_or_permalink), query)
             else
               get_by_name(id_or_name_or_permalink, query)
             end
 
-      return_resource(resource_from_json(res.body))
+      resource_from_json(res.body)
     end
     alias find get
 
@@ -101,74 +110,93 @@ module Yao::Resources
       list(query.merge({"name" => name}))
     end
 
+    # @param resource_params [Hash]
+    # @return [Yao::Resources::*]
     def create(resource_params)
       params = {
         resource_name_in_json => resource_params
       }
-      res = POST(create_url([api_version, resources_path])) do |req|
+      res = POST(create_url) do |req|
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-      return_resource(resource_from_json(res.body))
+      resource_from_json(res.body)
     end
 
+    # @param id [String]
+    # @return [Yao::Resources::*]
     def update(id, resource_params)
       params = {
         resource_name_in_json => resource_params
       }
-      res = PUT(create_url([api_version, resources_path, id])) do |req|
+      res = PUT(create_url(id)) do |req|
         req.body = params.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-      return_resource(resource_from_json(res.body))
+      resource_from_json(res.body)
     end
 
+    # @param id [String]
+    # @return [String]
     def destroy(id)
-      res = DELETE(create_url([api_version, resources_path, id]))
+      res = DELETE(create_url(id))
       res.body
     end
 
     private
-    def create_url(paths)
+
+    # returns pathname of resource URL
+    # @param subpath [String]
+    # @return [String]
+    def create_url(subpath='')
+      paths = [ api_version, resources_path, subpath ]
       paths.select{|s| s != ''}.join('/')
     end
 
+    # @return [String]
     def resource_name_in_json
       @_resource_name_in_json ||= resource_name.sub(/^os-/, "").tr("-", "_")
     end
 
+    # @param json [Hash]
+    # @return [Yao::Resources::*]
     def resource_from_json(json)
-      json[resource_name_in_json]
+      attribute = json[resource_name_in_json]
+      new(attribute)
     end
 
+    # @param json [Hash]
+    # @return [Array<Hash>]
     def resources_from_json(json)
       @resources_name_in_json ||= resources_name.sub(/^os-/, "").tr("-", "_")
       json[@resources_name_in_json]
     end
 
-    def return_resource(d)
-      new(d)
-    end
-
+    # @param arr [Array<Hash>]
+    # @return [Array<Yao::Resources::*>]
     def return_resources(arr)
-      arr.map{|d| return_resource(d) }
+      arr.map{|d| new(d) }
     end
 
     def uuid?(str)
       /^[\da-f]{8}-([\da-f]{4}-){3}[\da-f]{12}$/ === str
     end
 
+    # At first, search by ID. If nothing is found, search by name.
+    # @param name [String]
+    # @param query [Hash]
+    # @return [Yao::Resources::*]
     def get_by_name(name, query={})
-      # At first, search by ID. If nothing is found, search by name.
+
       begin
-        GET(create_url([api_version, resources_path, name]), query)
+        GET(create_url(name), query)
       rescue => e
         raise e unless e.class == Yao::ItemNotFound || e.class == Yao::NotFound
         item = find_by_name(name)
         if item.size > 1
           raise Yao::TooManyItemFonud.new("More than one resource exists with the name '#{name}'")
         end
-        GET(create_url([api_version, resources_path, item.first.id]), query)
+        GET(create_url(item.first.id), query)
       end
     end
   end

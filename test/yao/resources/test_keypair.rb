@@ -1,4 +1,4 @@
-class TestKeypair < TestYaoResouce
+class TestKeypair < TestYaoResource
 
   def test_keypair
     # https://docs.openstack.org/api-ref/compute/?expanded=list-keypairs-detail#list-keypairs
@@ -20,7 +20,7 @@ EOS
   end
 
   def test_list
-    stub_request(:get, "https://example.com:12345/os-keypairs")
+    stub = stub_request(:get, "https://example.com:12345/os-keypairs")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -46,5 +46,6 @@ EOS
 
     keypairs = Yao::Keypair.list
     assert_equal(keypairs.first.fingerprint, "7e:eb:ab:24:ba:d1:e1:88:ae:9a:fb:66:53:df:d3:bd")
+    assert_requested(stub)
   end
 end

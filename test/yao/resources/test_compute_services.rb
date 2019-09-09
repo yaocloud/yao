@@ -1,4 +1,4 @@
-class TestComputeServices < TestYaoResouce
+class TestComputeServices < TestYaoResource
 
   def test_compute_services
 

@@ -1,4 +1,4 @@
-class TestMeter < TestYaoResouce
+class TestMeter < TestYaoResource
 
   def test_meter
     # https://docs.openstack.org/ceilometer/pike/webapi/v2.html
@@ -28,9 +28,8 @@ class TestMeter < TestYaoResouce
   end
 
   def test_resource
-
     # https://docs.openstack.org/ceilometer/pike/webapi/v2.html
-    stub_request(:get, "https://example.com:12345/v2/resources/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/v2/resources/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -46,13 +45,15 @@ class TestMeter < TestYaoResouce
     }
 
     meter    = Yao::Meter.new(params)
-    resource = meter.resource
-    assert_instance_of(Yao::Resource, resource)
-    assert_equal(resource.resource_id, "00000000-0000-0000-0000-000000000000")
+    assert_instance_of(Yao::Resource, meter.resource)
+    assert_equal(meter.resource.resource_id, "00000000-0000-0000-0000-000000000000")
+    assert_equal(meter.resource.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 
   def test_tenant
-    stub_request(:get, "https://example.com:12345/tenants/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/tenants/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -72,10 +73,12 @@ class TestMeter < TestYaoResouce
     meter  = Yao::Meter.new(params)
     assert_instance_of(Yao::Tenant, meter.tenant)
     assert_equal(meter.tenant.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 
   def test_user
-    stub_request(:get, "https://example.com:12345/users/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/users/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -95,5 +98,7 @@ class TestMeter < TestYaoResouce
     meter  = Yao::Meter.new(params)
     assert_instance_of(Yao::User, meter.user)
     assert_equal(meter.user.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 end

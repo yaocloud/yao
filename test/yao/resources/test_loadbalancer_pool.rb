@@ -1,4 +1,4 @@
-class TestLoadBalancerPool < TestYaoResouce
+class TestLoadBalancerPool < TestYaoResource
   def test_loadbalancer_pool
     params = {
       "lb_algorithm" => "ROUND_ROBIN",

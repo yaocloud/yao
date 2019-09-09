@@ -1,4 +1,4 @@
-class TestSecurityGroup < TestYaoResouce
+class TestSecurityGroup < TestYaoResource
   def test_sg_attributes
     params = {
       "id"                   => "test_group_id_1",
@@ -25,7 +25,7 @@ class TestSecurityGroup < TestYaoResouce
 
   def test_sg_to_tenant
 
-    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -41,5 +41,7 @@ class TestSecurityGroup < TestYaoResouce
     sg = Yao::SecurityGroup.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, sg.tenant)
     assert_equal(sg.tenant.id, '0123456789abcdef0123456789abcdef')
+
+    assert_requested(stub)
   end
 end

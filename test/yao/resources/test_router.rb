@@ -1,4 +1,4 @@
-class TestRouter < TestYaoResouce
+class TestRouter < TestYaoResource
 
   def test_router
 
@@ -104,7 +104,7 @@ class TestRouter < TestYaoResouce
   end
 
   def test_iterfaces
-    stub_request(:get, "https://example.com:12345/ports?device_id=00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/ports?device_id=00000000-0000-0000-0000-000000000000")
     .to_return(
         status: 200,
         body: <<-JSON,
@@ -125,11 +125,13 @@ class TestRouter < TestYaoResouce
     port   = router.interfaces.first
     assert_instance_of(Yao::Port, port)
     assert_equal(port.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 
   def test_tenant
 
-    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -145,5 +147,7 @@ class TestRouter < TestYaoResouce
     router = Yao::Router.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, router.tenant)
     assert_equal(router.tenant.id, '0123456789abcdef0123456789abcdef')
+
+    assert_requested(stub)
   end
 end

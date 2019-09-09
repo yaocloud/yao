@@ -1,4 +1,4 @@
-class TestHypervisor < TestYaoResouce
+class TestHypervisor < TestYaoResource
 
   def test_hypervisor
     params = {
@@ -10,7 +10,7 @@ class TestHypervisor < TestYaoResouce
   end
 
   def test_list_detail
-    stub_request(:get, "https://example.com:12345/os-hypervisors/detail")
+    stub = stub_request(:get, "https://example.com:12345/os-hypervisors/detail")
       .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
       .to_return(
         status: 200,
@@ -26,10 +26,12 @@ class TestHypervisor < TestYaoResouce
 
     h = Yao::Resources::Hypervisor.list_detail
     assert_equal(h.first.id, "dummy")
+
+    assert_requested(stub)
   end
 
   def test_statistics
-    stub_request(:get, "https://example.com:12345/os-hypervisors/statistics")
+    stub = stub_request(:get, "https://example.com:12345/os-hypervisors/statistics")
       .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
       .to_return(
         status: 200,
@@ -56,10 +58,12 @@ class TestHypervisor < TestYaoResouce
 
     s = Yao::Resources::Hypervisor.statistics
     assert_equal(s.count, 1)
+
+    assert_requested(stub)
   end
 
   def test_uptime
-    stub_request(:get, "https://example.com:12345/os-hypervisors/1/uptime")
+    stub = stub_request(:get, "https://example.com:12345/os-hypervisors/1/uptime")
       .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
       .to_return(
         status: 200,
@@ -79,5 +83,7 @@ class TestHypervisor < TestYaoResouce
 
     u = Yao::Resources::Hypervisor.uptime(1)
     assert_equal(u.uptime, " 08:32:11 up 93 days, 18:25, 12 users,  load average: 0.20, 0.12, 0.14")
+
+    assert_requested(stub)
   end
 end

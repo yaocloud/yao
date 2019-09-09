@@ -6,10 +6,29 @@ module Yao::Resources
     self.resource_name  = "os-keypair"
     self.resources_name = "os-keypairs"
 
+    # os-keypairs API returns very complicated JSON.
+    # For example.
+    # {
+    #   "keypairs": [
+    #     {
+    #       "keypair": {
+    #          "fingerprint": "...",
+    #        }
+    #     },
+    #     {
+    #       "keypair": {
+    #          "fingerprint": "...",
+    #        }
+    #     },
+    #   ]
+    #
+    # @param query [Hash]
+    # @return [Array<Yao::Resources::Keypairs>]
     def self.list(query={})
-      return_resources(
-        resources_from_json(GET(resources_name, query).body).map{|r| resource_from_json(r)}
-      )
+      res = GET(resources_name, query)
+      res.body['keypairs'].map { |attribute|
+        new(attribute['keypair'])
+      }
     end
   end
 end

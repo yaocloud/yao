@@ -1,4 +1,4 @@
-class TestYaoResouce < Test::Unit::TestCase
+class TestYaoResource < Test::Unit::TestCase
   include AuthStub
 
   def setup

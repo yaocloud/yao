@@ -1,4 +1,4 @@
-class TestNetwork < TestYaoResouce
+class TestNetwork < TestYaoResource
 
   def test_network
 
@@ -38,7 +38,7 @@ class TestNetwork < TestYaoResouce
 
   def test_tenant
 
-    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
          status: 200,
          body: <<-JSON,
@@ -58,7 +58,8 @@ class TestNetwork < TestYaoResouce
 
     assert_instance_of(Yao::Tenant, network.tenant)
     assert_instance_of(Yao::Tenant, network.project)
-
     assert_equal(network.tenant.id, '0123456789abcdef0123456789abcdef')
+
+    assert_requested(stub)
   end
 end
