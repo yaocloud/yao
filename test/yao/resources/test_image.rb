@@ -1,4 +1,4 @@
-class TestImage < TestYaoResouce
+class TestImage < TestYaoResource
 
   def test_image
 

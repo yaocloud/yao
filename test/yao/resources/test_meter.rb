@@ -1,4 +1,4 @@
-class TestMeter < TestYaoResouce
+class TestMeter < TestYaoResource
 
   def test_meter
     # https://docs.openstack.org/ceilometer/pike/webapi/v2.html

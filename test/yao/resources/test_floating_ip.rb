@@ -1,4 +1,4 @@
-class TestFloatingIP < TestYaoResouce
+class TestFloatingIP < TestYaoResource
 
   def test_floating_ip
     params = {

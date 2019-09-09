@@ -1,4 +1,4 @@
-class TestVolume < TestYaoResouce
+class TestVolume < TestYaoResource
   def test_volume
     params = {
         'name' => 'cinder',

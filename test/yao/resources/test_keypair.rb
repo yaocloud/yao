@@ -1,4 +1,4 @@
-class TestKeypair < TestYaoResouce
+class TestKeypair < TestYaoResource
 
   def test_keypair
     # https://docs.openstack.org/api-ref/compute/?expanded=list-keypairs-detail#list-keypairs

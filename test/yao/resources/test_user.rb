@@ -1,4 +1,4 @@
-class TestUser < TestYaoResouce
+class TestUser < TestYaoResource
   def test_sg_attributes
     params = {
       "name" => "test_user",

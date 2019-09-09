@@ -1,4 +1,4 @@
-class TestLoadBalancerHealthMonitor < TestYaoResouce
+class TestLoadBalancerHealthMonitor < TestYaoResource
   def test_loadbalancer_healtchmonitor
     params = {
       "name" => "super-pool-health-monitor",

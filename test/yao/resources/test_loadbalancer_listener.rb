@@ -1,4 +1,4 @@
-class TestLoadBalancerListener < TestYaoResouce
+class TestLoadBalancerListener < TestYaoResource
   def test_loadbalancer_listener
     params = {
       "description" => "A great TLS listener",
