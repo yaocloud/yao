@@ -55,12 +55,11 @@ module Yao::Resources
     class << self
       alias :stop :shutoff
 
+      # @param query [Hash]
+      # @return [Array<Yao::Resources::Server>]
       def list_detail(query={})
-        return_resources(
-          resources_from_json(
-            GET([resources_path, "detail"].join("/"), query).body
-          )
-        )
+        res = GET([resources_path, "detail"].join("/"), query)
+        resources_from_json(res.body)
       end
     end
 

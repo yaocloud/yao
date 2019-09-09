@@ -84,9 +84,11 @@ module Yao::Resources
     def list(query={})
       json = GET(create_url, query).body
       if return_single_on_querying && !query.empty?
+        # returns Yao::Resources::*
         resource_from_json(json)
       else
-        return_resources(resources_from_json(json))
+        # returns Array of Yao::Resources::*
+        resources_from_json(json)
       end
     end
 
@@ -158,6 +160,11 @@ module Yao::Resources
       @_resource_name_in_json ||= resource_name.sub(/^os-/, "").tr("-", "_")
     end
 
+    # @return [String]
+    def resources_name_in_json
+      @resources_name_in_json ||= resources_name.sub(/^os-/, "").tr("-", "_")
+    end
+
     # @param json [Hash]
     # @return [Yao::Resources::*]
     def resource_from_json(json)
@@ -166,16 +173,11 @@ module Yao::Resources
     end
 
     # @param json [Hash]
-    # @return [Array<Hash>]
-    def resources_from_json(json)
-      @resources_name_in_json ||= resources_name.sub(/^os-/, "").tr("-", "_")
-      json[@resources_name_in_json]
-    end
-
-    # @param arr [Array<Hash>]
     # @return [Array<Yao::Resources::*>]
-    def return_resources(arr)
-      arr.map{|d| new(d) }
+    def resources_from_json(json)
+      json[resources_name_in_json].map { |attribute|
+        new(attribute) # instance of Yao::Resources::*
+      }
     end
 
     def uuid?(str)

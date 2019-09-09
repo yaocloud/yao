@@ -24,12 +24,12 @@ module Yao::Resources
     self.resources_name = "os-hypervisors"
 
     class << self
+
+      # @param query [Hash]
+      # @return [Array<Yao::Resources::Hypervisor>]
       def list_detail(query={})
-        return_resources(
-          resources_from_json(
-            GET([resources_path, "detail"].join("/"), query).body
-          )
-        )
+        res = GET([resources_path, "detail"].join("/"), query)
+        resources_from_json(res.body)
       end
 
       # @return [Yao::Resources::Hypervisor::Statistics]
