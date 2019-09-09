@@ -136,7 +136,7 @@ module Yao::Resources
     end
 
     def resource_name_in_json
-      @_resource_name_in_json ||= resource_name.sub(/^os-/, "").tr("-", "_")
+      @resource_name_in_json ||= resource_name.sub(/^os-/, "").tr("-", "_")
     end
 
     # @param json [Hash]
