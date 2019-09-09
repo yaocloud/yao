@@ -47,7 +47,7 @@ class TestFlavor < TestYaoResouce
   end
 
   def test_list_detail
-    stub_request(:get, "https://example.com:12345/flavors/detail").
+    stub = stub_request(:get, "https://example.com:12345/flavors/detail").
       to_return(
         status: 200,
         body: <<-JSON,
@@ -84,7 +84,9 @@ class TestFlavor < TestYaoResouce
       )
 
     flavors = Yao::Flavor.list_detail
-    assert { flavors.first.instance_of? Yao::Flavor }
+    assert_instance_of(Yao::Flavor, flavors.first)
     assert_equal(flavors.first.name, "m1.tiny")
+
+    assert_requested(stub)
   end
 end

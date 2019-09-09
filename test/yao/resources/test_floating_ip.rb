@@ -61,26 +61,30 @@ class TestFloatingIP < TestYaoResouce
 
   def test_floating_ip_to_router
 
-    stub_request(:get, "https://example.com:12345/routers/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/routers/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
         {
-          "routers": [{
-            "id": "0123456789abcdef0123456789abcdef"
-          }]
+          "router": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
         }
         JSON
         headers: {'Content-Type' => 'application/json'}
       )
 
     fip = Yao::FloatingIP.new("router_id" => "00000000-0000-0000-0000-000000000000")
+
     assert_instance_of(Yao::Router, fip.router)
+    assert_equal(fip.router.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 
   def test_tenant
 
-    stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
       .to_return(
          status: 200,
          body: <<-JSON,
@@ -100,19 +104,20 @@ class TestFloatingIP < TestYaoResouce
 
     assert_instance_of(Yao::Tenant, fip.tenant)
     assert_instance_of(Yao::Tenant, fip.project)
-
     assert_equal(fip.tenant.id, '0123456789abcdef0123456789abcdef')
+
+    assert_requested(stub)
   end
 
   def test_floating_ip_to_port
 
-    stub_request(:get, "https://example.com:12345/ports/00000000-0000-0000-0000-000000000000")
+    stub = stub_request(:get, "https://example.com:12345/ports/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
         {
           "port": {
-            "id": "0123456789abcdef0123456789abcdef"
+            "id": "00000000-0000-0000-0000-000000000000"
           }
         }
         JSON
@@ -120,7 +125,10 @@ class TestFloatingIP < TestYaoResouce
       )
 
     fip = Yao::FloatingIP.new("port_id" => "00000000-0000-0000-0000-000000000000")
+
     assert_instance_of(Yao::Port, fip.port)
-    assert_equal(fip.port.id, "0123456789abcdef0123456789abcdef")
+    assert_equal(fip.port.id, "00000000-0000-0000-0000-000000000000")
+
+    assert_requested(stub)
   end
 end

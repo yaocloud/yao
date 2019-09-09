@@ -29,8 +29,12 @@ module Yao::Resources
       end
 
       private
+
+      # @param path [String]
+      # @param  params [Hash]
+      # @return [Yao::Resources::ComputeServices]
       def put(path, params)
-        res = PUT(create_url([api_version, resources_path, path]), params) do |req|
+        res = PUT(create_url(path), params) do |req|
           req.body = params.to_json
           req.headers['Content-Type'] = 'application/json'
         end

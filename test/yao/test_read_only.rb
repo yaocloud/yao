@@ -17,13 +17,13 @@ class TestOnly < Test::Unit::TestCase
     end
 
     @username = username
-    @get_stub  = stub_request(:get,  "#{auth_url}/users?name=#{username}")
+    @get_stub  = stub_request(:get,  "#{auth_url}/users/#{username}")
     @post_stub = stub_request(:post, "#{auth_url}/users")
   end
 
   def test_read_only
     Yao.read_only do
-      Yao::User.get_by_name(@username)
+      Yao::User.get(@username)
       Yao::User.create(name: "foo", email: "bar", password: "baz")
     end
 
@@ -34,7 +34,7 @@ class TestOnly < Test::Unit::TestCase
   def test_read_only!
     assert_raise Yao::ReadOnlyViolationError do
       Yao.read_only! do
-        Yao::User.get_by_name(@username)
+        Yao::User.get(@username)
         Yao::User.create(name: "foo", email: "bar", password: "baz")
       end
     end
