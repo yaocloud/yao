@@ -3,6 +3,7 @@ module Yao
     require "yao/resources/base"
     require "yao/resources/tenant_associationable"
     require "yao/resources/port_associationable"
+    require "yao/resources/network_associationable"
 
     autoload :Server,                    "yao/resources/server"
     autoload :Flavor,                    "yao/resources/flavor"
@@ -29,6 +30,7 @@ module Yao
     autoload :RoleAssignment,            "yao/resources/role_assignment"
     autoload :Volume,                    "yao/resources/volume"
     autoload :VolumeType,                "yao/resources/volume_type"
+    autoload :ComputeServices,           "yao/resources/compute_services"
 
     autoload :Resource,                  "yao/resources/resource"
     autoload :Meter,                     "yao/resources/meter"
