@@ -87,7 +87,11 @@ module Yao::Resources
       end
 
       def path_for_grant_revoke(tenant, user, role)
-        ["tenants", tenant.id, "users", user.id, "roles", "OS-KSADM", role.id].join("/")
+        if api_version_v2?
+          ["tenants", tenant.id, "users", user.id, "roles", "OS-KSADM", role.id].join("/")
+        else
+          ["projects", tenant.id, "users", user.id, "roles", role.id].join("/")
+        end
       end
     end
   end
