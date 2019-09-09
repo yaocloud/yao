@@ -9,6 +9,17 @@ module Yao::Resources
 
     class << self
 
+      # override Yao::Resources::RestfullyAccessible#find_by_name
+      # This is workaround of keystone versioning v2.0/v3.
+      # @return [Array<Yao::Resources::Role>]
+      def find_by_name(name, query={})
+        if api_version_v2?
+          list.select{|r| r.name == name}
+        else
+          super
+        end
+      end
+
       # override Yao::Resources::RestfullyAccessible#resources_path
       # This is workaround of keystone versioning v2.0/v3.
       # @return [String]
@@ -19,11 +30,6 @@ module Yao::Resources
           resources_name
         end
       end
-
-      def get_by_name(name)
-        self.list.find {|role| role.name == name }
-      end
-      alias find_by_name get_by_name
 
       def list_for_user(user_name, on:)
         user   = Yao::User.get_by_name(user_name)
