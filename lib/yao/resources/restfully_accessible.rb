@@ -135,6 +135,7 @@ module Yao::Resources
       paths.select{|s| s != ''}.join('/')
     end
 
+    # @return [String]
     def resource_name_in_json
       @resource_name_in_json ||= resource_name.sub(/^os-/, "").tr("-", "_")
     end
