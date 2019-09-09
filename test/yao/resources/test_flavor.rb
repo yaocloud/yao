@@ -1,4 +1,4 @@
-class TestFlavor < TestYaoResouce
+class TestFlavor < TestYaoResource
 
   def test_flavor
     # https://docs.openstack.org/api-ref/compute/?expanded=list-flavors-detail,list-flavors-with-details-detail#list-flavors-with-details

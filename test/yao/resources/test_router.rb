@@ -1,4 +1,4 @@
-class TestRouter < TestYaoResouce
+class TestRouter < TestYaoResource
 
   def test_router
 

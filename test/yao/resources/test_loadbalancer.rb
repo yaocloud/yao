@@ -1,4 +1,4 @@
-class TestLoadBalancer < TestYaoResouce
+class TestLoadBalancer < TestYaoResource
   def test_loadbalancer
     params = {
       "provider" => "octavia",

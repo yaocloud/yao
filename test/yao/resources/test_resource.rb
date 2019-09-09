@@ -1,4 +1,4 @@
-class TestResource < TestYaoResouce
+class TestResource < TestYaoResource
 
   def test_resource
 

@@ -1,4 +1,4 @@
-class TestLoadBalancerPoolMember < TestYaoResouce
+class TestLoadBalancerPoolMember < TestYaoResource
   def test_loadbalancer_pool_member
     params = {
       "monitor_port" => 8080,

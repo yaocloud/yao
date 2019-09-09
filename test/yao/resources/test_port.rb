@@ -1,4 +1,4 @@
-class TestPort < TestYaoResouce
+class TestPort < TestYaoResource
 
   def test_port
 

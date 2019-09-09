@@ -1,4 +1,4 @@
-class TestRole < TestYaoResouce
+class TestRole < TestYaoResource
   def test_role_attributes
     params = {
       "name" => "test_role",
