@@ -48,7 +48,7 @@ module Yao::Resources
         new(json)
       end
 
-      # override Yao::Resources::RestfullyAccessible.resource_from_json
+      # override Yao::Resources::RestfullyAccessible.resources_from_json
       # @param [Hash]
       # @return [Yao::Resources::Resource]
       def resources_from_json(json)
