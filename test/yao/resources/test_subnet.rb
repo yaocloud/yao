@@ -1,4 +1,4 @@
-class TestSubnet < TestYaoResouce
+class TestSubnet < TestYaoResource
 
   def test_subnet
     # https://docs.openstack.org/api-ref/network/v2/#subnets

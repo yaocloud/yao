@@ -1,4 +1,4 @@
-class TestResourceBase < TestYaoResouce
+class TestResourceBase < TestYaoResource
   def setup
     stub(Yao::Resources::Base).get { Yao::Resources::Base.new({"id" => "foor", "name" => "bar"}) }
   end

@@ -1,4 +1,4 @@
-class TestHypervisor < TestYaoResouce
+class TestHypervisor < TestYaoResource
 
   def test_hypervisor
     params = {

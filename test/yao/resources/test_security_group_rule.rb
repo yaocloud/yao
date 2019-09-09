@@ -1,4 +1,4 @@
-class TestSecurityGroup < TestYaoResouce
+class TestSecurityGroup < TestYaoResource
   def test_rule_attributes
     params = {
       "id" => "test_rule_id_1",

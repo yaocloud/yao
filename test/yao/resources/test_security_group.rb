@@ -1,4 +1,4 @@
-class TestSecurityGroup < TestYaoResouce
+class TestSecurityGroup < TestYaoResource
   def test_sg_attributes
     params = {
       "id"                   => "test_group_id_1",
