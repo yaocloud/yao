@@ -1,4 +1,4 @@
-class TestNetwork < TestYaoResouce
+class TestNetwork < TestYaoResource
 
   def test_network
 

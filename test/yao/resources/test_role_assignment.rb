@@ -1,4 +1,4 @@
-class TestRoleAssignment < TestYaoResouce
+class TestRoleAssignment < TestYaoResource
 
   def test_role_assignment
 
