@@ -31,6 +31,7 @@ module Yao
     autoload :Volume,                    "yao/resources/volume"
     autoload :VolumeType,                "yao/resources/volume_type"
     autoload :ComputeServices,           "yao/resources/compute_services"
+    autoload :Project,                   "yao/resources/project"
 
     autoload :Resource,                  "yao/resources/resource"
     autoload :Meter,                     "yao/resources/meter"
