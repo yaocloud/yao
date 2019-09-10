@@ -94,7 +94,7 @@ module Yao::Resources
           paths += ["OS-KSADM", role.id] if role
         else
           paths = ["projects", tenant.id, "users", user.id, "roles"]
-          paths.append(role.id) if role
+          paths << role.id if role
         end
         paths.join("/")
       end
