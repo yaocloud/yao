@@ -105,6 +105,9 @@ module Yao::Resources
       end
     end
 
+    # @note .list is defined to keep backward compatibility and will be deprecated
+    alias :list_detail :list
+
     # @param id_or_name_or_permalink [Stirng]
     # @param query [Hash]
     # @return [Yao::Resources::*]

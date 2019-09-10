@@ -91,4 +91,10 @@ class TestFlavor < TestYaoResource
 
     assert_requested(stub)
   end
+
+  def test_list_detail
+    # Yao::Flavor.list_detail と Yao::Flavor.list が alias にあることをテストする
+    # see also: https://stackoverflow.com/questions/25883618/how-to-test-method-alias-ruby
+    assert_equal(Yao::Flavor.method(:list_detail), Yao::Flavor.method(:list))
+  end
 end

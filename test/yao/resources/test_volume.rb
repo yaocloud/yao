@@ -35,4 +35,8 @@ class TestVolume < TestYaoResource
 
     assert_requested(stub)
   end
+
+  def test_list_detail
+    assert_equal(Yao::Volume.method(:list_detail), Yao::Volume.method(:list))
+  end
 end

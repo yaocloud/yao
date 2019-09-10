@@ -162,6 +162,10 @@ class TestServer < TestYaoResource
     assert_requested(stub)
   end
 
+  def test_list_detail
+    assert_equal(Yao::Server.method(:list_detail), Yao::Server.method(:list))
+  end
+
   def test_tenant
 
     stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
