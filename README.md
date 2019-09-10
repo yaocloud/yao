@@ -43,7 +43,7 @@ Yao.configure do
 end
 
 Yao::Network.list # list up networks...
-Yao::Server.list_detail # list up instances...
+Yao::Server.list # list up instances...
 ```
 
 If you want to override some of endpoints by service, you can do:
@@ -79,7 +79,7 @@ OpenStack.configure do
   password    "tonk0tsu-r@men"
 end
 
-OpenStack::Server.list_detail # And let's go on
+OpenStack::Server.list # And let's go on
 ```
 
 ## Contributing

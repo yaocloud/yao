@@ -29,6 +29,7 @@ class TestYaoResource < Test::Unit::TestCase
     Yao.default_client.pool["network"]        = client
     Yao.default_client.pool["compute"]        = client
     Yao.default_client.pool["metering"]       = client
+    Yao.default_client.pool["volumev3"]       = client
   end
 
   # 他のテストで副作用を出さないように Yao::Client.default_client, Yao::Conig を nil でリセットしておきます

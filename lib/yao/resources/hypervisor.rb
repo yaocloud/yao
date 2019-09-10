@@ -22,16 +22,9 @@ module Yao::Resources
     self.service        = "compute"
     self.resource_name  = "os-hypervisor"
     self.resources_name = "os-hypervisors"
+    self.resources_detail_available = true
 
     class << self
-      def list_detail(query={})
-        return_resources(
-          resources_from_json(
-            GET([resources_path, "detail"].join("/"), query).body
-          )
-        )
-      end
-
       # @return [Yao::Resources::Hypervisor::Statistics]
       def statistics
         json = GET([resources_path, "statistics"].join("/")).body
