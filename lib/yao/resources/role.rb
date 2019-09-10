@@ -42,7 +42,8 @@ module Yao::Resources
                    Yao::Project.get(on)
                  end
 
-        GET path_for_role_resource(tenant, user)
+        res = GET(path_for_role_resource(tenant, user))
+        resources_from_json(res.body)
       end
 
       # @param role_name [String]
@@ -58,7 +59,8 @@ module Yao::Resources
                    Yao::Project.get(on)
                  end
 
-        PUT path_for_role_resource(tenant, user, role)
+        # response is "204 Not Content"
+        PUT(path_for_role_resource(tenant, user, role))
       end
 
       # @param role_name [String]
@@ -74,7 +76,8 @@ module Yao::Resources
                    Yao::Project.get(on)
                  end
 
-        DELETE path_for_role_resource(tenant, user, role)
+        # response is "204 Not Content"
+        DELETE(path_for_role_resource(tenant, user, role))
       end
 
       private
