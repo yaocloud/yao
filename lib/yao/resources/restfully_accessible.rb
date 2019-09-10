@@ -5,7 +5,7 @@ module Yao::Resources
     def self.extended(base)
       base.class_eval do
         class << self
-          attr_accessor :resource_name, :resources_name
+          attr_accessor :resource_name, :resources_name, :resources_detail_available
 
           extend Forwardable
           %w(get post put delete).each do |method_name|
@@ -73,13 +73,31 @@ module Yao::Resources
     # @return [Yao::Resources::*]
     # @return [Array<Yao::Resources::*]
     def list(query={})
-      json = GET(create_url, query).body
+
+      url = if resources_detail_available
+        # If the resource has 'detail', #list tries to GET /${resourece}/detail
+        # For example.
+        #
+        #   GET /servers/detail
+        #   GET /flavors/detail
+        #
+        create_url('detail')
+      else
+        create_url
+      end
+
+      json = GET(url, query).body
       if return_single_on_querying && !query.empty?
+        # returns Yao::Resources::*
         resource_from_json(json)
       else
-        return_resources(resources_from_json(json))
+        # returns Array of Yao::Resources::*
+        resources_from_json(json)
       end
     end
+
+    # @note .list is defined to keep backward compatibility and will be deprecated
+    alias :list_detail :list
 
     # @param id_or_name_or_permalink [Stirng]
     # @param query [Hash]
@@ -149,6 +167,11 @@ module Yao::Resources
       @_resource_name_in_json ||= resource_name.sub(/^os-/, "").tr("-", "_")
     end
 
+    # @return [String]
+    def resources_name_in_json
+      @resources_name_in_json ||= resources_name.sub(/^os-/, "").tr("-", "_")
+    end
+
     # @param json [Hash]
     # @return [Yao::Resources::*]
     def resource_from_json(json)
@@ -157,16 +180,11 @@ module Yao::Resources
     end
 
     # @param json [Hash]
-    # @return [Array<Hash>]
-    def resources_from_json(json)
-      @resources_name_in_json ||= resources_name.sub(/^os-/, "").tr("-", "_")
-      json[@resources_name_in_json]
-    end
-
-    # @param arr [Array<Hash>]
     # @return [Array<Yao::Resources::*>]
-    def return_resources(arr)
-      arr.map{|d| new(d) }
+    def resources_from_json(json)
+      json[resources_name_in_json].map { |attribute|
+        new(attribute) # instance of Yao::Resources::*
+      }
     end
 
     def uuid?(str)

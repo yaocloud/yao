@@ -9,7 +9,7 @@ class TestHypervisor < TestYaoResource
     assert_equal(host.enabled?, true)
   end
 
-  def test_list_detail
+  def test_list
     stub = stub_request(:get, "https://example.com:12345/os-hypervisors/detail")
       .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
       .to_return(
@@ -24,10 +24,14 @@ class TestHypervisor < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
-    h = Yao::Resources::Hypervisor.list_detail
+    h = Yao::Resources::Hypervisor.list
     assert_equal(h.first.id, "dummy")
 
     assert_requested(stub)
+  end
+
+  def test_list_detail
+    assert_equal(Yao::Hypervisor.method(:list_detail), Yao::Hypervisor.method(:list))
   end
 
   def test_statistics
