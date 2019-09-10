@@ -47,7 +47,7 @@ class TestFloatingIP < TestYaoResource
     assert_equal("2f245a7b-796b-4f26-9cf9-9e82d248fda7", fip.id)
     assert_equal("ACTIVE", fip.status)
     assert_equal(["tag1,tag2"], fip.tags)
-    assert_equal(fip.port_details, {
+    assert_equal({
         "status" => "ACTIVE",
         "name" => "",
         "admin_state_up" => true,
@@ -55,7 +55,7 @@ class TestFloatingIP < TestYaoResource
         "device_owner" => "compute:nova",
         "mac_address" => "fa:16:3e:b1:3b:30",
         "device_id" => "8e3941b4-a6e9-499f-a1ac-2a4662025cba"
-    })
+    },fip.port_details)
     assert_equal([], fip.port_forwardings)
   end
 

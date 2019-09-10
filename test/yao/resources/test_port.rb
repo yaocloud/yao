@@ -58,12 +58,12 @@ class TestPort < TestYaoResource
     assert_equal("ACTIVE", port.status)
     assert_equal([], port.allowed_address_pairs)
     assert_equal("network:router_interface", port.device_owner)
-    assert_equal(port.fixed_ips, [
+    assert_equal([
       {
         "ip_address" => "10.0.0.1",
         "subnet_id" => "a0304c3a-4f08-4c43-88af-d796509c97d2"
       }
-    ])
+    ], port.fixed_ips)
     assert_equal([], port.security_groups)
     assert_equal("5e3898d7-11be-483e-9732-b2f5eccd2b2e", port.device_id)
     assert_equal("a87cc70a-3e15-4acf-8205-9b711a3531b7", port.network_id)

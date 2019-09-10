@@ -23,10 +23,10 @@ class TestSample < TestYaoResource
 
     sample = Yao::Resources::Sample.new(params)
     assert_equal("2e589cbc-738f-11e9-a9b2-bc764e200515", sample.id)
-    assert_equal(sample.metadata, {
+    assert_equal({
       "name1" => "value1",
       "name2" => "value2"
-    })
+    }, sample.metadata)
     assert_equal("instance", sample.meter)
     assert_equal("openstack", sample.source)
     assert_equal("gauge", sample.type)

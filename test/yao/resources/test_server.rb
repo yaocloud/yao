@@ -93,7 +93,7 @@ class TestServer < TestYaoResource
 
     # friendly_attributes
     assert_equal("2ce4c5b3-2866-4972-93ce-77a2ea46a7f9", server.id)
-    assert_equal(server.addresses, {
+    assert_equal({
       "private" => [
         {
           "OS-EXT-IPS-MAC:mac_addr" => "aa:bb:cc:dd:ee:ff",
@@ -102,7 +102,7 @@ class TestServer < TestYaoResource
           "version" => 4
         }
       ]
-    })
+    }, server.addresses)
     assert_equal({ "My Server Name" => "Apache1" }, server.metadata)
     assert_equal("new-server-test", server.name)
     assert_equal(0, server.progress)

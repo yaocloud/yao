@@ -43,12 +43,12 @@ class TestImage < TestYaoResource
     assert_equal("fakeimage7", image.name)
     assert_equal("ACTIVE", image.status)
     assert_equal(100, image.progress)
-    assert_equal(image.metadata, {
+    assert_equal({
       "architecture"     => "x86_64",
       "auto_disk_config" => "True",
       "kernel_id"  => "nokernel",
       "ramdisk_id" => "nokernel"
-    })
+    },image.metadata)
 
     # map_attribute_to_attribute
     assert_equal(0, image.min_disk)

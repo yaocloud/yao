@@ -38,11 +38,11 @@ class TestResource < TestYaoResource
     assert_equal("bd9431c1-8d69-4ad3-803a-8d4a6b89fd36", resource.id)
     assert_equal("bd9431c1-8d69-4ad3-803a-8d4a6b89fd36", resource.resource_id)
     assert_equal("efd87807-12d2-4b38-9c70-5f5c2ac427ff", resource.user_id)
-    assert_equal(resource.metadata, {
+    assert_equal({
       "name1" =>"value1",
       "name2" =>"value2"
-    })
-    assert_equal(resource.links, [
+    }, resource.metadata)
+    assert_equal([
       {
         "href" => "http://localhost:8777/v2/resources/bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
         "rel" => "self"
@@ -51,6 +51,6 @@ class TestResource < TestYaoResource
         "href" => "http://localhost:8777/v2/meters/volume?q.field=resource_id&q.value=bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
         "rel" => "volume"
       }
-    ])
+    ], resource.links)
   end
 end

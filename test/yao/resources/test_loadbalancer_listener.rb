@@ -33,22 +33,22 @@ class TestLoadBalancerListener < TestYaoResource
     assert_equal(443, listener.protocol_port)
     assert_equal("ACTIVE", listener.provisioning_status)
     assert_equal("http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51", listener.default_tls_container_ref)
-    assert_equal(listener.insert_headers, {
+    assert_equal({
       "X-Forwarded-Port" => "true",
       "X-Forwarded-For" => "true"
-    })
+    },listener.insert_headers)
     assert_equal(Time.parse("2017-02-28T00:42:44"), listener.created)
     assert_equal(Time.parse("2017-02-28T00:44:30"), listener.updated)
     assert_equal("ONLINE", listener.operating_status)
-    assert_equal(listener.sni_container_refs, [
+    assert_equal([
       "http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51",
       "http://198.51.100.10:9311/v1/containers/aaebb31e-7761-4826-8cb4-2b829caca3ee"
-    ])
-    assert_equal(listener.l7policies, [
+    ], listener.sni_container_refs)
+    assert_equal([
         {
             "id" => "5e618272-339d-4a80-8d14-dbc093091bb1"
         }
-    ])
+    ], listener.l7policies)
     assert_equal("great_tls_listener", listener.name)
   end
 end

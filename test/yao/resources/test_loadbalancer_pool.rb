@@ -24,10 +24,10 @@ class TestLoadBalancerPool < TestYaoResource
     assert_equal(Time.parse("2017-04-13T18:14:44"), pool.created)
     assert_equal("ACTIVE", pool.provisioning_status)
     assert_equal(Time.parse("2017-04-13T23:08:12"), pool.updated)
-    assert_equal(pool.session_persistence, {
+    assert_equal({
         "cookie_name" => nil,
         "type" => "SOURCE_IP"
-    })
+    }, pool.session_persistence)
     assert_equal("ONLINE", pool.operating_status)
     assert_equal("round_robin_pool", pool.name)
   end

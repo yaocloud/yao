@@ -68,7 +68,7 @@ class TestRouter < TestYaoResource
     assert_equal("", router.description)
     assert_equal(true, router.admin_state_up)
     assert_equal("ACTIVE", router.status)
-    assert_equal(router.external_gateway_info, {
+    assert_equal({
       "enable_snat" => true,
       "external_fixed_ips" => [
         {
@@ -81,14 +81,14 @@ class TestRouter < TestYaoResource
         }
       ],
       "network_id" => "ae34051f-aa6c-4c75-abf5-50dc9ac99ef3"
-    })
+    }, router.external_gateway_info)
 
-    assert_equal(router.routes, [
+    assert_equal([
       {
         "destination" => "179.24.1.0/24",
         "nexthop" => "172.24.3.99"
       }
-    ])
+    ], router.routes)
 
     assert_equal(false, router.distributed)
     assert_equal(false, router.ha)

@@ -32,10 +32,10 @@ class TestOldSample < TestYaoResource
     assert_equal(1.0, sample.counter_volume)
     assert_equal("bd9431c1-8d69-4ad3-803a-8d4a6b89fd36", sample.resource_id)
     assert_equal(Time.parse("2015-01-01T12:00:00"), sample.timestamp)
-    assert_equal(sample.resource_metadata, {
+    assert_equal({
       "name1" => "value1",
       "name2" => "value2"
-    })
+    }, sample.resource_metadata)
     assert_equal("efd87807-12d2-4b38-9c70-5f5c2ac427ff", sample.user_id)
     assert_equal("openstack", sample.source)
     assert_equal(Time.parse("2015-01-01T12:00:00"), sample.recorded_at)
