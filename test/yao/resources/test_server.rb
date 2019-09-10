@@ -152,6 +152,8 @@ class TestServer < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
+    assert(Yao::Server.resources_detail_available)
+
     servers = Yao::Server.list
     assert_instance_of(Array, servers)
     assert_instance_of(Yao::Server, servers.first)

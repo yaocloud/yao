@@ -83,6 +83,8 @@ class TestFlavor < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
+    assert(Yao::Flavor.resources_detail_available)
+
     flavors = Yao::Flavor.list
     assert_instance_of(Yao::Flavor, flavors.first)
     assert_equal(flavors.first.name, "m1.tiny")
