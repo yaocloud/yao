@@ -17,9 +17,9 @@ class TestSecurityGroup < TestYaoResource
     }
 
     sg = Yao::SecurityGroup.new(params)
-    assert_equal(sg.name, "test_group_name_1")
-    assert_equal(sg.id, "test_group_id_1")
-    assert_equal(sg.description, "test_description_1")
+    assert_equal("test_group_name_1", sg.name)
+    assert_equal("test_group_id_1", sg.id)
+    assert_equal("test_description_1", sg.description)
     assert(sg.rules[0].instance_of?(Yao::SecurityGroupRule))
   end
 
@@ -40,7 +40,7 @@ class TestSecurityGroup < TestYaoResource
 
     sg = Yao::SecurityGroup.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, sg.tenant)
-    assert_equal(sg.tenant.id, '0123456789abcdef0123456789abcdef')
+    assert_equal('0123456789abcdef0123456789abcdef', sg.tenant.id)
 
     assert_requested(stub)
   end

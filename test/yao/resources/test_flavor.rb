@@ -30,20 +30,20 @@ class TestFlavor < TestYaoResource
     flavor = Yao::Flavor.new(params)
 
     # friendly_attributes
-    assert_equal(flavor.id, "1")
-    assert_equal(flavor.name, "m1.tiny")
-    assert_equal(flavor.vcpus, 1)
-    assert_equal(flavor.disk, 1)
-    assert_equal(flavor.swap, "")
+    assert_equal("1", flavor.id)
+    assert_equal("m1.tiny", flavor.name)
+    assert_equal(1, flavor.vcpus)
+    assert_equal(1, flavor.disk)
+    assert_equal("", flavor.swap)
 
     # map_attribute_to_attribute
-    assert_equal(flavor.public?, true)
-    assert_equal(flavor.disabled?, false)
+    assert_equal(true, flavor.public?)
+    assert_equal(false, flavor.disabled?)
 
-    assert_equal(flavor.ram, 512)
-    assert_equal(flavor.ram('M'), 512)
-    assert_equal(flavor.ram('G'), 0.5)
-    assert_equal(flavor.memory, 512)
+    assert_equal(512, flavor.ram)
+    assert_equal(512, flavor.ram('M'))
+    assert_equal(0.5, flavor.ram('G'))
+    assert_equal(512, flavor.memory)
   end
 
   def test_list
@@ -87,7 +87,7 @@ class TestFlavor < TestYaoResource
 
     flavors = Yao::Flavor.list
     assert_instance_of(Yao::Flavor, flavors.first)
-    assert_equal(flavors.first.name, "m1.tiny")
+    assert_equal("m1.tiny", flavors.first.name)
 
     assert_requested(stub)
   end
@@ -95,6 +95,6 @@ class TestFlavor < TestYaoResource
   def test_list_detail
     # Yao::Flavor.list_detail と Yao::Flavor.list が alias にあることをテストする
     # see also: https://stackoverflow.com/questions/25883618/how-to-test-method-alias-ruby
-    assert_equal(Yao::Flavor.method(:list_detail), Yao::Flavor.method(:list))
+    assert_equal(Yao::Flavor.method(:list), Yao::Flavor.method(:list_detail))
   end
 end

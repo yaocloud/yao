@@ -11,8 +11,8 @@ class TestHost < TestYaoResource
     host = Yao::Host.new(params)
 
     # friendly_attributes
-    assert_equal(host.host_name, "b6e4adbc193d428ea923899d07fb001e")
-    assert_equal(host.service, "conductor")
-    assert_equal(host.zone, "internal")
+    assert_equal("b6e4adbc193d428ea923899d07fb001e", host.host_name)
+    assert_equal("conductor", host.service)
+    assert_equal("internal", host.zone)
   end
 end

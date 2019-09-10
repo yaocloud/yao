@@ -16,15 +16,15 @@ class TestComputeServices < TestYaoResource
     }
     compute_service = Yao::ComputeServices.new(params)
 
-    assert_equal(compute_service.id, 1)
-    assert_equal(compute_service.binary, "nova-scheduler")
-    assert_equal(compute_service.disabled_reason, "test1")
-    assert_equal(compute_service.host, "host1")
-    assert_equal(compute_service.state, "up")
-    assert_equal(compute_service.status, "disabled")
-    assert_equal(compute_service.updated, Time.mktime(2012,10,29,13,42,2))
-    assert_equal(compute_service.forced_down, false)
-    assert_equal(compute_service.zone, "internal")
+    assert_equal(1, compute_service.id)
+    assert_equal("nova-scheduler", compute_service.binary)
+    assert_equal("test1", compute_service.disabled_reason)
+    assert_equal("host1", compute_service.host)
+    assert_equal("up", compute_service.state)
+    assert_equal("disabled", compute_service.status)
+    assert_equal(Time.mktime(2012,10,29,13,42,2), compute_service.updated)
+    assert_equal(false, compute_service.forced_down)
+    assert_equal("internal", compute_service.zone)
   end
 
   def test_enable
@@ -49,9 +49,9 @@ class TestComputeServices < TestYaoResource
 
     compute_service = Yao::ComputeServices.enable('host1', 'nova-compute')
 
-    assert_equal(compute_service.host, "host1")
-    assert_equal(compute_service.binary, "nova-compute")
-    assert_equal(compute_service.status, "enabled")
+    assert_equal("host1", compute_service.host)
+    assert_equal("nova-compute", compute_service.binary)
+    assert_equal("enabled", compute_service.status)
 
     assert_requested stub
   end
@@ -78,9 +78,9 @@ class TestComputeServices < TestYaoResource
 
     compute_service = Yao::ComputeServices.disable('host1', 'nova-compute')
 
-    assert_equal(compute_service.host, "host1")
-    assert_equal(compute_service.binary, "nova-compute")
-    assert_equal(compute_service.status, "disabled")
+    assert_equal("host1", compute_service.host)
+    assert_equal("nova-compute", compute_service.binary)
+    assert_equal("disabled", compute_service.status)
 
     assert_requested stub
   end
@@ -108,10 +108,10 @@ class TestComputeServices < TestYaoResource
 
     compute_service = Yao::ComputeServices.disable('host1', 'nova-compute', 'test2')
 
-    assert_equal(compute_service.host, "host1")
-    assert_equal(compute_service.binary, "nova-compute")
-    assert_equal(compute_service.status, "disabled")
-    assert_equal(compute_service.disabled_reason, "test2")
+    assert_equal("host1", compute_service.host)
+    assert_equal("nova-compute", compute_service.binary)
+    assert_equal("disabled", compute_service.status)
+    assert_equal("test2", compute_service.disabled_reason)
 
     assert_requested stub
   end

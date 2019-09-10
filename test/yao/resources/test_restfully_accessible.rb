@@ -21,21 +21,21 @@ class TestRestfullyAccesible < Test::Unit::TestCase
     test 'permalink' do
       stub_get_request("https://example.com/dummy_resource", @resource_name)
       mock(Test).new("dummy_resource") { "OK" }
-      assert_equal(Test.get("https://example.com/dummy_resource"), "OK")
+      assert_equal("OK", Test.get("https://example.com/dummy_resource"))
     end
 
     test 'uuid' do
       uuid = "00112233-4455-6677-8899-aabbccddeeff"
       stub_get_request([@url, @resources_name, uuid].join('/'), @resource_name)
       mock(Test).new("dummy_resource") { "OK" }
-      assert_equal(Test.get(uuid), "OK")
+      assert_equal("OK", Test.get(uuid))
     end
 
     test 'id (not uuid)' do
       id = "1"
       stub_get_request([@url, @resources_name, id].join('/'), @resource_name)
       mock(Test).new("dummy_resource") { "OK" }
-      assert_equal(Test.get(id), "OK")
+      assert_equal("OK", Test.get(id))
     end
 
     test 'name' do
@@ -49,21 +49,21 @@ class TestRestfullyAccesible < Test::Unit::TestCase
       stub_get_request([@url, @resources_name, uuid].join('/'), @resources_name)
       mock(Test).new("dummy_resource") { "OK" }
 
-      assert_equal(Test.get(name), "OK")
+      assert_equal("OK", Test.get(name))
     end
   end
 
   def test_find_by_name
     mock(Test).list({"name" => "dummy"}) { "dummy" }
 
-    assert_equal(Test.find_by_name("dummy"), "dummy")
+    assert_equal("dummy", Test.find_by_name("dummy"))
   end
 
   def test_uuid?
-    assert_equal(Test.send(:uuid?, "00112233-4455-6677-8899-aabbccddeeff"), true)
+    assert_equal(true, Test.send(:uuid?, "00112233-4455-6677-8899-aabbccddeeff"))
 
     # not uuid
-    assert_equal(Test.send(:uuid?, "dummy resource"), false)
-    assert_equal(Test.send(:uuid?, "00112233445566778899aabbccddeeff"), false)
+    assert_equal(false, Test.send(:uuid?, "dummy resource"))
+    assert_equal(false, Test.send(:uuid?, "00112233445566778899aabbccddeeff"))
   end
 end

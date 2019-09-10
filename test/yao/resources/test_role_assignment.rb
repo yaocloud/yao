@@ -21,15 +21,15 @@ class TestRoleAssignment < TestYaoResource
     }
 
     role_assignment = Yao::RoleAssignment.new(params)
-    assert_equal(role_assignment.scope, { "project" => { "id" => "456789" } })
+    assert_equal({ "project" => { "id" => "456789" } }, role_assignment.scope)
 
     # map_attribute_to_resource
     assert_instance_of(Yao::Resources::Role, role_assignment.role)
-    assert_equal(role_assignment.role.id, "123456")
+    assert_equal("123456", role_assignment.role.id)
 
     # map_attribute_to_resource
     assert_instance_of(Yao::Resources::User, role_assignment.user)
-    assert_equal(role_assignment.user.id, "313233")
+    assert_equal("313233", role_assignment.user.id)
   end
 
   def test_project
@@ -56,7 +56,7 @@ class TestRoleAssignment < TestYaoResource
 
     role_assignment = Yao::RoleAssignment.new(params)
     assert_instance_of(Yao::Resources::Tenant, role_assignment.project)
-    assert_equal(role_assignment.project.id, "456789")
+    assert_equal("456789", role_assignment.project.id)
 
     assert_requested(stub)
   end

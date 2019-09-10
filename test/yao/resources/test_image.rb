@@ -40,9 +40,9 @@ class TestImage < TestYaoResource
     image = Yao::Image.new(params)
 
     # friendly_attributes
-    assert_equal(image.name, "fakeimage7")
-    assert_equal(image.status, "ACTIVE")
-    assert_equal(image.progress, 100)
+    assert_equal("fakeimage7", image.name)
+    assert_equal("ACTIVE", image.status)
+    assert_equal(100, image.progress)
     assert_equal(image.metadata, {
       "architecture"     => "x86_64",
       "auto_disk_config" => "True",
@@ -51,13 +51,13 @@ class TestImage < TestYaoResource
     })
 
     # map_attribute_to_attribute
-    assert_equal(image.min_disk, 0)
-    assert_equal(image.min_ram, 0)
+    assert_equal(0, image.min_disk)
+    assert_equal(0, image.min_ram)
 
-    assert_equal(image.size, image["OS-EXT-IMG-SIZE:size"])
-    assert_equal(image.size, 74185822)
-    assert_equal(image.size('K'), 72447.091796875)      # oops
-    assert_equal(image.size('M'), 70.74911308288574)    #
-    assert_equal(image.size('G'), 0.06909093074500561)  #
+    assert_equal(image["OS-EXT-IMG-SIZE:size"], image.size)
+    assert_equal(74185822, image.size)
+    assert_equal(72447.091796875, image.size('K'))      # oops
+    assert_equal(70.74911308288574, image.size('M'))    #
+    assert_equal(0.06909093074500561, image.size('G'))  #
   end
 end

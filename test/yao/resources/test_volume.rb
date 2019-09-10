@@ -6,8 +6,8 @@ class TestVolume < TestYaoResource
     }
 
     volume = Yao::Volume.new(params)
-    assert_equal('cinder', volume.name)
-    assert_equal(10, volume.size)
+    assert_equal(volume.name, 'cinder')
+    assert_equal(volume.size, 10)
   end
 
   def test_list
@@ -31,12 +31,12 @@ class TestVolume < TestYaoResource
 
     volumes = Yao::Volume.list
     assert_instance_of(Yao::Volume, volumes.first)
-    assert_equal(volumes.first.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", volumes.first.id)
 
     assert_requested(stub)
   end
 
   def test_list_detail
-    assert_equal(Yao::Volume.method(:list_detail), Yao::Volume.method(:list))
+    assert_equal(Yao::Volume.method(:list), Yao::Volume.method(:list_detail))
   end
 end

@@ -59,15 +59,15 @@ class TestRouter < TestYaoResource
 
     router = Yao::Router.new(params)
 
-    assert_equal(router.id, "915a14a6-867b-4af7-83d1-70efceb146f9")
+    assert_equal("915a14a6-867b-4af7-83d1-70efceb146f9", router.id)
 
     # friendly_attributes
-    assert_equal(router.tenant_id, "0bd18306d801447bb457a46252d82d13")
-    assert_equal(router.project_id, "0bd18306d801447bb457a46252d82d13")
-    assert_equal(router.name, "router2")
-    assert_equal(router.description, "")
-    assert_equal(router.admin_state_up, true)
-    assert_equal(router.status, "ACTIVE")
+    assert_equal("0bd18306d801447bb457a46252d82d13", router.tenant_id)
+    assert_equal("0bd18306d801447bb457a46252d82d13", router.project_id)
+    assert_equal("router2", router.name)
+    assert_equal("", router.description)
+    assert_equal(true, router.admin_state_up)
+    assert_equal("ACTIVE", router.status)
     assert_equal(router.external_gateway_info, {
       "enable_snat" => true,
       "external_fixed_ips" => [
@@ -90,14 +90,14 @@ class TestRouter < TestYaoResource
       }
     ])
 
-    assert_equal(router.distributed, false)
-    assert_equal(router.ha, false)
-    assert_equal(router.availability_zone_hints, [])
-    assert_equal(router.availability_zones, [ "nova" ])
+    assert_equal(false, router.distributed)
+    assert_equal(false, router.ha)
+    assert_equal([], router.availability_zone_hints)
+    assert_equal([ "nova" ], router.availability_zones)
 
     pend 'oops. These are invalid friendly_attributes'
-    assert_equal(router.network_id,  '')
-    assert_equal(router.enable_snat, '')
+    assert_equal( '', router.network_id)
+    assert_equal('', router.enable_snat)
     assert_equal(router.external_fixed_ips '')
     assert_equal(router.destination '')
     assert_equal(router.nexthop '')
@@ -124,7 +124,7 @@ class TestRouter < TestYaoResource
     router = Yao::Router.new(params)
     port   = router.interfaces.first
     assert_instance_of(Yao::Port, port)
-    assert_equal(port.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", port.id)
 
     assert_requested(stub)
   end
@@ -146,7 +146,7 @@ class TestRouter < TestYaoResource
 
     router = Yao::Router.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, router.tenant)
-    assert_equal(router.tenant.id, '0123456789abcdef0123456789abcdef')
+    assert_equal('0123456789abcdef0123456789abcdef', router.tenant.id)
 
     assert_requested(stub)
   end

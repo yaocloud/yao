@@ -36,19 +36,19 @@ class TestSubnet < TestYaoResource
     subnet = Yao::Subnet.new(params)
 
     # friendly_attributes
-    assert_equal(subnet.name, "private-subnet")
-    assert_equal(subnet.cidr, "10.0.0.0/24")
-    assert_equal(subnet.gateway_ip, "10.0.0.1")
-    assert_equal(subnet.network_id, "db193ab3-96e3-4cb3-8fc5-05f4296d0324")
-    assert_equal(subnet.tenant_id, "26a7980765d0414dbc1fc1f88cdb7e6e")
-    assert_equal(subnet.ip_version, 4)
-    assert_equal(subnet.dns_nameservers, [])
-    assert_equal(subnet.host_routes, [])
-    assert_equal(subnet.enable_dhcp, true)
-    assert_equal(subnet.dhcp_enabled?, true) # alias
+    assert_equal("private-subnet", subnet.name)
+    assert_equal("10.0.0.0/24", subnet.cidr)
+    assert_equal("10.0.0.1", subnet.gateway_ip)
+    assert_equal("db193ab3-96e3-4cb3-8fc5-05f4296d0324", subnet.network_id)
+    assert_equal("26a7980765d0414dbc1fc1f88cdb7e6e", subnet.tenant_id)
+    assert_equal(4, subnet.ip_version)
+    assert_equal([], subnet.dns_nameservers)
+    assert_equal([], subnet.host_routes)
+    assert_equal(true, subnet.enable_dhcp)
+    assert_equal(true, subnet.dhcp_enabled?) # alias
 
     # #allocation_pools
-    assert_equal(subnet.allocation_pools, ["10.0.0.2".."10.0.0.254"])
+    assert_equal(["10.0.0.2".."10.0.0.254"], subnet.allocation_pools)
   end
 
   def test_network
@@ -71,7 +71,7 @@ class TestSubnet < TestYaoResource
 
     subnet = Yao::Subnet.new(params)
     assert_instance_of(Yao::Resources::Network, subnet.network)
-    assert_equal(subnet.network.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", subnet.network.id)
 
     assert_requested(stub)
   end
@@ -92,7 +92,7 @@ class TestSubnet < TestYaoResource
 
     subnet = Yao::Subnet.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, subnet.tenant)
-    assert_equal(subnet.tenant.id, '0123456789abcdef0123456789abcdef')
+    assert_equal('0123456789abcdef0123456789abcdef', subnet.tenant.id)
 
     assert_requested(stub)
   end

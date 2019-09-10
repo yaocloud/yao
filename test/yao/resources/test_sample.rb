@@ -22,20 +22,20 @@ class TestSample < TestYaoResource
     }
 
     sample = Yao::Resources::Sample.new(params)
-    assert_equal(sample.id, "2e589cbc-738f-11e9-a9b2-bc764e200515")
+    assert_equal("2e589cbc-738f-11e9-a9b2-bc764e200515", sample.id)
     assert_equal(sample.metadata, {
       "name1" => "value1",
       "name2" => "value2"
     })
-    assert_equal(sample.meter, "instance")
-    assert_equal(sample.source, "openstack")
-    assert_equal(sample.type, "gauge")
-    assert_equal(sample.unit, "instance")
-    assert_equal(sample.volume, 1.0)
-    assert_equal(sample.resource_id, "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36")
-    assert_equal(sample.user_id, "efd87807-12d2-4b38-9c70-5f5c2ac427ff")
-    assert_equal(sample.recorded_at, Time.parse("2015-01-01T12:00:00"))
-    assert_equal(sample.timestamp, Time.parse("2015-01-01T12:00:00"))
+    assert_equal("instance", sample.meter)
+    assert_equal("openstack", sample.source)
+    assert_equal("gauge", sample.type)
+    assert_equal("instance", sample.unit)
+    assert_equal(1.0, sample.volume)
+    assert_equal("bd9431c1-8d69-4ad3-803a-8d4a6b89fd36", sample.resource_id)
+    assert_equal("efd87807-12d2-4b38-9c70-5f5c2ac427ff", sample.user_id)
+    assert_equal(Time.parse("2015-01-01T12:00:00"), sample.recorded_at)
+    assert_equal(Time.parse("2015-01-01T12:00:00"), sample.timestamp)
   end
 
   def test_resource
@@ -54,7 +54,7 @@ class TestSample < TestYaoResource
     sample = Yao::Resources::Sample.new( 'resource_id' => '00000000-0000-0000-0000-000000000000' )
 
     assert_instance_of(Yao::Resources::Resource, sample.resource)
-    assert_equal(sample.resource.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", sample.resource.id)
 
     assert_requested(stub)
   end

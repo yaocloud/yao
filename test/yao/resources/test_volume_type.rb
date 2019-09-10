@@ -7,8 +7,8 @@ class TestVolumeType < TestYaoResource
     }
 
     volume = Yao::VolumeType.new(params)
-    assert_equal('test_volume', volume.name)
-    assert_equal('this is test volume', volume.description)
-    assert_equal(true, volume.is_public)
+    assert_equal(volume.name, 'test_volume')
+    assert_equal(volume.description, 'this is test volume')
+    assert_equal(volume.is_public, true)
   end
 end

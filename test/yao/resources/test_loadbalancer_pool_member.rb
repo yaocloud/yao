@@ -15,16 +15,16 @@ class TestLoadBalancerPoolMember < TestYaoResource
     }
 
     member = Yao::Resources::LoadBalancerPoolMember.new(params)
-    assert_equal(member.monitor_port, 8080)
-    assert_equal(member.name, "web-server-1")
-    assert_equal(member.weight, 20)
-    assert_equal(member.admin_state_up, true)
-    assert_equal(member.created, Time.parse("2017-05-11T17:21:34"))
-    assert_equal(member.provisioning_status, "ACTIVE")
-    assert_equal(member.monitor_address, nil)
-    assert_equal(member.updated, Time.parse("2017-05-11T17:21:37"))
-    assert_equal(member.address, "192.0.2.16")
-    assert_equal(member.protocol_port, 80)
-    assert_equal(member.operating_status, "NO_MONITOR")
+    assert_equal(8080, member.monitor_port)
+    assert_equal("web-server-1", member.name)
+    assert_equal(20, member.weight)
+    assert_equal(true, member.admin_state_up)
+    assert_equal(Time.parse("2017-05-11T17:21:34"), member.created)
+    assert_equal("ACTIVE", member.provisioning_status)
+    assert_equal(nil, member.monitor_address)
+    assert_equal(Time.parse("2017-05-11T17:21:37"), member.updated)
+    assert_equal("192.0.2.16", member.address)
+    assert_equal(80, member.protocol_port)
+    assert_equal("NO_MONITOR", member.operating_status)
   end
 end

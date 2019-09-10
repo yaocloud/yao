@@ -12,13 +12,13 @@ class TestAggregates < TestYaoResource
     }
 
     aggregates = Yao::Aggregates.new(params)
-    assert_equal(aggregates.availability_zone, "nova")
-    assert_equal(aggregates.deleted, false)
-    assert_equal(aggregates.hosts, ["host1", "host2"])
-    assert_equal(aggregates.metadata, {"foo" => "bar"})
-    assert_equal(aggregates.name, "nova")
-    assert_equal(aggregates.created, Time.parse("2015-08-27T09:49:58-05:00"))
-    assert_equal(aggregates.updated, Time.parse("2015-08-27T09:49:58-05:00"))
-    assert_equal(aggregates.deleted_at, Date.parse("2015-08-27T09:49:58-05:00"))
+    assert_equal("nova", aggregates.availability_zone)
+    assert_equal(false, aggregates.deleted)
+    assert_equal(["host1", "host2"], aggregates.hosts)
+    assert_equal({"foo" => "bar"}, aggregates.metadata)
+    assert_equal("nova", aggregates.name)
+    assert_equal(Time.parse("2015-08-27T09:49:58-05:00"), aggregates.created)
+    assert_equal(Time.parse("2015-08-27T09:49:58-05:00"), aggregates.updated)
+    assert_equal(Date.parse("2015-08-27T09:49:58-05:00"), aggregates.deleted_at)
   end
 end

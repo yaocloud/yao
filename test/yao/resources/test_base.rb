@@ -6,10 +6,10 @@ class TestResourceBase < TestYaoResource
   def test_friendly_attributes
     base = Yao::Resources::Base.new({"id" => "foor"})
     base.class.friendly_attributes(:name)
-    assert_equal(base.name, "bar")
+    assert_equal("bar", base.name)
 
     base = Yao::Resources::Base.new({"name" => "bar"})
     base.class.friendly_attributes(:name)
-    assert_equal(base.name, "bar")
+    assert_equal("bar", base.name)
   end
 end
