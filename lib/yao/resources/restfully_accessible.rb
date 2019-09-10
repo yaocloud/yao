@@ -5,7 +5,7 @@ module Yao::Resources
     def self.extended(base)
       base.class_eval do
         class << self
-          attr_accessor :resource_name, :resources_name
+          attr_accessor :resource_name, :resources_name, :resources_detail_available
 
           extend Forwardable
           %w(get post put delete).each do |method_name|
@@ -82,7 +82,20 @@ module Yao::Resources
     # @return [Yao::Resources::*]
     # @return [Array<Yao::Resources::*]
     def list(query={})
-      json = GET(create_url, query).body
+
+      url = if resources_detail_available
+        # If the resource has 'detail', #list tries to GET /${resourece}/detail
+        # For example.
+        #
+        #   GET /servers/detail
+        #   GET /flavors/detail
+        #
+        create_url('detail')
+      else
+        create_url
+      end
+
+      json = GET(url, query).body
       if return_single_on_querying && !query.empty?
         # returns Yao::Resources::*
         resource_from_json(json)

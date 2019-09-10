@@ -17,15 +17,6 @@ module Yao::Resources
     self.service        = "compute"
     self.resource_name  = "flavor"
     self.resources_name = "flavors"
-
-    class << self
-
-      # @param query [Hash]
-      # @return [Array<Yao::Resources::Flavor>]
-      def list_detail(query={})
-        res = GET([resources_path, "detail"].join("/"), query)
-        resources_from_json(res.body)
-      end
-    end
+    self.resources_detail_available = true
   end
 end

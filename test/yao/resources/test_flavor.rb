@@ -46,7 +46,7 @@ class TestFlavor < TestYaoResource
     assert_equal(flavor.memory, 512)
   end
 
-  def test_list_detail
+  def test_list
     stub = stub_request(:get, "https://example.com:12345/flavors/detail").
       to_return(
         status: 200,
@@ -83,7 +83,7 @@ class TestFlavor < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
-    flavors = Yao::Flavor.list_detail
+    flavors = Yao::Flavor.list
     assert_instance_of(Yao::Flavor, flavors.first)
     assert_equal(flavors.first.name, "m1.tiny")
 

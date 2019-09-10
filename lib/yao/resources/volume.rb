@@ -7,15 +7,6 @@ module Yao::Resources
     self.service        = "volumev3"
     self.resource_name  = "volume"
     self.resources_name = "volumes"
-
-    class << self
-
-      # @param query [Hash]
-      # @return [Array<Yao::Resources::Volume]
-      def list_detail(query={})
-        res = GET([resources_path, "detail"].join("/"), query)
-        resources_from_json(res.body)
-      end
-    end
+    self.resources_detail_available = true
   end
 end

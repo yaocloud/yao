@@ -23,6 +23,7 @@ module Yao::Resources
     self.service        = "compute"
     self.resource_name  = "server"
     self.resources_name = "servers"
+    self.resources_detail_available = true
 
     def old_samples(counter_name: nil, query: {})
       Yao::OldSample.list(counter_name, query).select{|os| os.resource_metadata["instance_id"] == id}
@@ -54,13 +55,6 @@ module Yao::Resources
 
     class << self
       alias :stop :shutoff
-
-      # @param query [Hash]
-      # @return [Array<Yao::Resources::Server>]
-      def list_detail(query={})
-        res = GET([resources_path, "detail"].join("/"), query)
-        resources_from_json(res.body)
-      end
     end
 
     extend MetadataAvailable

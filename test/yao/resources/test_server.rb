@@ -138,7 +138,7 @@ class TestServer < TestYaoResource
     assert_equal(server.ext_sts_vm_state, "active")
   end
 
-  def test_list_detail
+  def test_list
     stub = stub_request(:get, "https://example.com:12345/servers/detail")
       .to_return(
         status: 200,
@@ -152,7 +152,7 @@ class TestServer < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
-    servers = Yao::Server.list_detail
+    servers = Yao::Server.list
     assert_instance_of(Array, servers)
     assert_instance_of(Yao::Server, servers.first)
     assert_equal(servers.first.id, 'dummy')
