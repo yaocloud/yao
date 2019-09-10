@@ -69,15 +69,6 @@ module Yao::Resources
       end
     end
 
-    def with_resources_path(path, &blk)
-      original = @resources_path
-      @resources_path = path
-      result = yield
-      @resources_path = original
-
-      result
-    end
-
     # @param query [Hash]
     # @return [Yao::Resources::*]
     # @return [Array<Yao::Resources::*]
