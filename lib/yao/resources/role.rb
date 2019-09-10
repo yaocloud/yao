@@ -41,9 +41,8 @@ module Yao::Resources
                  else
                    Yao::Project.get(on)
                  end
-        path = ["tenants", tenant.id, "users", user.id, "roles"].join("/")
 
-        with_resources_path(path) { self.list }
+        GET path_for_role_resource(tenant, user)
       end
 
       # @param role_name [String]
@@ -59,7 +58,7 @@ module Yao::Resources
                    Yao::Project.get(on)
                  end
 
-        PUT path_for_grant_revoke(tenant, user, role)
+        PUT path_for_role_resource(tenant, user, role)
       end
 
       # @param role_name [String]
@@ -75,7 +74,7 @@ module Yao::Resources
                    Yao::Project.get(on)
                  end
 
-        DELETE path_for_grant_revoke(tenant, user, role)
+        DELETE path_for_role_resource(tenant, user, role)
       end
 
       private
@@ -86,12 +85,15 @@ module Yao::Resources
         client.url_prefix.to_s =~ /v2\.0/
       end
 
-      def path_for_grant_revoke(tenant, user, role)
+      def path_for_role_resource(tenant, user, role = nil)
         if api_version_v2?
-          ["tenants", tenant.id, "users", user.id, "roles", "OS-KSADM", role.id].join("/")
+          paths = ["tenants", tenant.id, "users", user.id, "roles"]
+          paths += ["OS-KSADM", role.id] if role
         else
-          ["projects", tenant.id, "users", user.id, "roles", role.id].join("/")
+          paths = ["projects", tenant.id, "users", user.id, "roles"]
+          paths.append(role.id) if role
         end
+        paths.join("/")
       end
     end
   end
