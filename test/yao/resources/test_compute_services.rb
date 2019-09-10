@@ -29,14 +29,14 @@ class TestComputeServices < TestYaoResource
 
   def test_enabled?
     compute_service = Yao::ComputeServices.new( 'status' => 'enabled' )
-    assert_equal(compute_service.enabled?, true)
-    assert_equal(compute_service.disabled?, false)
+    assert_true  compute_service.enabled?
+    assert_false compute_service.disabled?
   end
 
   def test_disabled?
     compute_service = Yao::ComputeServices.new( 'status' => 'disabled' )
-    assert_equal(compute_service.enabled?, false)
-    assert_equal(compute_service.disabled?, true)
+    assert_false compute_service.enabled?
+    assert_true  compute_service.disabled?
   end
 
   def test_enable
