@@ -7,8 +7,8 @@ class TestUser < TestYaoResource
     }
 
     user = Yao::User.new(params)
-    assert_equal(user.name, "test_user")
-    assert_equal(user.email, "test-user@example.com")
+    assert_equal("test_user", user.name)
+    assert_equal("test-user@example.com", user.email)
   end
 
   sub_test_case 'with keystone v2.0' do
@@ -37,7 +37,7 @@ class TestUser < TestYaoResource
 
         roles = Yao::User.find_by_name("test_user")
         assert_instance_of(Array, roles)
-        assert_equal(roles.first.id, "u1000")
+        assert_equal("u1000", roles.first.id)
         assert_requested(stub)
     end
   end
@@ -78,7 +78,7 @@ class TestUser < TestYaoResource
 
         roles = Yao::User.find_by_name("test_user")
         assert_instance_of(Array, roles)
-        assert_equal(roles.first.id, "2844b2a08be147a08ef58317d6471f1f")
+        assert_equal("2844b2a08be147a08ef58317d6471f1f", roles.first.id)
         assert_requested(stub)
     end
   end

@@ -31,23 +31,23 @@ class TestFloatingIP < TestYaoResource
     }
 
     fip = Yao::Resources::FloatingIP.new(params)
-    assert_equal(fip.router_id, "d23abc8d-2991-4a55-ba98-2aaea84cc72f")
-    assert_equal(fip.description, "for test")
-    assert_equal(fip.dns_domain, "my-domain.org.")
-    assert_equal(fip.dns_name, "myfip")
-    assert_equal(fip.created, Time.parse("2016-12-21T10:55:50Z"))
-    assert_equal(fip.updated, Time.parse("2016-12-21T10:55:53Z"))
-    assert_equal(fip.revision_number, 1)
-    assert_equal(fip.project_id, "4969c491a3c74ee4af974e6d800c62de")
-    assert_equal(fip.tenant_id, "4969c491a3c74ee4af974e6d800c62de")
-    assert_equal(fip.floating_network_id, "376da547-b977-4cfe-9cba-275c80debf57")
-    assert_equal(fip.fixed_ip_address, "10.0.0.3")
-    assert_equal(fip.floating_ip_address, "172.24.4.228")
-    assert_equal(fip.port_id, "ce705c24-c1ef-408a-bda3-7bbd946164ab")
-    assert_equal(fip.id, "2f245a7b-796b-4f26-9cf9-9e82d248fda7")
-    assert_equal(fip.status, "ACTIVE")
-    assert_equal(fip.tags, ["tag1,tag2"])
-    assert_equal(fip.port_details, {
+    assert_equal("d23abc8d-2991-4a55-ba98-2aaea84cc72f", fip.router_id)
+    assert_equal("for test", fip.description)
+    assert_equal("my-domain.org.", fip.dns_domain)
+    assert_equal("myfip", fip.dns_name)
+    assert_equal(Time.parse("2016-12-21T10:55:50Z"), fip.created)
+    assert_equal(Time.parse("2016-12-21T10:55:53Z"), fip.updated)
+    assert_equal(1, fip.revision_number)
+    assert_equal("4969c491a3c74ee4af974e6d800c62de", fip.project_id)
+    assert_equal("4969c491a3c74ee4af974e6d800c62de", fip.tenant_id)
+    assert_equal("376da547-b977-4cfe-9cba-275c80debf57", fip.floating_network_id)
+    assert_equal("10.0.0.3", fip.fixed_ip_address)
+    assert_equal("172.24.4.228", fip.floating_ip_address)
+    assert_equal("ce705c24-c1ef-408a-bda3-7bbd946164ab", fip.port_id)
+    assert_equal("2f245a7b-796b-4f26-9cf9-9e82d248fda7", fip.id)
+    assert_equal("ACTIVE", fip.status)
+    assert_equal(["tag1,tag2"], fip.tags)
+    assert_equal({
         "status" => "ACTIVE",
         "name" => "",
         "admin_state_up" => true,
@@ -55,8 +55,8 @@ class TestFloatingIP < TestYaoResource
         "device_owner" => "compute:nova",
         "mac_address" => "fa:16:3e:b1:3b:30",
         "device_id" => "8e3941b4-a6e9-499f-a1ac-2a4662025cba"
-    })
-    assert_equal(fip.port_forwardings, [])
+    },fip.port_details)
+    assert_equal([], fip.port_forwardings)
   end
 
   def test_floating_ip_to_router
@@ -77,7 +77,7 @@ class TestFloatingIP < TestYaoResource
     fip = Yao::FloatingIP.new("router_id" => "00000000-0000-0000-0000-000000000000")
 
     assert_instance_of(Yao::Router, fip.router)
-    assert_equal(fip.router.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", fip.router.id)
 
     assert_requested(stub)
   end
@@ -104,7 +104,7 @@ class TestFloatingIP < TestYaoResource
 
     assert_instance_of(Yao::Tenant, fip.tenant)
     assert_instance_of(Yao::Tenant, fip.project)
-    assert_equal(fip.tenant.id, '0123456789abcdef0123456789abcdef')
+    assert_equal('0123456789abcdef0123456789abcdef', fip.tenant.id)
 
     assert_requested(stub)
   end
@@ -127,7 +127,7 @@ class TestFloatingIP < TestYaoResource
     fip = Yao::FloatingIP.new("port_id" => "00000000-0000-0000-0000-000000000000")
 
     assert_instance_of(Yao::Port, fip.port)
-    assert_equal(fip.port.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", fip.port.id)
 
     assert_requested(stub)
   end

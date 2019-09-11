@@ -27,28 +27,28 @@ class TestLoadBalancerListener < TestYaoResource
     }
 
     listener = Yao::Resources::LoadBalancerListener.new(params)
-    assert_equal(listener.description, "A great TLS listener")
-    assert_equal(listener.admin_state_up, true)
-    assert_equal(listener.protocol, "TERMINATED_HTTPS")
-    assert_equal(listener.protocol_port, 443)
-    assert_equal(listener.provisioning_status, "ACTIVE")
-    assert_equal(listener.default_tls_container_ref, "http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51")
-    assert_equal(listener.insert_headers, {
+    assert_equal("A great TLS listener", listener.description)
+    assert_equal(true, listener.admin_state_up)
+    assert_equal("TERMINATED_HTTPS", listener.protocol)
+    assert_equal(443, listener.protocol_port)
+    assert_equal("ACTIVE", listener.provisioning_status)
+    assert_equal("http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51", listener.default_tls_container_ref)
+    assert_equal({
       "X-Forwarded-Port" => "true",
       "X-Forwarded-For" => "true"
-    })
-    assert_equal(listener.created, Time.parse("2017-02-28T00:42:44"))
-    assert_equal(listener.updated, Time.parse("2017-02-28T00:44:30"))
-    assert_equal(listener.operating_status, "ONLINE")
-    assert_equal(listener.sni_container_refs, [
+    },listener.insert_headers)
+    assert_equal(Time.parse("2017-02-28T00:42:44"), listener.created)
+    assert_equal(Time.parse("2017-02-28T00:44:30"), listener.updated)
+    assert_equal("ONLINE", listener.operating_status)
+    assert_equal([
       "http://198.51.100.10:9311/v1/containers/a570068c-d295-4780-91d4-3046a325db51",
       "http://198.51.100.10:9311/v1/containers/aaebb31e-7761-4826-8cb4-2b829caca3ee"
-    ])
-    assert_equal(listener.l7policies, [
+    ], listener.sni_container_refs)
+    assert_equal([
         {
             "id" => "5e618272-339d-4a80-8d14-dbc093091bb1"
         }
-    ])
-    assert_equal(listener.name, "great_tls_listener")
+    ], listener.l7policies)
+    assert_equal("great_tls_listener", listener.name)
   end
 end

@@ -16,15 +16,15 @@ class TestMeter < TestYaoResource
     meter = Yao::Meter.new(params)
 
     # friendly_attributes
-    assert_equal(meter.meter_id, "YmQ5NDMxYzEtOGQ2OS00YWQzLTgwM2EtOGQ0YTZiODlmZDM2K2luc3RhbmNl")
-    assert_equal(meter.meter_id, meter.id)
-    assert_equal(meter.name, "instance")
-    assert_equal(meter.project_id, "35b17138-b364-4e6a-a131-8f3099c5be68")
-    assert_equal(meter.resource_id, "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36")
-    assert_equal(meter.source, "openstack")
-    assert_equal(meter.type, "gauge")
-    assert_equal(meter.unit, "instance")
-    assert_equal(meter.user_id, "efd87807-12d2-4b38-9c70-5f5c2ac427ff")
+    assert_equal("YmQ5NDMxYzEtOGQ2OS00YWQzLTgwM2EtOGQ0YTZiODlmZDM2K2luc3RhbmNl", meter.meter_id)
+    assert_equal(meter.id, meter.meter_id)
+    assert_equal("instance", meter.name)
+    assert_equal("35b17138-b364-4e6a-a131-8f3099c5be68", meter.project_id)
+    assert_equal("bd9431c1-8d69-4ad3-803a-8d4a6b89fd36", meter.resource_id)
+    assert_equal("openstack", meter.source)
+    assert_equal("gauge", meter.type)
+    assert_equal("instance", meter.unit)
+    assert_equal("efd87807-12d2-4b38-9c70-5f5c2ac427ff", meter.user_id)
   end
 
   def test_resource
@@ -46,8 +46,8 @@ class TestMeter < TestYaoResource
 
     meter    = Yao::Meter.new(params)
     assert_instance_of(Yao::Resource, meter.resource)
-    assert_equal(meter.resource.resource_id, "00000000-0000-0000-0000-000000000000")
-    assert_equal(meter.resource.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", meter.resource.resource_id)
+    assert_equal("00000000-0000-0000-0000-000000000000", meter.resource.id)
 
     assert_requested(stub)
   end
@@ -72,7 +72,7 @@ class TestMeter < TestYaoResource
 
     meter  = Yao::Meter.new(params)
     assert_instance_of(Yao::Tenant, meter.tenant)
-    assert_equal(meter.tenant.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", meter.tenant.id)
 
     assert_requested(stub)
   end
@@ -97,7 +97,7 @@ class TestMeter < TestYaoResource
 
     meter  = Yao::Meter.new(params)
     assert_instance_of(Yao::User, meter.user)
-    assert_equal(meter.user.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", meter.user.id)
 
     assert_requested(stub)
   end

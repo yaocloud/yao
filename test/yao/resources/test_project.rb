@@ -21,12 +21,12 @@ class TestProject < TestYaoResource
     }
 
     project = Yao::Project.new(params)
-    assert_equal(project.domain?, false)
-    assert_equal(project.description, nil)
-    assert_equal(project.domain_id, "default")
-    assert_equal(project.enabled?, true)
-    assert_equal(project.id, "0c4e939acacf4376bdcd1129f1a054ad")
-    assert_equal(project.name, "admin")
-    assert_equal(project.parent_id, nil)
+    assert_equal(false, project.domain?)
+    assert_equal(nil, project.description)
+    assert_equal("default", project.domain_id)
+    assert_equal(true, project.enabled?)
+    assert_equal("0c4e939acacf4376bdcd1129f1a054ad", project.id)
+    assert_equal("admin", project.name)
+    assert_equal(nil, project.parent_id)
   end
 end

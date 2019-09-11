@@ -13,14 +13,14 @@ class TestLoadBalancer < TestYaoResource
     }
 
     lb = Yao::Resources::LoadBalancer.new(params)
-    assert_equal(lb.provider, "octavia")
-    assert_equal(lb.description, "greate loadbalancer")
-    assert_equal(lb.admin_state_up, true)
-    assert_equal(lb.provisioning_status, "ACTIVE")
-    assert_equal(lb.vip_address, "198.51.100.1")
-    assert_equal(lb.operationg_status, "ONLINE")
-    assert_equal(lb.name, "greate loadbalancer")
-    assert_equal(lb.created, Time.parse("2017-02-28T00:41:44"))
-    assert_equal(lb.updated, Time.parse("2017-02-28T00:43:30"))
+    assert_equal("octavia", lb.provider)
+    assert_equal("greate loadbalancer", lb.description)
+    assert_equal(true, lb.admin_state_up)
+    assert_equal("ACTIVE", lb.provisioning_status)
+    assert_equal("198.51.100.1", lb.vip_address)
+    assert_equal("ONLINE", lb.operationg_status)
+    assert_equal("greate loadbalancer", lb.name)
+    assert_equal(Time.parse("2017-02-28T00:41:44"), lb.created)
+    assert_equal(Time.parse("2017-02-28T00:43:30"), lb.updated)
   end
 end

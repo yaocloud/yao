@@ -14,10 +14,10 @@ class TestSecurityGroup < TestYaoResource
     }
 
     rule = Yao::SecurityGroupRule.new(params)
-    assert_equal(rule.id, "test_rule_id_1")
-    assert_equal(rule.protocol, "tcp")
-    assert_equal(rule.port_range_max, "443")
-    assert_equal(rule.port_range_min, "443")
-    assert_equal(rule.ethertype, "IPv4")
+    assert_equal("test_rule_id_1", rule.id)
+    assert_equal("tcp", rule.protocol)
+    assert_equal("443", rule.port_range_max)
+    assert_equal("443", rule.port_range_min)
+    assert_equal("IPv4", rule.ethertype)
   end
 end

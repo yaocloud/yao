@@ -6,7 +6,7 @@ class TestHypervisor < TestYaoResource
     }
 
     host = Yao::Hypervisor.new(params)
-    assert_equal(host.enabled?, true)
+    assert_equal(true, host.enabled?)
   end
 
   def test_list
@@ -25,13 +25,13 @@ class TestHypervisor < TestYaoResource
       )
 
     h = Yao::Resources::Hypervisor.list
-    assert_equal(h.first.id, "dummy")
+    assert_equal("dummy", h.first.id)
 
     assert_requested(stub)
   end
 
   def test_list_detail
-    assert_equal(Yao::Hypervisor.method(:list_detail), Yao::Hypervisor.method(:list))
+    assert_equal(Yao::Hypervisor.method(:list), Yao::Hypervisor.method(:list_detail))
   end
 
   def test_statistics
@@ -61,7 +61,7 @@ class TestHypervisor < TestYaoResource
       )
 
     s = Yao::Resources::Hypervisor.statistics
-    assert_equal(s.count, 1)
+    assert_equal(1, s.count)
 
     assert_requested(stub)
   end
@@ -86,7 +86,7 @@ class TestHypervisor < TestYaoResource
       )
 
     u = Yao::Resources::Hypervisor.uptime(1)
-    assert_equal(u.uptime, " 08:32:11 up 93 days, 18:25, 12 users,  load average: 0.20, 0.12, 0.14")
+    assert_equal(" 08:32:11 up 93 days, 18:25, 12 users,  load average: 0.20, 0.12, 0.14", u.uptime)
 
     assert_requested(stub)
   end

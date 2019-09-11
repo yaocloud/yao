@@ -50,31 +50,31 @@ class TestPort < TestYaoResource
     }
 
     port = Yao::Port.new(params)
-    assert_equal(port.id, "46d4bfb9-b26e-41f3-bd2e-e6dcc1ccedb2")
+    assert_equal("46d4bfb9-b26e-41f3-bd2e-e6dcc1ccedb2", port.id)
 
     # friendly_attributes
-    assert_equal(port.name, "foobar")
-    assert_equal(port.mac_address, "fa:16:3e:23:fd:d7")
-    assert_equal(port.status, "ACTIVE")
-    assert_equal(port.allowed_address_pairs, [])
-    assert_equal(port.device_owner, "network:router_interface")
-    assert_equal(port.fixed_ips, [
+    assert_equal("foobar", port.name)
+    assert_equal("fa:16:3e:23:fd:d7", port.mac_address)
+    assert_equal("ACTIVE", port.status)
+    assert_equal([], port.allowed_address_pairs)
+    assert_equal("network:router_interface", port.device_owner)
+    assert_equal([
       {
         "ip_address" => "10.0.0.1",
         "subnet_id" => "a0304c3a-4f08-4c43-88af-d796509c97d2"
       }
-    ])
-    assert_equal(port.security_groups, [])
-    assert_equal(port.device_id, "5e3898d7-11be-483e-9732-b2f5eccd2b2e")
-    assert_equal(port.network_id, "a87cc70a-3e15-4acf-8205-9b711a3531b7")
-    assert_equal(port.tenant_id, "7e02058126cc4950b75f9970368ba177")
-    assert_equal(port.admin_state_up, true)
+    ], port.fixed_ips)
+    assert_equal([], port.security_groups)
+    assert_equal("5e3898d7-11be-483e-9732-b2f5eccd2b2e", port.device_id)
+    assert_equal("a87cc70a-3e15-4acf-8205-9b711a3531b7", port.network_id)
+    assert_equal("7e02058126cc4950b75f9970368ba177", port.tenant_id)
+    assert_equal(true, port.admin_state_up)
 
     # map_attribute_to_attribute
-    assert_equal(port.host_id, "compute-000")
+    assert_equal("compute-000", port.host_id)
 
     # primary_ip
-    assert_equal(port.primary_ip, "10.0.0.1")
+    assert_equal("10.0.0.1", port.primary_ip)
   end
 
   def test_tenant
@@ -94,7 +94,7 @@ class TestPort < TestYaoResource
 
     port = Yao::Port.new('tenant_id' => '0123456789abcdef0123456789abcdef')
     assert_instance_of(Yao::Tenant, port.tenant)
-    assert_equal(port.tenant.id, '0123456789abcdef0123456789abcdef')
+    assert_equal('0123456789abcdef0123456789abcdef', port.tenant.id)
 
     assert_requested(stub)
   end
@@ -111,7 +111,7 @@ class TestPort < TestYaoResource
     }
 
     port = Yao::Port.new(params)
-    assert_equal(port.primary_ip, "10.0.0.1")
+    assert_equal("10.0.0.1", port.primary_ip)
   end
 
   def test_primary_subnet
@@ -140,7 +140,7 @@ class TestPort < TestYaoResource
 
     port = Yao::Port.new(params)
     assert{ port.primary_subnet.instance_of?(Yao::Subnet) }
-    assert_equal(port.primary_subnet.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", port.primary_subnet.id)
 
     assert_requested(stub)
   end
@@ -166,7 +166,7 @@ class TestPort < TestYaoResource
 
     port = Yao::Port.new(params)
     assert_instance_of(Yao::Network, port.network)
-    assert_equal(port.network.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", port.network.id)
 
     assert_requested(stub)
   end

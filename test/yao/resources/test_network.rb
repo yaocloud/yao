@@ -21,19 +21,19 @@ class TestNetwork < TestYaoResource
     network = Yao::Network.new(params)
 
     # friendly_attributes
-    assert_equal(network.id, "b3680498-03da-4691-896f-ef9ee1d856a7")
-    assert_equal(network.name, "net1")
-    assert_equal(network.status, "ACTIVE")
-    assert_equal(network.shared, false)
-    assert_equal(network.shared?, false)
-    assert_equal(network.tenant_id, "c05140b3dc7c4555afff9fab6b58edc2")
-    assert_equal(network.subnets, [])
-    assert_equal(network.admin_state_up, true)
+    assert_equal("b3680498-03da-4691-896f-ef9ee1d856a7", network.id)
+    assert_equal("net1", network.name)
+    assert_equal("ACTIVE", network.status)
+    assert_equal(false, network.shared)
+    assert_equal(false, network.shared?)
+    assert_equal("c05140b3dc7c4555afff9fab6b58edc2", network.tenant_id)
+    assert_equal([], network.subnets)
+    assert_equal(true, network.admin_state_up)
 
     #map_attribute_to_attribute
-    assert_equal(network.physical_network, "physnet1")
-    assert_equal(network.type, "vlan")
-    assert_equal(network.segmentation_id, 1000)
+    assert_equal("physnet1", network.physical_network)
+    assert_equal("vlan", network.type)
+    assert_equal(1000, network.segmentation_id)
   end
 
   def test_tenant
@@ -58,7 +58,7 @@ class TestNetwork < TestYaoResource
 
     assert_instance_of(Yao::Tenant, network.tenant)
     assert_instance_of(Yao::Tenant, network.project)
-    assert_equal(network.tenant.id, '0123456789abcdef0123456789abcdef')
+    assert_equal('0123456789abcdef0123456789abcdef', network.tenant.id)
 
     assert_requested(stub)
   end

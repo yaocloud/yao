@@ -23,22 +23,22 @@ class TestOldSample < TestYaoResource
 
     sample = Yao::Resources::OldSample.new(params)
 
-    assert_equal(sample.id, "5460acce-4fd6-480d-ab18-9735ec7b1996")
-    assert_equal(sample.message_id, "5460acce-4fd6-480d-ab18-9735ec7b1996")
+    assert_equal("5460acce-4fd6-480d-ab18-9735ec7b1996", sample.id)
+    assert_equal("5460acce-4fd6-480d-ab18-9735ec7b1996", sample.message_id)
 
-    assert_equal(sample.counter_name, "instance")
-    assert_equal(sample.counter_type, "gauge")
-    assert_equal(sample.counter_unit, "instance")
-    assert_equal(sample.counter_volume, 1.0)
-    assert_equal(sample.resource_id, "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36")
-    assert_equal(sample.timestamp, Time.parse("2015-01-01T12:00:00"))
-    assert_equal(sample.resource_metadata, {
+    assert_equal("instance", sample.counter_name)
+    assert_equal("gauge", sample.counter_type)
+    assert_equal("instance", sample.counter_unit)
+    assert_equal(1.0, sample.counter_volume)
+    assert_equal("bd9431c1-8d69-4ad3-803a-8d4a6b89fd36", sample.resource_id)
+    assert_equal(Time.parse("2015-01-01T12:00:00"), sample.timestamp)
+    assert_equal({
       "name1" => "value1",
       "name2" => "value2"
-    })
-    assert_equal(sample.user_id, "efd87807-12d2-4b38-9c70-5f5c2ac427ff")
-    assert_equal(sample.source, "openstack")
-    assert_equal(sample.recorded_at, Time.parse("2015-01-01T12:00:00"))
+    }, sample.resource_metadata)
+    assert_equal("efd87807-12d2-4b38-9c70-5f5c2ac427ff", sample.user_id)
+    assert_equal("openstack", sample.source)
+    assert_equal(Time.parse("2015-01-01T12:00:00"), sample.recorded_at)
   end
 
   def test_resource
@@ -57,7 +57,7 @@ class TestOldSample < TestYaoResource
     sample = Yao::Resources::OldSample.new( 'resource_id' => '00000000-0000-0000-0000-000000000000' )
 
     assert_instance_of(Yao::Resources::Resource, sample.resource)
-    assert_equal(sample.resource.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", sample.resource.id)
 
     assert_requested(stub)
   end
@@ -79,7 +79,7 @@ class TestOldSample < TestYaoResource
 
     meter  = Yao::OldSample.new( "user_id" => "00000000-0000-0000-0000-000000000000" )
     assert_instance_of(Yao::User, meter.user)
-    assert_equal(meter.user.id, "00000000-0000-0000-0000-000000000000")
+    assert_equal("00000000-0000-0000-0000-000000000000", meter.user.id)
 
     assert_requested(stub)
   end
