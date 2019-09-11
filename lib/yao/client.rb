@@ -73,8 +73,13 @@ module Yao
           force_public_url = Yao.config.endpoints[type.to_sym][:public] rescue nil
           force_admin_url = Yao.config.endpoints[type.to_sym][:admin] rescue nil
 
-          self.pool[type] = Yao::Client.gen_client(force_public_url || urls[:public_url], token: token) if force_public_url || urls[:public_url]
-          self.admin_pool[type] = Yao::Client.gen_client(force_admin_url || urls[:admin_url],  token: token) if force_admin_url || urls[:admin_url]
+          if force_public_url || urls[:public_url]
+            self.pool[type] = Yao::Client.gen_client(force_public_url || urls[:public_url], token: token)
+          end
+
+          if force_admin_url || urls[:admin_url]
+            self.admin_pool[type] = Yao::Client.gen_client(force_admin_url || urls[:admin_url],  token: token)
+          end
         end
       end
     end
@@ -109,7 +114,12 @@ module Yao
       # @return [Hash]
       def client_options
         opt = {}
-        opt.merge!({ request: { timeout: Yao.config.timeout }}) if Yao.config.timeout
+
+        if Yao.config.timeout
+          opt.merge!({ request: { timeout: Yao.config.timeout }})
+        end
+
+        # Client Certificate Authentication
         if Yao.config.client_cert && Yao.config.client_key
           require 'openssl'
           cert = OpenSSL::X509::Certificate.new(File.read(Yao.config.client_cert))
