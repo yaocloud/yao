@@ -71,7 +71,7 @@ module Yao
           #   end
           #
           force_public_url = Yao.config.endpoints[type.to_sym][:public] rescue nil
-          force_admin_url = Yao.config.endpoints[type.to_sym][:admin] rescue nil
+          force_admin_url  = Yao.config.endpoints[type.to_sym][:admin]  rescue nil
 
           if force_public_url || urls[:public_url]
             self.pool[type] = Yao::Client.gen_client(force_public_url || urls[:public_url], token: token)
