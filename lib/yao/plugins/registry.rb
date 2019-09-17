@@ -10,10 +10,15 @@ module Yao::Plugins
       @types = {}
     end
 
+    # @type type [Symbol]
+    # @return [Object]
     def [](type)
       @types[type]
     end
 
+    # @param klass [*]
+    # @param type [Symbol]
+    # @param name [Symbol]
     def register(klass, type: nil, name: :default)
       raise("Plugin registration requires both type and name.") if !type or !name
       @types[type] ||= {}
@@ -21,6 +26,9 @@ module Yao::Plugins
     end
   end
 
+  # @param [*]
+  # @param [Symbol]
+  # @param [Symbol]
   def self.register(*a)
     Registry.instance.register(*a)
   end
