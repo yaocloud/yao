@@ -1,5 +1,7 @@
 require 'singleton'
 
+# Regstiry Pattern - https://www.martinfowler.com/eaaCatalog/registry.html
+# A well-known object that other objects can use to find common objects and services.
 module Yao::Plugins
   class Registry
     include Singleton
