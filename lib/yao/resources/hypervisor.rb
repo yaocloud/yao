@@ -7,12 +7,19 @@ module Yao::Resources
                         :memory_mb, :memory_mb_used, :free_disk_gb,
                         :local_gb, :local_gb_used, :free_disk_gb, :status
 
+    # @return [Hash]
     def cpu_info
       JSON.parse self["cpu_info"]
     end
 
+    # @return [Bool]
     def enabled?
       self['status'] == 'enabled'
+    end
+
+    # @return [Yao::ComputeServices]
+    def service
+      Yao::ComputeServices.new(self['service'])
     end
 
     alias hostname hypervisor_hostname

@@ -73,6 +73,10 @@ class TestHypervisor < TestYaoResource
 
     # #enabled?
     assert_true(host.enabled?)
+
+    # #service
+    assert_instance_of(Yao::ComputeServices, host.service)
+    assert_equal(6, host.service.id)
   end
 
   def test_list
