@@ -16,7 +16,7 @@ module Yao::Resources
     end
 
     alias hostname hypervisor_hostname
-    alias type     hypervisor_hostname
+    alias type     hypervisor_type
     alias version  hypervisor_version
 
     self.service        = "compute"
