@@ -58,6 +58,38 @@ module Yao::Resources
       end or raise "You do not have #{@admin ? 'admin' : 'public'} access to the #{service} service"
     end
 
+    # https://example.com/mitaka/admin/*/v3 and returns Yao::APIVersion
+    # @return Yao::APIVersion
+    def api_version
+      url  = client.url_prefix
+      path = Pathname.new(url.path)
+      if path.basename.to_s.match(/v\d/)
+        response = client.get(path.to_s)
+        Yao::APIVersion.new(response.body["version"])
+      else
+        raise 'oops'
+      end
+    end
+
+    # request to https://example.com/mitaka/* and returns Array of Yao::APIVersion
+    # @return [Array<Yao::APIVersion>]
+    def api_versions
+      url  = client.url_prefix
+      path = Pathname.new(url.path)
+
+      if path.basename.to_s.match(/v\d/)
+        path_for_version = path.parent
+
+        response = client.get(path_for_version.to_s)
+        version = response.body["versions"]["values"].map { |params|
+          Yao::APIVersion.new(params)
+        }
+        Yao::APIVersions.new(version)
+      else
+        raise 'oops '
+      end
+    end
+
     def as_member(&blk)
       if @admin
         @admin = false

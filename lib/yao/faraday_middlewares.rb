@@ -124,6 +124,7 @@ Faraday::Response.register_middleware os_response_recorder: -> { Faraday::Respon
 class Faraday::Response::OSErrorDetector < Faraday::Response::Middleware
   # TODO: Better handling, respecting official doc
   def on_complete(env)
+    return if env.status == 300
     return if env.success?
 
     raise Yao::ServerError.detect(env)
