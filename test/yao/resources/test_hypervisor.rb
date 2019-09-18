@@ -45,9 +45,6 @@ class TestHypervisor < TestYaoResource
 
     host = Yao::Hypervisor.new(params)
 
-    assert_true(host.enabled?)
-    assert_false(host.disabled?)
-
     assert_equal("host1", host.hypervisor_hostname)
     assert_equal("host1", host.hostname)
 
@@ -74,6 +71,7 @@ class TestHypervisor < TestYaoResource
 
     # #enabled?
     assert_true(host.enabled?)
+    assert_false(host.disabled?)
 
     # #service
     assert_instance_of(Yao::ComputeServices, host.service)
