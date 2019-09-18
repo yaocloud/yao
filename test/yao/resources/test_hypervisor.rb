@@ -2,11 +2,77 @@ class TestHypervisor < TestYaoResource
 
   def test_hypervisor
     params = {
-      "status" => "enabled"
+      "current_workload" => 0,
+      "status" => "enabled",
+      "state" => "up",
+      "disk_available_least" => 0,
+      "host_ip" => "1.1.1.1",
+      "free_disk_gb" => 1028,
+      "free_ram_mb" => 7680,
+      "hypervisor_hostname" => "host1",
+      "hypervisor_type" => "fake",
+      "hypervisor_version" => 1000,
+      "id" => 2,
+      "local_gb" => 1028,
+      "local_gb_used" => 0,
+      "memory_mb" => 8192,
+      "memory_mb_used" => 512,
+      "running_vms" => 0,
+      "service" => {
+        "host" => "host1",
+        "id" => 6,
+        "disabled_reason" => nil,
+      },
+      "vcpus" => 2,
+      "vcpus_used" => 0
     }
 
+    # ooooooooooooooopsssssssssssss
+    params['cpu_info'] = {
+        "arch" => "x86_64",
+        "model" => "Nehalem",
+        "vendor" => "Intel",
+        "features" => [
+          "pge",
+          "clflush"
+        ],
+        "topology" => {
+          "cores" => 1,
+          "threads" => 1,
+          "sockets" => 4
+        }
+    }.to_json
+
     host = Yao::Hypervisor.new(params)
+
     assert_equal(true, host.enabled?)
+
+    assert_equal("host1", host.hypervisor_hostname)
+    assert_equal("host1", host.hostname)
+
+    assert_equal("fake", host.hypervisor_type)
+    assert_equal("fake", host.type)
+
+    assert_equal(1000, host.hypervisor_version)
+    assert_equal(1000, host.version)
+
+    assert_equal(0, host.running_vms)
+    assert_equal(0, host.current_workload)
+    assert_equal(2, host.vcpus)
+    assert_equal(0, host.vcpus_used)
+    assert_equal(8192, host.memory_mb)
+    assert_equal(512, host.memory_mb_used)
+    assert_equal(1028, host.free_disk_gb)
+    assert_equal(1028, host.local_gb)
+    assert_equal(0, host.local_gb_used)
+    assert_equal(1028, host.free_disk_gb)
+    assert_equal('enabled', host.status)
+
+    # #cpu_info
+    assert_equal('x86_64', host.cpu_info["arch"])
+
+    # #enabled?
+    assert_true(host.enabled?)
   end
 
   def test_list
