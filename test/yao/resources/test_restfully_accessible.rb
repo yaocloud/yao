@@ -38,7 +38,7 @@ class TestRestfullyAccesible < Test::Unit::TestCase
       assert_equal("OK", Test.get(id))
     end
 
-    test 'name' do
+    test 'name (return_single_on_querying = true)' do
       Test.return_single_on_querying = true
       name = "dummy"
       uuid = "00112233-4455-6677-8899-aabbccddeeff"
@@ -47,6 +47,21 @@ class TestRestfullyAccesible < Test::Unit::TestCase
       stub_get_request([@url, "#{@resources_name}?name=dummy"].join('/'), @resources_name)
       mock(Test).new("dummy_resource") { Struct.new(:id).new(uuid) }
       stub_get_request([@url, @resources_name, uuid].join('/'), @resources_name)
+      mock(Test).new("dummy_resource") { "OK" }
+
+      assert_equal("OK", Test.get(name))
+    end
+
+    test 'name' do
+      Test.return_single_on_querying = false
+      name = "dummy"
+      uuid = "00112233-4455-6677-8899-aabbccddeeff"
+      body = {@resources_name => [@resources_name]}
+
+      stub_get_request_not_found([@url, @resources_name, name].join('/'))
+      stub_get_request_with_json_response([@url, "#{@resources_name}?name=dummy"].join('/'), body)
+      mock(Test).new("dummy_resources") { Struct.new(:id).new(uuid) }
+      stub_get_request([@url, @resources_name, uuid].join('/'), @resource_name)
       mock(Test).new("dummy_resource") { "OK" }
 
       assert_equal("OK", Test.get(name))
