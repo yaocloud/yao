@@ -45,7 +45,7 @@ class TestRestfullyAccesible < Test::Unit::TestCase
 
       stub_get_request_not_found([@url, @resources_name, name].join('/'))
       stub_get_request([@url, "#{@resources_name}?name=dummy"].join('/'), @resources_name)
-      mock(Test).new("dummy_resource") { [Struct.new(:id).new(uuid)] }
+      mock(Test).new("dummy_resource") { Struct.new(:id).new(uuid) }
       stub_get_request([@url, @resources_name, uuid].join('/'), @resources_name)
       mock(Test).new("dummy_resource") { "OK" }
 

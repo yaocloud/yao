@@ -10,14 +10,6 @@ module Yao::Resources
     self.admin          = true
 
     class << self
-      def find_by_name(name, query={})
-        if api_verion_v2?
-          [super]
-        else
-          super
-        end
-      end
-
       def return_single_on_querying
         api_verion_v2?
       end
