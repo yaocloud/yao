@@ -27,6 +27,18 @@ class TestComputeServices < TestYaoResource
     assert_equal("internal", compute_service.zone)
   end
 
+  def test_enabled?
+    compute_service = Yao::ComputeServices.new( 'status' => 'enabled' )
+    assert_true  compute_service.enabled?
+    assert_false compute_service.disabled?
+  end
+
+  def test_disabled?
+    compute_service = Yao::ComputeServices.new( 'status' => 'disabled' )
+    assert_false compute_service.enabled?
+    assert_true  compute_service.disabled?
+  end
+
   def test_enable
     stub = stub_request(:put, "https://example.com:12345/os-services/enable").
       with(

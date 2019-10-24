@@ -6,6 +6,18 @@ module Yao::Resources
     self.resource_name  = "service"
     self.resources_name = "os-services"
 
+    # return true if ComputeServices is enabled
+    # @return [Bool]
+    def enabled?
+      status == 'enabled'
+    end
+
+    # return true if ComputeServices is disabled
+    # @return [Bool]
+    def disabled?
+      status == 'disabled'
+    end
+
     class << self
       def enable(host, binary)
         params = {
