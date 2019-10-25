@@ -115,6 +115,15 @@ module Yao::Resources
     end
     alias find get
 
+    # @param id_or_name_or_permalink [Stirng]
+    # @param query [Hash]
+    # @return [Yao::Resources::*]
+    def get!(id_or_name_or_permalink, query={})
+      get(id_or_name_or_permalink, query)
+    rescue Yao::ItemNotFound, Yao::NotFound
+      nil
+    end
+
     def find_by_name(name, query={})
       list(query.merge({"name" => name}))
     end

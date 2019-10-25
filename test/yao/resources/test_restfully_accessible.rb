@@ -53,6 +53,27 @@ class TestRestfullyAccesible < Test::Unit::TestCase
     end
   end
 
+  sub_test_case 'get!' do
+    test 'not found' do
+      stub_get_request_not_found("https://example.com/dummy_resource")
+      assert_equal(nil, Test.get!("https://example.com/dummy_resource"))
+    end
+
+    test 'found' do
+      uuid = "00112233-4455-6677-8899-aabbccddeeff"
+      stub_get_request([@url, @resources_name, uuid].join('/'), @resource_name)
+      mock(Test).new("dummy_resource") { "OK" }
+      assert_equal("OK", Test.get!(uuid))
+    end
+
+    test 'other error' do
+      stub_get_request_unauthorized("https://example.com/dummy_resource")
+      assert_raises Yao::Unauthorized do
+        Test.get!("https://example.com/dummy_resource")
+      end
+    end
+  end
+
   def test_find_by_name
     mock(Test).list({"name" => "dummy"}) { "dummy" }
 
