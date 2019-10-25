@@ -9,6 +9,17 @@ module RestfullAccessibleStub
       )
   end
 
+  def stub_get_request_with_json_response(url, body)
+    stub_request(:get, url)
+      .with(
+        headers: request_headers
+      ).to_return(
+        status: 200,
+        headers: {'Content-Type' => 'application/json'},
+        body: body.to_json
+      )
+  end
+
   def stub_get_request_not_found(url)
     stub_request(:get, url)
       .with(

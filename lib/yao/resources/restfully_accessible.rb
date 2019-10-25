@@ -88,10 +88,8 @@ module Yao::Resources
 
       json = GET(url, query).body
       if return_single_on_querying && !query.empty?
-        # returns Yao::Resources::*
-        resource_from_json(json)
+        [resource_from_json(json)]
       else
-        # returns Array of Yao::Resources::*
         resources_from_json(json)
       end
     end
