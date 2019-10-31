@@ -16,16 +16,8 @@ module Yao::Resources
       @servers ||= Yao::Server.list(project_id: id)
     end
 
-    def meters
-      @meters ||= Yao::Meter.list({'q.field' => 'project_id', 'q.op' => 'eq', 'q.value' => id})
-    end
-
     def ports
       @ports ||= Yao::Port.list(tenant_id: id)
-    end
-
-    def meters_by_name(meter_name)
-      meters.select{|m| m.name == meter_name}
     end
 
     class << self
