@@ -27,6 +27,9 @@ module Yao::Resources
         new(json)
       end
 
+      # override Yao::Resources::RestfullyAccessible.resources_from_json
+      # @param [Array]
+      # @return [Array<Yao::Resources::Meter>]
       def resources_from_json(json)
         json.map{|d| new(d)}
       end
