@@ -13,7 +13,7 @@ module Yao::Resources
     end
 
     def servers
-      @servers ||= Yao::Server.list(all_tenants: 1).select{|s| s.tenant_id == id }
+      @servers ||= Yao::Server.list(project_id: id)
     end
 
     def meters
