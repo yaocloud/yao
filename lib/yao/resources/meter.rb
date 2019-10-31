@@ -28,7 +28,7 @@ module Yao::Resources
       end
 
       def resources_from_json(json)
-        new(json)
+        json.map{|d| new(d)}
       end
     end
   end
