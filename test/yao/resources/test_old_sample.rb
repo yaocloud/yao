@@ -83,4 +83,54 @@ class TestOldSample < TestYaoResource
 
     assert_requested(stub)
   end
+
+  def test_list
+    stub = stub_request(:get, "https://example.com:12345/v2/meters/?q.field=timestamp&q.op=gt&q.value=2015-01-01T00:00:00%2B00:00")
+               .to_return(
+                   status: 200,
+                   body: <<-JSON,
+                   [
+                     {
+                       "counter_name": "instance",
+                       "counter_type": "gauge",
+                       "counter_unit": "instance",
+                       "counter_volume": 1.0,
+                       "message_id": "5460acce-4fd6-480d-ab18-9735ec7b1996",
+                       "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+                       "recorded_at": "2015-01-01T12:00:00",
+                       "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+                       "resource_metadata": {
+                           "name1": "value1",
+                           "name2": "value2"
+                       },
+                       "source": "openstack",
+                       "timestamp": "2015-01-01T12:00:00",
+                       "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff"
+                     },
+                     {
+                       "counter_name": "instance",
+                       "counter_type": "gauge",
+                       "counter_unit": "instance",
+                       "counter_volume": 1.0,
+                       "message_id": "5460acce-4fd6-480d-ab18-9735ec7b1996",
+                       "project_id": "35b17138-b364-4e6a-a131-8f3099c5be68",
+                       "recorded_at": "2015-01-01T12:00:00",
+                       "resource_id": "bd9431c1-8d69-4ad3-803a-8d4a6b89fd36",
+                       "resource_metadata": {
+                           "name1": "value1",
+                           "name2": "value2"
+                       },
+                       "source": "openstack",
+                       "timestamp": "2015-01-01T12:00:00",
+                       "user_id": "efd87807-12d2-4b38-9c70-5f5c2ac427ff"
+                     }
+                   ]
+                   JSON
+                   headers: {'Content-Type' => 'application/json'}
+               )
+
+    oldsamples  = Yao::OldSample.list("", {'q.field': 'timestamp', 'q.op': 'gt', 'q.value': "2015-01-01T00:00:00+00:00"})
+    assert_instance_of(Array, oldsamples)
+    assert_requested(stub)
+  end
 end
