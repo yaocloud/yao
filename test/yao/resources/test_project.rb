@@ -150,7 +150,7 @@ class TestProject < TestYaoResource
   end
 
   def test_servers
-    stub = stub_request(:get, "https://example.com:12345/servers/detail?project_id=6f70656e737461636b20342065766572")
+    stub = stub_request(:get, "https://example.com:12345/servers/detail?all_tenants=1&project_id=6f70656e737461636b20342065766572")
                .to_return(
                    status: 200,
                    # https://docs.openstack.org/api-ref/compute/?expanded=list-servers-detailed-detail#list-servers-detailed
