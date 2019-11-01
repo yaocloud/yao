@@ -13,7 +13,7 @@ module Yao::Resources
     end
 
     def servers
-      @servers ||= Yao::Server.list(project_id: id)
+      @servers ||= Yao::Server.list(all_tenants: 1, project_id: id)
     end
 
     def ports
