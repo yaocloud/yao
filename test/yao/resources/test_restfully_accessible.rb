@@ -1,5 +1,5 @@
 class TestRestfullyAccesible < Test::Unit::TestCase
-  include RestfullAccessibleStub
+  include RestfullyAccessibleStub
   class Test
     class << self
       attr_accessor :client

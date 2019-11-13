@@ -1,4 +1,4 @@
-module RestfullAccessibleStub
+module RestfullyAccessibleStub
   def stub_get_request(url, resource_name)
     stub_request(:get, url)
       .with(
@@ -16,7 +16,7 @@ module RestfullAccessibleStub
       ).to_return(
         status: 200,
         headers: {'Content-Type' => 'application/json'},
-        body: body.to_json
+        body: body.class == String ? body : body.to_json
       )
   end
 
