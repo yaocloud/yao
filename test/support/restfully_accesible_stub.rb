@@ -16,7 +16,7 @@ module RestfullAccessibleStub
       ).to_return(
         status: 200,
         headers: {'Content-Type' => 'application/json'},
-        body: body.to_json
+        body: body.class == String ? body : body.to_json
       )
   end
 
