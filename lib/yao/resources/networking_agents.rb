@@ -6,6 +6,10 @@ module Yao::Resources
                         :description, :heartbeat_timestamp, :host,
                         :resources_synced, :topic
 
+    self.service        = "network"
+    self.resource_name  = "agents"
+    self.resources_name = "agents"
+
     # @return [Date]
     def created_at
       Time.parse(self["created_at"])
@@ -20,9 +24,5 @@ module Yao::Resources
     def heartbeat_timestamp
       Time.parse(self["heartbeat_timestamp"])
     end
-
-    self.service        = "network"
-    self.resource_name  = "agents"
-    self.resources_name = "agents"
   end
 end
