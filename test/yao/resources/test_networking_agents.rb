@@ -62,6 +62,7 @@ class TestNetworkingAgents < TestYaoResource
     # friendly_attributes
     assert_equal("04c62b91-b799-48b7-9cd5-2982db6df9c6", agent.id)
     assert_equal(true, agent.admin_state_up)
+    assert_equal(true, agent.state) # alias
     assert_equal("Open vSwitch agent", agent.agent_type)
     assert_equal(true, agent.alive)
     assert_equal("zone", agent.availability_zone)

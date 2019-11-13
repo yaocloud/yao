@@ -24,5 +24,7 @@ module Yao::Resources
     def heartbeat_timestamp
       Time.parse(self["heartbeat_timestamp"])
     end
+
+    alias :state :admin_state_up
   end
 end
