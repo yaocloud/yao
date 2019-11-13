@@ -1,4 +1,4 @@
-module RestfullAccessibleStub
+module RestfullyAccessibleStub
   def stub_get_request(url, resource_name)
     stub_request(:get, url)
       .with(

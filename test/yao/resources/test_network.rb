@@ -1,5 +1,5 @@
 class TestNetwork < TestYaoResource
-  include RestfullAccessibleStub
+  include RestfullyAccessibleStub
 
   def test_network
 
