@@ -15,6 +15,7 @@ module Yao
     autoload :Keypair,                   "yao/resources/keypair"
     autoload :FloatingIP,                "yao/resources/floating_ip"
     autoload :Network,                   "yao/resources/network"
+    autoload :NetworkingAgents,          "yao/resources/networking_agents"
     autoload :Subnet,                    "yao/resources/subnet"
     autoload :Port,                      "yao/resources/port"
     autoload :Router,                    "yao/resources/router"
