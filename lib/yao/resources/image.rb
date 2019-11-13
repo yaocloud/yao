@@ -19,7 +19,8 @@ module Yao::Resources
       end
     end
 
-    self.service        = "compute"
+    self.service        = "image"
+    self.api_version    = "v2"
     self.resource_name  = "image"
     self.resources_name = "images"
 
