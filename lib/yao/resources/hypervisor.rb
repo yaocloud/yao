@@ -22,6 +22,14 @@ module Yao::Resources
       self['status'] == 'disabled'
     end
 
+    def servers
+      res = POST("/os-hypervisors") do |req|
+        req.body = { "hostname-patterns" => self.hostname }.to_json
+        req.headers["Content-Type"] = "application/json"
+      end
+      res["servers"]
+    end
+
     # @return [Yao::ComputeServices]
     def service
       Yao::ComputeServices.new(self['service'])
