@@ -23,11 +23,11 @@ module Yao::Resources
     end
 
     def servers
-      res = POST("/os-hypervisors") do |req|
+      res = GET("/os-hypervisors") do |req|
         req.body = { "hostname-patterns" => self.hostname }.to_json
         req.headers["Content-Type"] = "application/json"
       end
-      res["servers"]
+      res.body["servers"].map{ |s| resource_from_json(s) }
     end
 
     # @return [Yao::ComputeServices]
