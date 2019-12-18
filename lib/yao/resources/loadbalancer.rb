@@ -1,7 +1,7 @@
 module Yao::Resources
   class LoadBalancer < Base
     friendly_attributes :provider, :description, :admin_state_up, :provisioning_status,
-                        :vip_address, :operationg_status, :name
+                        :vip_address, :operating_status, :name
 
     map_attribute_to_resources listeners: LoadBalancerListener
     map_attribute_to_resources pools: LoadBalancerListener
