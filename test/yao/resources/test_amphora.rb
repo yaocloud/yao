@@ -1,5 +1,6 @@
 class TestLoadBalancer < TestYaoResource
   def test_loadbalancer
+    # https://docs.openstack.org/api-ref/load-balancer/v2/?expanded=list-amphora-detail,show-amphora-statistics-detail#list-amphora
     params = {
         "id": "6bd55cd3-802e-447e-a518-1e74e23bb106",
         "load_balancer_id": "09eedfc6-2c55-41a8-a75c-2cd4e95212ca",
