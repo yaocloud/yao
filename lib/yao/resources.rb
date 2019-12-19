@@ -24,6 +24,7 @@ module Yao
     autoload :LoadBalancerPool,          "yao/resources/loadbalancer_pool"
     autoload :LoadBalancerPoolMember,    "yao/resources/loadbalancer_pool_member"
     autoload :LoadBalancerHealthMonitor, "yao/resources/loadbalancer_healthmonitor"
+    autoload :Amphora,                   "yao/resources/amphora"
     autoload :Tenant,                    "yao/resources/tenant"
     autoload :Host,                      "yao/resources/host"
     autoload :User,                      "yao/resources/user"
