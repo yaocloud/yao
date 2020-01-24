@@ -1,6 +1,6 @@
 module Yao::Resources
   class Amphora < Base
-    friendly_attributes :loadbalancer_id, :compute_id, :lb_network_ip, :vrrp_ip, :ha_ip, :vrrp_port_id,
+    friendly_attributes :load_balancer_id, :compute_id, :lb_network_ip, :vrrp_ip, :ha_ip, :vrrp_port_id,
                         :ha_port_id, :role, :status, :vrrp_interface, :vrrp_id,
                         :vrrp_priority, :cached_zone, :image_id, :compute_flavor
 
