@@ -29,7 +29,7 @@ module Yao::Plugins
   # @param [*]
   # @param [Symbol]
   # @param [Symbol]
-  def self.register(*a)
-    Registry.instance.register(*a)
+  def self.register(klass, **kw)
+    Registry.instance.register(klass, **kw)
   end
 end
