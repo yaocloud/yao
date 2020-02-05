@@ -107,7 +107,10 @@ module Yao
       # @param [String]
       def reset_client(new_endpoint=nil)
         set = ClientSet.new
-        set.register_endpoints("default" => {public_url: new_endpoint || Yao.config.endpoint})
+        endpoint = {
+          "default" => {public_url: new_endpoint || Yao.config.endpoint}
+        }
+        set.register_endpoints(endpoint)
         self.default_client = set
       end
 
