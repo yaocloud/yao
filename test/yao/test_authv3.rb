@@ -103,18 +103,22 @@ class TestAuthV3 < Test::Unit::TestCase
   end
 
   def test_build_authv3_info
-    auth_info = Yao::Auth.build_authv3_info("example", "udzura", "XXXXXXXX", "default", nil, "default", nil)
+    auth_info = Yao::Auth.build_authv3_info("example", "udzura", "XXXXXXXX", "test", nil, nil, nil, nil)
 
     user = auth_info[:auth][:identity][:password][:user]
     assert { user[:name] == "udzura" }
     assert { user[:password] == "XXXXXXXX" }
-    assert { user[:domain][:id] == "default" }
+    assert { user[:domain][:id] == "test" }
 
     project = auth_info[:auth][:scope][:project]
     assert { project[:name] == "example" }
-    assert { project[:domain][:id] == "default" }
+    assert { project[:domain][:id] == "test" }
 
-    auth_info = Yao::Auth.build_authv3_info("example", "udzura", "XXXXXXXX", nil, "default", nil, "default")
+    auth_info = Yao::Auth.build_authv3_info("example", "udzura", "XXXXXXXX", nil, "default", nil, "default", nil)
+    assert { auth_info[:auth][:identity][:password][:user][:domain][:id] == "default" }
+    assert { auth_info[:auth][:scope][:project][:domain][:id] == "default" }
+
+    auth_info = Yao::Auth.build_authv3_info("example", "udzura", "XXXXXXXX", nil, nil, "default", nil, "default")
     assert { auth_info[:auth][:identity][:password][:user][:domain][:name] == "default" }
     assert { auth_info[:auth][:scope][:project][:domain][:name] == "default" }
   end

@@ -148,6 +148,8 @@ module Yao
     Yao::Client.default_client
   end
 
+  Yao.config.param :default_domain, 'default'
+
   Yao.config.param :noop_on_write, false
   Yao.config.param :raise_on_write, false
 

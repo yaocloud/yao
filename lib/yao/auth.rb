@@ -19,6 +19,7 @@ module Yao
       end
 
       def build_authv3_info(tenant_name, username, password,
+                            default_domain,
                             user_domain_id, user_domain_name,
                             project_domain_id, project_domain_name)
           identity = {
@@ -31,6 +32,8 @@ module Yao
             identity[:password][:user][:domain] = { id: user_domain_id }
           elsif user_domain_name
             identity[:password][:user][:domain] = { name: user_domain_name }
+          elsif default_domain
+            identity[:password][:user][:domain] = { id: default_domain }
           end
 
           scope = {
@@ -40,6 +43,8 @@ module Yao
             scope[:project][:domain] = { id: project_domain_id }
           elsif project_domain_name
             scope[:project][:domain] = { name: project_domain_name }
+          elsif default_domain
+            scope[:project][:domain] = { id: default_domain }
           end
 
           {
@@ -68,6 +73,7 @@ module Yao
           username: Yao.config.username,
           password: Yao.config.password,
           identity_api_version: Yao.config.identity_api_version,
+          default_domain: Yao.config.default_domain,
           user_domain_id: Yao.config.user_domain_id,
           user_domain_name: Yao.config.user_domain_name,
           project_domain_id: Yao.config.project_domain_id,
@@ -75,6 +81,7 @@ module Yao
       )
         if identity_api_version.to_i == 3
           auth_info = build_authv3_info(tenant_name, username, password,
+                                        default_domain,
                                         user_domain_id, user_domain_name,
                                         project_domain_id, project_domain_name)
           issue = TokenV3.issue(Yao.default_client.default, auth_info)
