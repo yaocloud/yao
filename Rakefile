@@ -9,4 +9,5 @@ Rake::TestTask.new do |t|
   t.test_files = Dir["test/**/test_*.rb"]
   t.verbose = true
   t.ruby_opts = ["-r config"]
+  t.warning = false
 end
