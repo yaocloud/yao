@@ -6,7 +6,7 @@ gemspec
 group :development do
   gem 'rubocop'
   gem "bundler", ">= 1.10"
-  gem "rake", "~> 10.0"
+  gem "rake", "~> 13.0"
   gem "test-unit", ">= 3"
   gem "test-unit-rr"
   gem "power_assert"
