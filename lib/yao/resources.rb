@@ -6,6 +6,7 @@ module Yao
     require "yao/resources/network_associationable"
 
     autoload :Server,                    "yao/resources/server"
+    autoload :ServerGroup,               "yao/resources/server_group"
     autoload :Flavor,                    "yao/resources/flavor"
     autoload :Image,                     "yao/resources/image"
     autoload :SecurityGroup,             "yao/resources/security_group"
