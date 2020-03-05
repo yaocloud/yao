@@ -53,6 +53,10 @@ module Yao::Resources
       action(id, {"removeSecurityGroup": {"name": sg_name}})
     end
 
+    def self.get_vnc_console(id)
+      action(id, {"os-getVNCConsole": {"type": "novnc"}})["console"]["url"]
+    end
+
     class << self
       alias :stop :shutoff
     end
