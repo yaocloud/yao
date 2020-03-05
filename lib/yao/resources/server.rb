@@ -54,7 +54,8 @@ module Yao::Resources
     end
 
     def self.get_vnc_console(id)
-      action(id, {"os-getVNCConsole": {"type": "novnc"}})["console"]["url"]
+      response = action(id, {"os-getVNCConsole": {"type": "novnc"}})
+      response.dig("console", "url")
     end
 
     class << self
