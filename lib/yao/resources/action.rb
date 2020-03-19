@@ -5,7 +5,7 @@ module Yao::Resources
         req.body = query.to_json
         req.headers['Content-Type'] = 'application/json'
       end
-      res.body ? resource_from_json(res.body) : nil
+      res.body
     end
 
     private
