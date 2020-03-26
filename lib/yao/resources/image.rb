@@ -19,28 +19,29 @@ module Yao::Resources
       end
     end
 
-    # override Yao::Resources::Restfully_Accessible.get
-    # @param id_or_name_or_permalink [Stirng]
-    # @param query [Hash]
-    # @return [Yao::Resources::*]
-    def self.get(id_or_name_or_permalink, query={})
-      super
-      res = if id_or_name_or_permalink.start_with?("http://", "https://")
-              GET(id_or_name_or_permalink, query)
-            elsif uuid?(id_or_name_or_permalink)
-              GET(create_url(id_or_name_or_permalink), query)
-            else
-              get_by_name(id_or_name_or_permalink, query)
-            end
-
-      new(res.body)
-    end
-
     self.service        = "image"
     self.api_version    = "v2"
     self.resource_name  = "image"
     self.resources_name = "images"
 
     extend MetadataAvailable
+
+    class << self
+      private
+
+      # override Yao::Resources::RestfullyAccessible.resource_from_json
+      # @param json [Hash]
+      # @return [Yao::Resources::*]
+      def resource_from_json(json)
+        new(json)
+      end
+
+      # override Yao::Resources::RestfullyAccessible.resources_from_json
+      # @param [Hash]
+      # @return [Yao::Resources::Resource]
+      def resources_from_json(json)
+        new(json)
+      end
+    end
   end
 end
