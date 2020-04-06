@@ -37,7 +37,7 @@ class TestImage < TestYaoResource
       "updated" => "2011-01-01T01:02:03Z"
     }
 
-    image = Yao::Image.new(params)
+    image = Yao::Resources::Image.send(:resource_from_json, params)
 
     # friendly_attributes
     assert_equal("fakeimage7", image.name)
@@ -59,5 +59,9 @@ class TestImage < TestYaoResource
     assert_equal(72447.091796875, image.size('K'))      # oops
     assert_equal(70.74911308288574, image.size('M'))    #
     assert_equal(0.06909093074500561, image.size('G'))  #
+  end
+
+  def test_image_get
+    stub = stub_request(:get, "https://example.com")
   end
 end
