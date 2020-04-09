@@ -8,27 +8,30 @@ class TestClient < Test::Unit::TestCase
     cli = Yao::Client.gen_client("http://cool-api.example.com:12345/v3.0")
     assert { cli.url_prefix.to_s == "http://cool-api.example.com:12345/v3.0" }
 
+    adapter = Faraday::Adapter::NetHttp
+    assert { cli.builder.adapter == adapter }
+
     handlers = [
       Faraday::Request::Accept,
       Faraday::Request::UrlEncoded,
       Faraday::Request::ReadOnly,
       Faraday::Response::OSErrorDetector,
-      FaradayMiddleware::ParseJson,
-      Faraday::Adapter::NetHttp
+      FaradayMiddleware::ParseJson
     ]
     assert { cli.builder.handlers == handlers }
   end
 
   def test_gen_with_token
     cli = Yao::Client.gen_client("http://cool-api.example.com:12345/v3.0", token: "deadbeaf")
+    adapter = Faraday::Adapter::NetHttp
+    assert { cli.builder.adapter == adapter }
     handlers = [
       Faraday::Request::Accept,
       Faraday::Request::UrlEncoded,
       Faraday::Request::OSToken,
       Faraday::Request::ReadOnly,
       Faraday::Response::OSErrorDetector,
-      FaradayMiddleware::ParseJson,
-      Faraday::Adapter::NetHttp
+      FaradayMiddleware::ParseJson
     ]
     assert { cli.builder.handlers == handlers }
   end
@@ -37,6 +40,8 @@ class TestClient < Test::Unit::TestCase
     stub(Yao.config).debug { true }
 
     cli = Yao::Client.gen_client("http://cool-api.example.com:12345/v3.0")
+    adapter = Faraday::Adapter::NetHttp
+    assert { cli.builder.adapter == adapter }
     handlers = [
       Faraday::Request::Accept,
       Faraday::Request::UrlEncoded,
@@ -44,8 +49,7 @@ class TestClient < Test::Unit::TestCase
       Faraday::Response::OSErrorDetector,
       FaradayMiddleware::ParseJson,
       Faraday::Response::Logger,
-      Faraday::Response::OSDumper,
-      Faraday::Adapter::NetHttp
+      Faraday::Response::OSDumper
     ]
     assert { cli.builder.handlers == handlers }
   end

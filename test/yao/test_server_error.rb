@@ -1,8 +1,8 @@
 class TestServerError < Test::Unit::TestCase
   def test_detects_error_with_env
     env = Faraday::Env.new
-    env.body = {"itemNotFound"=>{"message"=>"Image not found.", "code"=>404}}
     env.status = 404
+    env.body = {"itemNotFound"=>{"message"=>"Image not found.", "code"=>404}}
 
     error = Yao::ServerError.detect(env)
     assert { error.is_a? Yao::ItemNotFound }
@@ -13,8 +13,8 @@ class TestServerError < Test::Unit::TestCase
 
   def test_anyway_returns_error
     env = Faraday::Env.new
-    env.body = "<html>Not found.</html>"
     env.status = 599
+    env.body = "<html>Not found.</html>"
 
     error = Yao::ServerError.detect(env)
     assert { error.is_a? Yao::ServerError }
