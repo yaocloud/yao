@@ -25,5 +25,16 @@ module Yao::Resources
     self.resources_name = "images"
 
     extend MetadataAvailable
+
+    class << self
+      private
+
+      # override Yao::Resources::RestfullyAccessible.resource_from_json
+      # @param json [Hash]
+      # @return [Yao::Resources::*]
+      def resource_from_json(json)
+        new(json)
+      end
+    end
   end
 end
