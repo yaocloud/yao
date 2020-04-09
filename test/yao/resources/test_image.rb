@@ -1,5 +1,5 @@
 class TestImage < TestYaoResource
-    # https://docs.openstack.org/api-ref/compute/?expanded=list-flavors-detail,list-flavors-with-details-detail,list-hosts-detail,show-host-details-detail,list-images-detail,list-images-with-details-detail#list-images-with-details
+  # https://docs.openstack.org/api-ref/compute/?expanded=list-flavors-detail,list-flavors-with-details-detail,list-hosts-detail,show-host-details-detail,list-images-detail,list-images-with-details-detail#list-images-with-details
   @@params = {
     "OS-DCF:diskConfig" => "AUTO",
     "OS-EXT-IMG-SIZE:size" => 74185822,
@@ -34,6 +34,22 @@ class TestImage < TestYaoResource
     "updated" => "2011-01-01T01:02:03Z"
   }
 
+  def test_image
+
+    image = Yao::Resources::Image.new(@@params)
+    check_image(image)
+
+  end
+
+  def test_resource_from_json
+
+    image = Yao::Resources::Image.send(:resource_from_json, @@params)
+    check_image(image)
+    
+  end
+
+  private
+
   def check_image(image)
     # friendly_attributes
     assert_equal("fakeimage7", image.name)
@@ -55,20 +71,6 @@ class TestImage < TestYaoResource
     assert_equal(72447.091796875, image.size('K'))      # oops
     assert_equal(70.74911308288574, image.size('M'))    #
     assert_equal(0.06909093074500561, image.size('G'))  #
-  end
-
-  def test_image
-
-    image = Yao::Resources::Image.new(@@params)
-    check_image(image)
-
-  end
-
-  def test_resource_from_json
-
-    image = Yao::Resources::Image.send(:resource_from_json, @@params)
-
-    check_image(image)
   end
 
 end
