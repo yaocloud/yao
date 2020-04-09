@@ -60,8 +60,4 @@ class TestImage < TestYaoResource
     assert_equal(70.74911308288574, image.size('M'))    #
     assert_equal(0.06909093074500561, image.size('G'))  #
   end
-
-  def test_image_get
-    stub = stub_request(:get, "https://example.com")
-  end
 end
