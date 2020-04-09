@@ -34,10 +34,7 @@ class TestImage < TestYaoResource
     "updated" => "2011-01-01T01:02:03Z"
   }
 
-  def test_image
-
-    image = Yao::Resources::Image.new(@@params)
-
+  def check_image(image)
     # friendly_attributes
     assert_equal("fakeimage7", image.name)
     assert_equal("ACTIVE", image.status)
@@ -60,30 +57,18 @@ class TestImage < TestYaoResource
     assert_equal(0.06909093074500561, image.size('G'))  #
   end
 
+  def test_image
+
+    image = Yao::Resources::Image.new(@@params)
+    check_image(image)
+
+  end
+
   def test_resource_from_json
 
     image = Yao::Resources::Image.send(:resource_from_json, @@params)
 
-    # friendly_attributes
-    assert_equal("fakeimage7", image.name)
-    assert_equal("ACTIVE", image.status)
-    assert_equal(100, image.progress)
-    assert_equal({
-      "architecture"     => "x86_64",
-      "auto_disk_config" => "True",
-      "kernel_id"  => "nokernel",
-      "ramdisk_id" => "nokernel"
-    },image.metadata)
-
-    # map_attribute_to_attribute
-    assert_equal(0, image.min_disk)
-    assert_equal(0, image.min_ram)
-
-    assert_equal(image["OS-EXT-IMG-SIZE:size"], image.size)
-    assert_equal(74185822, image.size)
-    assert_equal(72447.091796875, image.size('K'))      # oops
-    assert_equal(70.74911308288574, image.size('M'))    #
-    assert_equal(0.06909093074500561, image.size('G'))  #
+    check_image(image)
   end
 
 end
