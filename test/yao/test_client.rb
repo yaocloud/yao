@@ -48,7 +48,6 @@ class TestClient < Test::Unit::TestCase
       Faraday::Request::ReadOnly,
       Faraday::Response::OSErrorDetector,
       FaradayMiddleware::ParseJson,
-      Faraday::Response::Logger,
       Faraday::Response::OSDumper
     ]
     assert { cli.builder.handlers == handlers }

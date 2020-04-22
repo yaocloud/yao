@@ -19,7 +19,6 @@ module Yao::Plugins
       f.response :json, content_type: /\bjson$/
 
       if Yao.config.debug
-        f.response :logger
         f.response :os_dumper
       end
 
