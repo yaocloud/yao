@@ -37,7 +37,7 @@ module Yao::Resources
       def list_for_user(user_name, on:)
         user   = Yao::User.get(user_name)
         tenant = if api_version_v2?
-                   Yao::Tenant.find_by_name(on)
+                   Yao::Tenant.get_by_name(on)
                  else
                    Yao::Project.get(on)
                  end
@@ -54,7 +54,7 @@ module Yao::Resources
         role   = Yao::Role.get(role_name)
         user   = Yao::User.get(to)
         tenant = if api_version_v2?
-                   Yao::Tenant.find_by_name(on)
+                   Yao::Tenant.get_by_name(on)
                  else
                    Yao::Project.get(on)
                  end
@@ -71,7 +71,7 @@ module Yao::Resources
         role   = Yao::Role.get(role_name)
         user   = Yao::User.get(from)
         tenant = if api_version_v2?
-                   Yao::Tenant.find_by_name(on)
+                   Yao::Tenant.get_by_name(on)
                  else
                    Yao::Project.get(on)
                  end

@@ -60,10 +60,10 @@ class TestRole < TestYaoResource
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_requested(stub)
     end
-    
+
     def test_list_for_user
       stub_user
-      stub_tenant
+      stub_tenant_by_name
       stub = stub_request(:get, "https://example.com:12345/v2.0/tenants/0123456789abcdef0123456789abcdef/users/2844b2a08be147a08ef58317d6471f1f/roles").
         to_return(
           status: 200,
@@ -77,18 +77,18 @@ class TestRole < TestYaoResource
           JSON
           headers: {'Content-Type' => 'application/json'}
         )
-      
+
       roles = Yao::Role.list_for_user("test_user", on:"admin")
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_received(Yao::User) { |subject| subject.get("test_user") }
-      assert_received(Yao::Tenant) { |subject| subject.find_by_name("admin") }
+      assert_received(Yao::Tenant) { |subject| subject.get_by_name("admin") }
       assert_requested(stub)
     end
 
     def test_grant
       stub_role
       stub_user
-      stub_tenant
+      stub_tenant_by_name
       stub = stub_request(:put, "https://example.com:12345/v2.0/tenants/0123456789abcdef0123456789abcdef/users/2844b2a08be147a08ef58317d6471f1f/roles/OS-KSADM/5318e65d75574c17bf5339d3df33a5a3").
         to_return(
           status: 204,
@@ -99,14 +99,14 @@ class TestRole < TestYaoResource
       Yao::Role.grant("test_role", to:"test_user", on:"admin")
       assert_received(Yao::Role) { |subject| subject.get("test_role") }
       assert_received(Yao::User) { |subject| subject.get("test_user") }
-      assert_received(Yao::Tenant) { |subject| subject.find_by_name("admin") }
+      assert_received(Yao::Tenant) { |subject| subject.get_by_name("admin") }
       assert_requested(stub)
     end
 
     def test_revoke
       stub_role
       stub_user
-      stub_tenant
+      stub_tenant_by_name
       stub = stub_request(:delete, "https://example.com:12345/v2.0/tenants/0123456789abcdef0123456789abcdef/users/2844b2a08be147a08ef58317d6471f1f/roles/OS-KSADM/5318e65d75574c17bf5339d3df33a5a3").
         to_return(
           status: 204,
@@ -117,7 +117,7 @@ class TestRole < TestYaoResource
       Yao::Role.revoke("test_role", from:"test_user", on:"admin")
       assert_received(Yao::Role) { |subject| subject.get("test_role") }
       assert_received(Yao::User) { |subject| subject.get("test_user") }
-      assert_received(Yao::Tenant) { |subject| subject.find_by_name("admin") }
+      assert_received(Yao::Tenant) { |subject| subject.get_by_name("admin") }
       assert_requested(stub)
     end
   end
@@ -172,7 +172,7 @@ class TestRole < TestYaoResource
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_requested(stub)
     end
-    
+
     def test_list_for_user
       stub_user
       stub_project
@@ -189,7 +189,7 @@ class TestRole < TestYaoResource
           JSON
           headers: {'Content-Type' => 'application/json'}
         )
-      
+
       roles = Yao::Role.list_for_user("test_user", on:"admin")
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_received(Yao::Resources::User) { |subject| subject.get("test_user") }
@@ -249,9 +249,9 @@ class TestRole < TestYaoResource
       "name" => "test_user",
     }) }
   end
-  
-  def stub_tenant
-    stub(Yao::Tenant).find_by_name { Yao::Tenant.new({
+
+  def stub_tenant_by_name
+    stub(Yao::Tenant).get_by_name { Yao::Tenant.new({
       "id" => "0123456789abcdef0123456789abcdef",
       "name" => "admin",
     }) }
