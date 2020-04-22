@@ -28,8 +28,7 @@ module Yao::Resources
       def accessible
         as_member { self.list }
       end
+      public :get_by_name
     end
-
-    public :get_by_name
   end
 end
