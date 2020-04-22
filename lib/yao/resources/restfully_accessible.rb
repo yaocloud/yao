@@ -106,7 +106,7 @@ module Yao::Resources
             elsif uuid?(id_or_name_or_permalink)
               GET(create_url(id_or_name_or_permalink), query)
             else
-              get_by_name(id_or_name_or_permalink, query)
+              GET_by_name(id_or_name_or_permalink, query)
             end
 
       resource_from_json(res.body)
@@ -203,7 +203,18 @@ module Yao::Resources
     # @param query [Hash]
     # @return [Yao::Resources::*]
     def get_by_name(name, query={})
+      res = GET_by_name(name, query)
+      if res.is_a?(Faraday::Response)
+        resource_from_json(res.body)
+      elsif res.is_a?(Base)
+        res
+      else
+        raise "Unknown instance type: #{res.inspect}"
+      end
+    end
 
+    # @return [Faraday::Response]
+    def GET_by_name(name, query={})
       begin
         GET(create_url(name), query)
       rescue => e
