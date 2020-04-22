@@ -29,5 +29,7 @@ module Yao::Resources
         as_member { self.list }
       end
     end
+
+    public :get_by_name
   end
 end
