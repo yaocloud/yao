@@ -68,7 +68,7 @@ class Faraday::Response::OSDumper < Faraday::Response::Middleware
   def on_complete(env)
     require 'pp'
 
-    body = if env.response_headers["content-type"] == "application/json"
+    body = if env.response_headers["content-type"].start_with?("application/json")
              JSON.parse(env.body)
            else
              env.body
