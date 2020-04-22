@@ -73,12 +73,16 @@ class Faraday::Response::OSDumper < Faraday::Response::Middleware
            else
              env.body
            end
+    body = conseal_token_in_body(body)
+
+    request_headers = conseal_token_in_request_headers(env.request_headers.dup)
+    response_headers= conseal_token_in_response_headers(env.response_headers.dup)
 
     params = [
       env.url.to_s,
       body,
-      env.request_headers,
-      env.response_headers,
+      request_headers,
+      response_headers,
       env.method,
       env.status
     ].map(&:pretty_inspect)
@@ -100,6 +104,36 @@ Status Code: %s
 ================================
 
     FMT
+  end
+
+  private
+  def conseal_token_in_body(body)
+    # for keystone v2.0
+    if body.is_a?(Hash) && token = body.dig("access", "token", "id")
+      body["access"]["token"]["id"] = hashed_token(token)
+    end
+    body
+  end
+
+  def conseal_token_in_request_headers(headers)
+    if token = headers["X-Auth-Token"]
+      headers["X-Auth-Token"] = hashed_token(token)
+    end
+    headers
+  end
+
+  def conseal_token_in_response_headers(headers)
+    if token = headers["x-subject-token"]
+      headers["x-subject-token"] = hashed_token(token)
+    end
+    headers
+  end
+
+  def hashed_token(token)
+    require 'openssl'
+
+    # This format was based on openstack client.
+    "{SHA256}" + OpenSSL::Digest::SHA256.hexdigest(token)
   end
 end
 Faraday::Response.register_middleware os_dumper: -> { Faraday::Response::OSDumper }
