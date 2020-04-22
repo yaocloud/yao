@@ -66,6 +66,20 @@ class TestRestfullyAccesible < Test::Unit::TestCase
 
       assert_equal("OK", Test.get(name))
     end
+
+    test 'name (with no item JSON)' do
+      Test.return_single_on_querying = false
+      name = "dummy2"
+      uuid = "00112233-4455-6677-8899-aabbccddeeff"
+      body = {@resources_name => []}
+
+      stub_get_request_not_found([@url, @resources_name, name].join('/'))
+      stub_get_request_with_json_response([@url, "#{@resources_name}?name=#{name}"].join('/'), body)
+
+      assert_raise(Yao::InvalidResponse, "raise proper exception") do
+        Test.get(name)
+      end
+    end
   end
 
   sub_test_case 'get!' do
