@@ -80,7 +80,7 @@ class TestHypervisor < TestYaoResource
 
   def test_list
     stub = stub_request(:get, "https://example.com:12345/os-hypervisors/detail")
-      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Yao/#{Yao::VERSION} Faraday/#{Faraday::VERSION}"})
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -105,7 +105,7 @@ class TestHypervisor < TestYaoResource
 
   def test_statistics
     stub = stub_request(:get, "https://example.com:12345/os-hypervisors/statistics")
-      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Yao/#{Yao::VERSION} Faraday/#{Faraday::VERSION}"})
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -137,7 +137,7 @@ class TestHypervisor < TestYaoResource
 
   def test_uptime
     stub = stub_request(:get, "https://example.com:12345/os-hypervisors/1/uptime")
-      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"})
+      .with(headers: {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Yao/#{Yao::VERSION} Faraday/#{Faraday::VERSION}"})
       .to_return(
         status: 200,
         body: <<-JSON,
