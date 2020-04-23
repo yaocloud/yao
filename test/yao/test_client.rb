@@ -14,6 +14,7 @@ class TestClient < Test::Unit::TestCase
     handlers = [
       Faraday::Request::Accept,
       Faraday::Request::UrlEncoded,
+      Faraday::Request::UserAgent,
       Faraday::Request::ReadOnly,
       Faraday::Response::OSErrorDetector,
       FaradayMiddleware::ParseJson
@@ -28,6 +29,7 @@ class TestClient < Test::Unit::TestCase
     handlers = [
       Faraday::Request::Accept,
       Faraday::Request::UrlEncoded,
+      Faraday::Request::UserAgent,
       Faraday::Request::OSToken,
       Faraday::Request::ReadOnly,
       Faraday::Response::OSErrorDetector,
@@ -45,6 +47,7 @@ class TestClient < Test::Unit::TestCase
     handlers = [
       Faraday::Request::Accept,
       Faraday::Request::UrlEncoded,
+      Faraday::Request::UserAgent,
       Faraday::Request::ReadOnly,
       Faraday::Response::OSErrorDetector,
       FaradayMiddleware::ParseJson,
