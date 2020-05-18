@@ -41,13 +41,6 @@ class TestImage < TestYaoResource
 
   end
 
-  def test_resource_from_json
-
-    image = Yao::Resources::Image.send(:resource_from_json, @@params)
-    check_image(image)
-    
-  end
-
   private
 
   def check_image(image)
