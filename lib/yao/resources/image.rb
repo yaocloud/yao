@@ -31,9 +31,9 @@ module Yao::Resources
 
       # override Yao::Resources::RestfullyAccessible.resource_from_json
       # @param json [Hash]
-      # @return json [Hash] 
+      # @return [Yao::Resources::*]
       def resource_from_json(json)
-        json
+        new(json)
       end
     end
   end
