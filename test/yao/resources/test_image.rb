@@ -41,7 +41,7 @@ class TestImage < TestYaoResource
 
   end
 
-  def test_server_image
+  def test_to_hash
     server = Yao::Resources::Server.new(
       "OS-DCF:diskConfig" => "AUTO",
       "OS-EXT-AZ:availability_zone" => "nova",
@@ -128,10 +128,10 @@ class TestImage < TestYaoResource
       "user_id" => "fake"
     )
 
-    assert_equal(server.image, server['image__Yao::Resources::Image'])
+    assert_equal(server.image.to_hash, server['image__Yao::Resources::Image'].to_hash)
 
-    server['image__Yao::Resources::Image'].instance_variable_set('@data', Yao::Resources::Image.send('resource_from_json', @@params))
-    check_image(server.image)
+    image = Yao::Resources::Image.new(@@params)
+    assert_equal(image.to_hash, @@params)
   end
 
   private
