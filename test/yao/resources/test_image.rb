@@ -41,6 +41,11 @@ class TestImage < TestYaoResource
 
   end
 
+  def test_empty_image
+    image = Yao::Server.new("image"=>"").image
+    assert_equal(image, nil)
+  end
+
   def test_to_hash
     server = Yao::Resources::Server.new(
       "OS-DCF:diskConfig" => "AUTO",
