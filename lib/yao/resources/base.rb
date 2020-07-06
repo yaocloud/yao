@@ -7,7 +7,7 @@ module Yao::Resources
       names.map(&:to_s).each do |name|
         define_method(name) do
           if !@data.key?(name) && id
-            @data = self.class.get(id).to_hash
+            @data = self.class.get(id).to_hash 
           end
           self[name]
         end
@@ -25,7 +25,11 @@ module Yao::Resources
       _name, klass = *k_and_v.to_a.first
       name = _name.to_s
       define_method(name) do
-        self[[name, klass].join("__")] ||= klass.new(self[name])
+        if self[name] != ""
+          self[[name, klass].join("__")] ||= klass.new(self[name])
+        else
+          nil
+        end
       end
     end
 
