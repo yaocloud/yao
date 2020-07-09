@@ -12,4 +12,15 @@ class TestResourceBase < TestYaoResource
     base.class.friendly_attributes(:name)
     assert_equal("bar", base.name)
   end
+
+  def test_map_attribute_to_resource
+    base = Yao::Resources::Base.new("string" => "hoge")
+    base.class.map_attribute_to_resource string: String
+    assert_equal("hoge", base.string)
+
+    base = Yao::Resources::Base.new({"empty" => ""})
+    base.class.map_attribute_to_resource empty: NilClass
+    assert_equal(nil, base.empty)
+  end
+
 end
