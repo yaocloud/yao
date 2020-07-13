@@ -10,11 +10,13 @@ module Yao::Resources
     self.admin          = true
 
     class << self
+      # @return [Bool]
       def return_single_on_querying
         api_verion_v2?
       end
 
       private
+      # @return [Bool]
       def api_verion_v2?
         client.url_prefix.to_s.match?(/v2\.0/)
       end

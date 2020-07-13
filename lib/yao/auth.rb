@@ -12,12 +12,22 @@ module Yao
 
   module Auth
     class << self
+      # @return [Yao::Auth]
       def try_new
         if Yao.config.tenant_name && Yao.config.username && Yao.config.password && Yao.default_client
           Yao::Auth.new
         end
       end
 
+      # @param tenant_name [String]
+      # @param username [String]
+      # @param password [String]
+      # @param default_domain [String]
+      # @param user_domain_id [String]
+      # @param user_domain_name [String]
+      # @param project_domain_id [String]
+      # @param project_domain_name [String]
+      # @return [Hash] 
       def build_authv3_info(tenant_name, username, password,
                             default_domain,
                             user_domain_id, user_domain_name,
@@ -55,6 +65,10 @@ module Yao
           }
       end
 
+      # @param tenant_name [String]
+      # @param username [String]
+      # @param password [String]
+      # @return [Hash]
       def build_auth_info(tenant_name, username, password)
           auth_info = {
             auth: {
@@ -67,7 +81,11 @@ module Yao
 
           auth_info
       end
-
+  
+      # if identity_api_version == "3"
+      # @return [TokenV3]
+      # else
+      # @return [Token]
       def new(
           tenant_name: Yao.config.tenant_name,
           username: Yao.config.username,

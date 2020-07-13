@@ -47,8 +47,8 @@ module Yao::Resources
       end
 
       # @param role_name [String]
-      # @param to: [String]
-      # @param on: [String]
+      # @param to [String]
+      # @param on [String]
       # @return [Faraday::Response]
       def grant(role_name, to:, on:)
         role   = Yao::Role.get(role_name)
@@ -64,8 +64,8 @@ module Yao::Resources
       end
 
       # @param role_name [String]
-      # @param from: [String]
-      # @param on: [String]
+      # @param from [String]
+      # @param on [String]
       # @return [Faraday::Response]
       def revoke(role_name, from:, on:)
         role   = Yao::Role.get(role_name)
@@ -88,6 +88,8 @@ module Yao::Resources
         client.url_prefix.to_s =~ /v2\.0/
       end
 
+      # @param tenant [String]
+      # @param user [String]
       def path_for_role_resource(tenant, user, role = nil)
         if api_version_v2?
           paths = ["tenants", tenant.id, "users", user.id, "roles"]

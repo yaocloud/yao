@@ -8,6 +8,7 @@ module Yao::Resources
 
     map_attribute_to_resources loadbalancers: LoadBalancer
 
+    # @return [Yao::Resources::Tenant]
     def project
       if project_id = self["project_id"]
         Yao::Tenant.find project_id
@@ -15,6 +16,7 @@ module Yao::Resources
     end
     alias :tenant :project
 
+    # @return [Yao::Resources::LoadBalancerPool]
     def default_pool
       if default_pool_id = self["default_pool_id"]
         Yao::LoadBalancerPool.find default_pool_id

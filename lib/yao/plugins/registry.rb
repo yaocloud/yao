@@ -10,7 +10,7 @@ module Yao::Plugins
       @types = {}
     end
 
-    # @type type [Symbol]
+    # @param type [Symbol]
     # @return [Object]
     def [](type)
       @types[type]

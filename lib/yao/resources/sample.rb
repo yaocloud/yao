@@ -4,14 +4,17 @@ module Yao::Resources
                         :source, :type, :unit, :volume,
                         :resource_id, :user_id
 
+    # @return [Date]
     def recorded_at
       Time.parse(self["recorded_at"])
     end
 
+    # @return [Date]
     def timestamp
       Time.parse(self["timestamp"])
     end
 
+    # @return [Yao::Resources::Resource]
     def resource
       @resource ||= Yao::Resource.get(resource_id)
     end

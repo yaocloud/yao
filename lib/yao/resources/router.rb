@@ -10,19 +10,28 @@ module Yao::Resources
     self.resource_name  = 'router'
     self.resources_name = 'routers'
 
+    # @return [Array<Yao::Resources::Port>]
     def interfaces
       Yao::Port.list(device_id: id)
     end
 
     class << self
+      # @param id [String]
+      # @param param [Hash]
+      # @return [Hash]
       def add_interface(id, param)
         PUT(['routers', id, 'add_router_interface.json'].join('/'), param.to_json)
       end
 
+      # @param id [String]
+      # @param param [Hash]
+      # @return [Hash]
       def remove_interface(id, param)
         PUT(['routers', id, 'remove_router_interface.json'].join('/'), param.to_json)
       end
 
+      # @param name [String]
+      # @return [Array<Yao::Resources::Router>]
       def get_by_name(name)
         self.list(name: name)
       end

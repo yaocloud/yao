@@ -5,6 +5,7 @@ module Yao::Resources
 
     friendly_attributes :name, :description
 
+    # @return [Array<Yao::Resources::SecurityGroupRule>]
     def rules
       self[["rules", SecurityGroupRule].join("__")] ||= (case self.class.service
       when "compute"

@@ -7,14 +7,17 @@ module Yao::Resources
 
     map_attribute_to_resources pools: LoadBalancerListener
 
+    # @return [Date]
     def created_at
       Date.parse(self["created_at"])
     end
 
+    # @return [Date]
     def updated_at
       Date.parse(self["updated_at"])
     end
 
+    # @return [Date]
     def project
       if project_id = self["project_id"]
         Yao::Tenant.find project_id

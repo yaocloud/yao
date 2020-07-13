@@ -25,34 +25,54 @@ module Yao::Resources
     self.resources_name = "servers"
     self.resources_detail_available = true
 
+    # @param counter_name [String]
+    # @param query [Hash]
+    # @return [Array<Yao::OldSample>]
     def old_samples(counter_name: nil, query: {})
       Yao::OldSample.list(counter_name, query).select{|os| os.resource_metadata["instance_id"] == id}
     end
 
+    # @param id [String]
+    # @return [Hash]
     def self.start(id)
       action(id, "os-start" => nil)
     end
 
+    # @param id [String]
+    # @return [Hash]
     def self.shutoff(id)
       action(id, "os-stop" => nil)
     end
 
+    # @param id [String]
+    # @return [Hash]
     def self.reboot(id)
       action(id,"reboot" => { "type" => "HARD" })
     end
 
+    # @param id [String]
+    # @param flavor_id [String]
+    # @return [Hash]
     def self.resize(id, flavor_id)
       action(id,"resize" => { "flavorRef" => flavor_id })
     end
 
+    # @param id [String]
+    # @param sg_name [String]
+    # @return [Hash]
     def self.add_security_group(id, sg_name)
       action(id, {"addSecurityGroup": {"name": sg_name}})
     end
 
+    # @param id [String]
+    # @param sg_name [String]
+    # @return [Hash]
     def self.remove_security_group(id, sg_name)
       action(id, {"removeSecurityGroup": {"name": sg_name}})
     end
 
+    # @param id [String]
+    # @return [Hash]
     def self.get_vnc_console(id)
       response = action(id, {"os-getVNCConsole": {"type": "novnc"}})
       response.dig("console", "url")

@@ -9,10 +9,12 @@ module Yao::Resources
                         :admin_state_up
     map_attribute_to_attribute "binding:host_id" => :host_id
 
+    # @return [String]
     def primary_ip
       fixed_ips.first["ip_address"]
     end
 
+    # @return [Yao::Resources::Subnet]
     def primary_subnet
       @subnet ||= Yao::Subnet.find fixed_ips.first["subnet_id"]
     end

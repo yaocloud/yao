@@ -5,6 +5,8 @@ module Yao::Resources
     map_attribute_to_attribute minDisk: :min_disk
     map_attribute_to_attribute minRam: :min_ram
 
+    # @param unit [String]
+    # @return [Integer]
     def size(unit=nil)
       size = self["OS-EXT-IMG-SIZE:size"]
       case unit

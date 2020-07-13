@@ -14,10 +14,12 @@ module Yao::Resources
     self.resource_name  = "floatingip"
     self.resources_name = "floatingips"
 
+    # @return [Yao::Resources::Router]
     def router
       @router ||= Yao::Router.get(router_id)
     end
 
+    # @return [Yao::Resources::Tenant]
     def project
       @project ||= Yao::Tenant.get(project_id)
     end

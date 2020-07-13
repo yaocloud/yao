@@ -13,6 +13,7 @@ module Yao::Resources
     self.resource_name  = "network"
     self.resources_name = "networks"
 
+    # @return [Array<Yao::Resources::Port>]
     def ports
       @ports ||= Yao::Port.list(network_id: id)
     end

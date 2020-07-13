@@ -104,7 +104,7 @@ module Yao
         end
       end
 
-      # @param [String]
+      # @param new_endpoint [String]
       def reset_client(new_endpoint=nil)
         set = ClientSet.new
         endpoint = {

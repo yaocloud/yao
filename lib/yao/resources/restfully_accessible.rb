@@ -20,10 +20,12 @@ module Yao::Resources
     end
     attr_reader :service
 
+    # @return [String]
     def api_version
       @api_version || ''
     end
 
+    # @return [String]
     def api_version=(v)
       raise("Set api_version after service is declared") unless service
       @api_version = v
