@@ -1,6 +1,5 @@
 require "forwardable"
 require "deep_merge"
-
 module Yao::Resources
   module RestfullyAccessible
     def self.extended(base)
@@ -86,7 +85,6 @@ module Yao::Resources
       else
         create_url
       end
-
       memo_query = query
       res = {}
       loop do
@@ -97,8 +95,6 @@ module Yao::Resources
           if links && links.last.is_a?(Array) && next_link = links.last.find{|s| s["rel"] == "next" }
             uri = URI.parse(next_link["href"])
             query = Hash[URI::decode_www_form(uri.query)] if uri.query
-            url = uri.path
-            url.slice!(0)
             next
           end
         else
@@ -106,9 +102,7 @@ module Yao::Resources
         end
         break
       end
-
-
-      if return_single_on_querying && !memo_query.empty?
+      if return_single_on_querying && !query.empty?
         [resource_from_json(res)]
       else
         resources_from_json(res)
