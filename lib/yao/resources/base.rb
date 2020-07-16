@@ -27,6 +27,7 @@ module Yao::Resources
       define_method(name) do
         unless self[name].empty?
           self[[name, klass].join("__")] ||= klass.new(self[name])
+        end
       end
     end
 
