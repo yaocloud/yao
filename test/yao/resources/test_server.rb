@@ -162,6 +162,46 @@ class TestServer < TestYaoResource
     assert_requested(stub)
   end
 
+  def test_paging
+    stub = stub_request(:get, "https://example.com:12345/servers/detail")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "servers_links":[
+             {
+                "href":"https://example.com:12345/servers/detail",
+                "rel":"next"
+             }
+          ],
+          "servers": [{
+            "id": "dummy1"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "servers": [{
+            "id": "dummy2"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    servers = Yao::Server.list
+    assert_instance_of(Array, servers)
+    assert_instance_of(Yao::Server, servers.first)
+    assert_equal('dummy1', servers.first.id)
+    assert_equal('dummy2', servers.last.id)
+
+    assert_requested(stub)
+  end
+
   def test_list_detail
     assert_equal(Yao::Server.method(:list), Yao::Server.method(:list_detail))
   end
