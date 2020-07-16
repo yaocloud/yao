@@ -19,6 +19,6 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "json"
   spec.add_dependency "deep_merge"
-  spec.add_dependency "faraday"
+  spec.add_dependency "faraday", "~> 1.0.1"
   spec.add_dependency "faraday_middleware"
 end

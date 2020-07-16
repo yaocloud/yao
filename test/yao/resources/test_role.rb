@@ -60,7 +60,7 @@ class TestRole < TestYaoResource
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_requested(stub)
     end
-    
+
     def test_list_for_user
       stub_user
       stub_tenant
@@ -77,11 +77,11 @@ class TestRole < TestYaoResource
           JSON
           headers: {'Content-Type' => 'application/json'}
         )
-      
+
       roles = Yao::Role.list_for_user("test_user", on:"admin")
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_received(Yao::User) { |subject| subject.get("test_user") }
-      assert_received(Yao::Tenant) { |subject| subject.find_by_name("admin") }
+      assert_received(Yao::Tenant) { |subject| subject.get("admin") }
       assert_requested(stub)
     end
 
@@ -99,7 +99,7 @@ class TestRole < TestYaoResource
       Yao::Role.grant("test_role", to:"test_user", on:"admin")
       assert_received(Yao::Role) { |subject| subject.get("test_role") }
       assert_received(Yao::User) { |subject| subject.get("test_user") }
-      assert_received(Yao::Tenant) { |subject| subject.find_by_name("admin") }
+      assert_received(Yao::Tenant) { |subject| subject.get("admin") }
       assert_requested(stub)
     end
 
@@ -117,7 +117,7 @@ class TestRole < TestYaoResource
       Yao::Role.revoke("test_role", from:"test_user", on:"admin")
       assert_received(Yao::Role) { |subject| subject.get("test_role") }
       assert_received(Yao::User) { |subject| subject.get("test_user") }
-      assert_received(Yao::Tenant) { |subject| subject.find_by_name("admin") }
+      assert_received(Yao::Tenant) { |subject| subject.get("admin") }
       assert_requested(stub)
     end
   end
@@ -172,7 +172,7 @@ class TestRole < TestYaoResource
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_requested(stub)
     end
-    
+
     def test_list_for_user
       stub_user
       stub_project
@@ -189,7 +189,7 @@ class TestRole < TestYaoResource
           JSON
           headers: {'Content-Type' => 'application/json'}
         )
-      
+
       roles = Yao::Role.list_for_user("test_user", on:"admin")
       assert_equal("0123456789abcdef0123456789abcdef", roles.first.id)
       assert_received(Yao::Resources::User) { |subject| subject.get("test_user") }
@@ -249,9 +249,9 @@ class TestRole < TestYaoResource
       "name" => "test_user",
     }) }
   end
-  
+
   def stub_tenant
-    stub(Yao::Tenant).find_by_name { Yao::Tenant.new({
+    stub(Yao::Tenant).get { Yao::Tenant.new({
       "id" => "0123456789abcdef0123456789abcdef",
       "name" => "admin",
     }) }

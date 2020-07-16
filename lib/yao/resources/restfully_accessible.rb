@@ -232,6 +232,8 @@ module Yao::Resources
         item = find_by_name(name)
         if item.size > 1
           raise Yao::TooManyItemFonud.new("More than one resource exists with the name '#{name}'")
+        elsif item.size.zero?
+          raise Yao::InvalidResponse.new("No resource exists with the name '#{name}'")
         end
         GET(create_url(item.first.id), query)
       end

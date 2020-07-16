@@ -64,6 +64,19 @@ class Faraday::Request::ReadOnly
 end
 Faraday::Request.register_middleware read_only: -> { Faraday::Request::ReadOnly }
 
+class Faraday::Request::UserAgent
+  def initialize(app, user_agent=nil)
+    @app = app
+    @user_agent = user_agent || "Yao/#{Yao::VERSION} Faraday/#{Faraday::VERSION}"
+  end
+
+  def call(env)
+    env[:request_headers]['User-Agent'] = @user_agent
+    @app.call(env)
+  end
+end
+Faraday::Request.register_middleware user_agent: -> { Faraday::Request::UserAgent }
+
 class Faraday::Response::OSDumper < Faraday::Response::Middleware
   def on_complete(env)
     require 'pp'

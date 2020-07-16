@@ -8,6 +8,7 @@ module Yao::Plugins
     def call(f, token)
       f.request :accept, 'application/json'
       f.request :url_encoded
+      f.request :user_agent
 
       if token
         f.request :os_token, token

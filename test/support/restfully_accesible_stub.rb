@@ -41,6 +41,6 @@ module RestfullyAccessibleStub
   end
 
   def request_headers
-    {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Faraday v#{Faraday::VERSION}"}
+    {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Yao/#{Yao::VERSION} Faraday/#{Faraday::VERSION}"}
   end
 end
