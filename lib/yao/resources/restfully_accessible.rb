@@ -87,23 +87,24 @@ module Yao::Resources
         create_url
       end
 
+      memo_query = query
       res = {}
       loop do
         r = GET(url, query).body
         res.deep_merge!(r)
-        links = r.find {|k,_| k =~ /links/ }
-
-        if links && next_link = links.last.find{|s|s["rel"] == "next" }
-          uri = URI.parse(next_link["href"])
-          query = Hash[URI::decode_www_form(uri.query)] if uri.query
-
-          uri.fragment = uri.query = nil
-          url = uri.to_s
-          next
+        if r.is_a?(Hash)
+          links = r.find {|k,_| k =~ /links/ }
+          if links && links.last.is_a?(Array) && next_link = links.last.find{|s| s["rel"] == "next" }
+            uri = URI.parse(next_link["href"])
+            query = Hash[URI::decode_www_form(uri.query)] if uri.query
+            url = uri.path
+            url.slice!(0)
+            next
+          end
         end
         break
       end
-      if return_single_on_querying && !query.empty?
+      if return_single_on_querying && !memo_query.empty?
         [resource_from_json(res)]
       else
         resources_from_json(res)

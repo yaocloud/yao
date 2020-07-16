@@ -180,7 +180,7 @@ class TestServer < TestYaoResource
         }
         JSON
         headers: {'Content-Type' => 'application/json'}
-      )
+      ).times(1).then
       .to_return(
         status: 200,
         body: <<-JSON,
@@ -191,7 +191,7 @@ class TestServer < TestYaoResource
         }
         JSON
         headers: {'Content-Type' => 'application/json'}
-      )
+      ).times(1)
 
     servers = Yao::Server.list
     assert_instance_of(Array, servers)
@@ -199,7 +199,7 @@ class TestServer < TestYaoResource
     assert_equal('dummy1', servers.first.id)
     assert_equal('dummy2', servers.last.id)
 
-    assert_requested(stub)
+    assert_requested(stub, times: 2)
   end
 
   def test_list_detail
