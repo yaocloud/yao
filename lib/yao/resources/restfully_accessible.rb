@@ -91,8 +91,8 @@ module Yao::Resources
       res = {}
       loop do
         r = GET(url, query).body
-        res.deep_merge!(r)
         if r.is_a?(Hash)
+          res.deep_merge!(r)
           links = r.find {|k,_| k =~ /links/ }
           if links && links.last.is_a?(Array) && next_link = links.last.find{|s| s["rel"] == "next" }
             uri = URI.parse(next_link["href"])
@@ -101,9 +101,13 @@ module Yao::Resources
             url.slice!(0)
             next
           end
+        else
+          res = r
         end
         break
       end
+
+
       if return_single_on_querying && !memo_query.empty?
         [resource_from_json(res)]
       else
