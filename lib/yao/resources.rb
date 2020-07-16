@@ -42,6 +42,8 @@ module Yao
     autoload :Sample,                    "yao/resources/sample"
   end
 
+  # @param name [String]
+  # @return [object]
   def self.const_missing(name)
     new_klass = Yao::Resources.const_get(name)
     Yao.const_set(name, new_klass)

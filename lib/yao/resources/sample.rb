@@ -19,6 +19,7 @@ module Yao::Resources
       @resource ||= Yao::Resource.get(resource_id)
     end
 
+    # @return [Yao::Resources::User]
     def user
       @user ||= Yao::User.get(user_id)
     end

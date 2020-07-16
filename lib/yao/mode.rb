@@ -1,5 +1,7 @@
 module Yao
   module Mode
+    # @param blk [Proc]
+    # @return [String]
     def read_only!(&blk)
       raise unless block_given?
 
@@ -16,6 +18,8 @@ module Yao
       end
     end
 
+    # @param blk [Proc]
+    # @return [String]
     def read_only(&blk)
       raise unless block_given?
 

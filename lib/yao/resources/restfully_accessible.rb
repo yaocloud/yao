@@ -15,6 +15,8 @@ module Yao::Resources
       end
     end
 
+    # @param name [String]
+    # @return 
     def service=(name)
       @service = name
     end
@@ -25,6 +27,7 @@ module Yao::Resources
       @api_version || ''
     end
 
+    # @param v [String]
     # @return [String]
     def api_version=(v)
       raise("Set api_version after service is declared") unless service
@@ -32,26 +35,35 @@ module Yao::Resources
       api_version
     end
 
+    # @param bool [Boolean]
+    # @return [Boolean]
     def admin=(bool)
       @admin = bool
     end
 
+    # @return [Boolean]
     def return_single_on_querying
       @return_single_on_querying
     end
 
+    # @param bool [Boolean]
+    # @return [Boolean]
     def return_single_on_querying=(bool)
       @return_single_on_querying = bool
     end
 
+    # @return [String]
     def resources_path
       @resources_path || resources_name
     end
 
+    # @param path [String]
+    # @return [String]
     def resources_path=(path)
       @resources_path = path.sub(%r!^\/!, "")
     end
 
+    # @return [Faraday::Connection]
     def client
       if @admin
         Yao.default_client.admin_pool[service]
@@ -60,6 +72,7 @@ module Yao::Resources
       end or raise "You do not have #{@admin ? 'admin' : 'public'} access to the #{service} service"
     end
 
+    # @param blk [Proc]
     def as_member(&blk)
       if @admin
         @admin = false

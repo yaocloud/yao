@@ -1,22 +1,30 @@
 module Yao
   class Config
+
+    # @return [Hash]
     def _configuration_defaults
       @_configuration_defaults ||= {}
     end
 
+    # @return [Hash]
     def _configuration_hooks
       @_configuration_hooks ||= {}
     end
 
+    # @return [Array]
     def _configuration_hooks_queue
       @_configuration_hooks_queue ||= []
     end
 
+    # @return [Hash]
     def configuration
       @configuration ||= {}
     end
 
     HOOK_RENEW_CLIENT_KEYS = %i(tenant_name username password auth_url debug debug_record_response)
+    
+    # @param v [Boolean]
+    # @return [Array]
     def delay_hook=(v)
       @delay_hook = v
       if !v and !_configuration_hooks_queue.empty?
@@ -33,10 +41,14 @@ module Yao
       end
     end
 
+    # @return [Boolean]
     def delay_hook?
       @delay_hook
     end
 
+    # @param name [String]
+    # @param default [String]
+    # @param hook [Proc]
     def param(name, default, &hook)
       raise("Duplicate definition of #{name}") if self.respond_to?(name)
 
@@ -55,6 +67,9 @@ module Yao
       end
     end
 
+    # @param name [String]
+    # @param value [String]
+    # @return [String]
     def set(name, value)
       raise("Undefined config key #{name}") unless self.respond_to?(name)
       configuration[name.to_sym] = value
@@ -67,6 +82,8 @@ module Yao
     end
   end
 
+  # @param blk [Proc]
+  # @return [Yao::Config]
   def self.config(&blk)
     @__config ||= Config.new
     if blk
@@ -77,6 +94,8 @@ module Yao
     @__config
   end
 
+  # @param blk [Proc]
+  # @return [Yao::Config]
   def self.configure(&blk)
     config(&blk)
   end
