@@ -19,5 +19,13 @@ module Yao::Resources
     def bootable?
       self["bootable"] == "true" ? true : false
     end
+
+    def error?
+      /^error/.match?(status)
+    end
+
+    def use?
+      status == "in-use"
+    end
   end
 end

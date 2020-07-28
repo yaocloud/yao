@@ -43,8 +43,10 @@ class TestVolume < TestYaoResource
     assert_equal(volume.attachments, [])
     assert_equal(volume.bootable?, false)
     assert_equal(volume.description, "description")
+    assert_equal(volume.error?, false)
     assert_equal(volume.encrypted?, false)
     assert_equal(volume.host, "test")
+    assert_equal(volume.use?, false)
     assert_equal(volume.metadata, {})
     assert_equal(volume.migration_status, nil)
     assert_equal(volume.multiattach?, false)
@@ -54,6 +56,12 @@ class TestVolume < TestYaoResource
     assert_equal(volume.type, "__DEFAULT__")
     assert_equal(volume.volume_image_metadata, {})
     assert_equal(volume.volume_type, "__DEFAULT__")
+
+    volume = Yao::Volume.new({"status" => "in-use"})
+    assert_equal(volume.use?, true)
+
+    volume = Yao::Volume.new({"status" => "error"})
+    assert_equal(volume.error?, true)
   end
 
   def test_list
