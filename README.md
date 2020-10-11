@@ -34,7 +34,8 @@ Yao.configure do
   # timeout is optional
   timeout     300
 
-  # If your endpoint requires cert & key
+  # If your endpoint requires cacert,cert and key
+  ca_cert "/path/to/my.ca"
   client_cert "/path/to/my.pem"
   client_key "/path/to/my.key"
 
