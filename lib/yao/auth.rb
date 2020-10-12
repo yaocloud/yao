@@ -5,7 +5,7 @@ require 'yao/token'
 require 'yao/tokenv3'
 
 module Yao
-  %i(tenant_name username password timeout client_cert client_key region_name
+  %i(tenant_name username password timeout ca_cert client_cert client_key region_name
      identity_api_version user_domain_id user_domain_name project_domain_id project_domain_name).each do |name|
     Yao.config.param name, nil
   end

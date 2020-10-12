@@ -64,6 +64,7 @@ class TestClient < Test::Unit::TestCase
   end
 
   def test_cert_key
+    stub(Yao.config).ca_cert { File.expand_path("../../fixtures/dummy.pem", __FILE__) }
     stub(Yao.config).client_cert { File.expand_path("../../fixtures/dummy.pem", __FILE__) }
     stub(Yao.config).client_key  { File.expand_path("../../fixtures/dummy.key", __FILE__) }
     stub(OpenSSL::X509::Certificate).new { "DummyCert" }
@@ -71,6 +72,7 @@ class TestClient < Test::Unit::TestCase
 
     cli = Yao::Client.gen_client("http://cool-api.example.com:12345/v3.0")
     ssl = cli.ssl
+    assert { ssl[:ca_file] == File.expand_path("../../fixtures/dummy.pem", __FILE__) }
     assert { ssl[:client_cert] == "DummyCert" }
     assert { ssl[:client_key] == "DummyKey" }
   end

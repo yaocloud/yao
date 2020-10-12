@@ -127,10 +127,13 @@ module Yao
         if Yao.config.client_cert && Yao.config.client_key
           cert = OpenSSL::X509::Certificate.new(File.read(Yao.config.client_cert))
           key  = OpenSSL::PKey.read(File.read(Yao.config.client_key))
-          opt.merge!(ssl: {
+          h = {
             client_cert: cert,
             client_key:  key,
-          })
+          }
+
+          h[:ca_file] = Yao.config.ca_cert if Yao.config.ca_cert
+          opt.merge!(ssl: h)
         end
         opt
       end
