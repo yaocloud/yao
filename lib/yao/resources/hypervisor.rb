@@ -22,7 +22,7 @@ module Yao::Resources
       self['status'] == 'disabled'
     end
 
-    # @return [Yao::ComputeServices]
+    # @return [Yao::Resources::ComputeServices]
     def service
       Yao::ComputeServices.new(self['service'])
     end

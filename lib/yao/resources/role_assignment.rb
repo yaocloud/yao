@@ -8,6 +8,7 @@ module Yao::Resources
     self.api_version    = "v3"
     self.client.url_prefix = Yao.config.auth_url.gsub(/v2.0|v3/, '')
 
+    # @return [Yao::Resources::Tenant]
     def project
       @project ||= Yao::Tenant.get(scope["project"]["id"])
     end

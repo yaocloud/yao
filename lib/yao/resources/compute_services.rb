@@ -19,6 +19,9 @@ module Yao::Resources
     end
 
     class << self
+      # @param host [String]
+      # @param binary [String]
+      # @return [Yao::Resources::ComputeServices]
       def enable(host, binary)
         params = {
           "host" => host,
@@ -27,6 +30,10 @@ module Yao::Resources
         put("enable", params)
       end
 
+      # @param host [String]
+      # @param binary [String]
+      # @param resason [String]
+      # @return [Yao::Resources::ComputeServices]
       def disable(host, binary, reason = nil)
         params = {
           "host" => host,

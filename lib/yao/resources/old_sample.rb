@@ -6,19 +6,23 @@ module Yao::Resources
                         :message_id, :resource_id, :timestamp, :resource_metadata, :user_id,
                         :source
 
+    # @return [Date]
     def recorded_at
       Time.parse(self["recorded_at"] || self["timestamp"])
     end
     alias timestamp recorded_at
 
+    # @return [String]
     def id
       message_id
     end
 
+    # @return [Yao::Resources::Resource]
     def resource
       @resource ||= Yao::Resource.get(resource_id)
     end
 
+    # @return [Yao::Resources::User]
     def user
       @user ||= Yao::User.get(user_id)
     end

@@ -8,19 +8,23 @@ module Yao::Resources
     self.resources_name = "projects"
     self.admin          = true
 
+    # @return [Bool]
     def domain?
       @data["is_domain"]
     end
 
+    # @return [Array<Yao::Resources::Server>]
     def servers
       @servers ||= Yao::Server.list(all_tenants: 1, project_id: id)
     end
 
+    # @return [Yao::Resources::Port]
     def ports
       @ports ||= Yao::Port.list(tenant_id: id)
     end
 
     class << self
+
       def accessible
         as_member { self.list }
       end

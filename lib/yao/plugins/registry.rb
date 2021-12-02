@@ -6,11 +6,12 @@ module Yao::Plugins
   class Registry
     include Singleton
 
+    # @return [Hash]
     def initialize
       @types = {}
     end
 
-    # @type type [Symbol]
+    # @param type [Symbol]
     # @return [Object]
     def [](type)
       @types[type]

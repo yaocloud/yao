@@ -6,6 +6,7 @@ module Yao
         base.friendly_attributes :network_id
       end
 
+      # @return [Yao::Resources::Network]
       def network
         @tenant ||= Yao::Network.find(network_id)
       end
