@@ -31,7 +31,9 @@ module Yao::Resources
       _name, klass = *k_and_v.to_a.first
       name = _name.to_s
       define_method(name) do
-        self[[name, klass].join("__")] ||= klass.new(self[name])
+        unless self[name].empty?
+          self[[name, klass].join("__")] ||= klass.new(self[name])
+        end
       end
     end
 
