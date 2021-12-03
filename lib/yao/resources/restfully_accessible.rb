@@ -16,7 +16,7 @@ module Yao::Resources
     end
 
     # @param name [String]
-    # @return 
+    # @return
     def service=(name)
       @service = name
     end

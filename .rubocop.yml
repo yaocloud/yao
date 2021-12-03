@@ -1,5 +1,6 @@
 AllCops:
-  TargetRubyVersion: 2.4
+  SuggestExtensions: false
+  TargetRubyVersion: 3.0
   DisplayCopNames: true
   DisabledByDefault: true
   Exclude:
@@ -11,7 +12,7 @@ Style/HashSyntax:
 Layout/EmptyLines:
   Enabled: true
 
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Enabled: true
 
 Layout/TrailingWhitespace:
@@ -51,8 +52,4 @@ Style/NumericLiteralPrefix:
 
 Style/StabbyLambdaParentheses:
   EnforcedStyle: require_parentheses
-  Enabled: true
-
-Rails/ActionFilter:
-  EnforcedStyle: action
   Enabled: true
