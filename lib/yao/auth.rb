@@ -27,7 +27,7 @@ module Yao
       # @param user_domain_name [String]
       # @param project_domain_id [String]
       # @param project_domain_name [String]
-      # @return [Hash] 
+      # @return [Hash]
       def build_authv3_info(tenant_name, username, password,
                             default_domain,
                             user_domain_id, user_domain_name,
@@ -81,7 +81,7 @@ module Yao
 
           auth_info
       end
-  
+
       # if identity_api_version == "3"
       # @return [TokenV3]
       # else

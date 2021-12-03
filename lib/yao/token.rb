@@ -2,7 +2,7 @@ require 'yao/client'
 
 module Yao
   class Token
-    
+
     def self.issue(cli, auth_info)
       t = new(auth_info)
       t.refresh(cli)

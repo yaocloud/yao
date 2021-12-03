@@ -1,5 +1,7 @@
 module Yao::Resources
   class Project < Base
+    include ServerUsageAssociationable
+
     friendly_attributes :id, :name, :description, :enabled, :parent_id, :domain_id
     alias :enabled? :enabled
 

@@ -22,7 +22,7 @@ module Yao
     end
 
     HOOK_RENEW_CLIENT_KEYS = %i(tenant_name username password auth_url debug debug_record_response)
-    
+
     # @param v [Boolean]
     # @return [Array]
     def delay_hook=(v)

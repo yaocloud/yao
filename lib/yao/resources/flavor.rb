@@ -4,7 +4,7 @@ module Yao::Resources
     map_attribute_to_attribute "os-flavor-access:is_public" => :public?
     map_attribute_to_attribute "OS-FLV-DISABLED:disabled"   => :disabled?
 
-    # @param unit [String] 
+    # @param unit [String]
     # @return [Integer]
     def ram(unit='M')
       case unit

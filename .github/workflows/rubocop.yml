@@ -1,22 +1,19 @@
-name: ubuntu
+name: rubocop
 
 on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby: [3.0, 2.7, 2.6]
     steps:
     - uses: actions/checkout@master
     - name: Set up Ruby
       uses: actions/setup-ruby@v1
       with:
-        ruby-version: ${{ matrix.ruby }}
+        ruby-version: 3.0
     - name: Install dependencies
       run: |
         gem install bundler --no-document
         bundle install
-    - name: Run test
-      run: bundle exec rake test
+    - name: Run rubocop
+      run: bundle exec rubocop
