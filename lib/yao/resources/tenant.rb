@@ -1,5 +1,7 @@
 module Yao::Resources
   class Tenant < Base
+    include ServerUsageAssociationable
+
     friendly_attributes :id, :name, :description, :enabled
 
     self.service        = "identity"

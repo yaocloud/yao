@@ -4,6 +4,7 @@ module Yao
     require "yao/resources/tenant_associationable"
     require "yao/resources/port_associationable"
     require "yao/resources/network_associationable"
+    require "yao/resources/server_usage_associationable"
 
     autoload :Server,                    "yao/resources/server"
     autoload :ServerGroup,               "yao/resources/server_group"

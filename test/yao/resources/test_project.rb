@@ -254,4 +254,23 @@ class TestProject < TestYaoResource
     assert_instance_of(Array, project.servers)
     assert_requested(stub)
   end
+
+  def test_server_usage
+    stub = stub_request(:get, "https://example.com:12345/os-simple-tenant-usage/0123456789abcdef0123456789abcdef")
+      .to_return(
+         status: 200,
+         body: <<-JSON,
+        {
+            "tenant_usage": {
+                "total_memory_mb_usage": 1024
+            }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    project = Yao::Project::new("id" => "0123456789abcdef0123456789abcdef")
+    usage = project.server_usage
+    assert_equal(1024, usage["total_memory_mb_usage"])
+  end
 end
