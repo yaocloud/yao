@@ -29,6 +29,7 @@ class TestVolume < TestYaoResource
     assert_equal(volume.snapshot_id, nil)
     assert_equal(volume.user_id, 'aaaa166533fd49f3b11b1cdce2430000')
     assert_equal(volume.volume_type, 'test')
+    assert_equal(volume.type, 'test')
   end
 
   def test_list
@@ -59,5 +60,42 @@ class TestVolume < TestYaoResource
 
   def test_list_detail
     assert_equal(Yao::Volume.method(:list), Yao::Volume.method(:list_detail))
+  end
+
+  def stub_action_request(id, body)
+    # https://docs.openstack.org/api-ref/block-storage/v3/index.html?expanded=list-accessible-volumes-with-details-detail,reset-a-volume-s-statuses-detail#reset-a-volume-s-statuses
+    stub_request(:post, "https://example.com:12345/volumes/#{id}/action").
+      with(
+      body: body,
+      headers: {
+          'Accept'=>'application/json',
+          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'Content-Type'=>'application/json',
+          'User-Agent'=>"Yao/#{Yao::VERSION} Faraday/#{Faraday::VERSION}"
+      }).
+      to_return(
+        status: 202,
+        body: '',
+        headers: {'Content-Type' => 'application/json'}
+      )
+  end
+
+  def test_set_status
+    volume_id = '00000000-0000-0000-0000-000000000000'
+
+    stub = stub_action_request(volume_id, {'os-reset_status': {'status': 'error'}})
+    Yao::Volume.set_status(volume_id, 'error')
+    assert_requested(stub)
+  end
+
+  def test_set_status_on_instance
+    volume_id = '00000000-0000-0000-0000-000000000000'
+    stub = stub_action_request(volume_id, {'os-reset_status': {'status': 'error'}})
+    params = {
+      'id' => volume_id,
+    }
+    volume = Yao::Volume.new(params)
+    volume.status = 'error'
+    assert_requested(stub)
   end
 end
