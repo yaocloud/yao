@@ -32,8 +32,30 @@ class TestRoleAssignment < TestYaoResource
     assert_equal("313233", role_assignment.user.id)
   end
 
+  def test_list
+    stub = stub_request(:get, "https://example.com:12345/role_assignments").
+      to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "role_assignments": [{
+            "scope": {
+              "project": {
+                "id": "aaaa166533fd49f3b11b1cdce2430000"
+              }
+            }
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+    role_assignment = Yao::RoleAssignment.list
+    assert_equal('aaaa166533fd49f3b11b1cdce2430000', role_assignment.first.scope['project']['id'])
+    assert_requested(stub)
+  end
+
   def test_project
-    stub = stub_request(:get, "http://example.com:12345/tenants/456789").
+    stub = stub_request(:get, "https://example.com:12345/tenants/456789").
       to_return(
         status: 200,
         body: <<-JSON,

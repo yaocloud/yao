@@ -6,7 +6,12 @@ module Yao::Resources
     self.resources_name  = "role_assignments"
     self.admin          = true
     self.api_version    = "v3"
-    self.client.url_prefix = Yao.config.auth_url.gsub(/v2.0|v3/, '')
+
+    # @param _subpath [String]
+    # @return [String]
+    def self.create_url(_subpath='')
+      resources_name
+    end
 
     # @return [Yao::Resources::Tenant]
     def project
