@@ -1,9 +1,4 @@
 class TestProject < TestYaoResource
-  def setup
-    super
-    Yao.default_client.admin_pool["identity"] = Yao::Client.gen_client("https://example.com:12345/v2.0")
-  end
-
   # https://docs.openstack.org/api-ref/identity/v3/?expanded=list-projects-detail#projects
   def test_project
     params = {
@@ -272,5 +267,30 @@ class TestProject < TestYaoResource
     project = Yao::Project::new("id" => "0123456789abcdef0123456789abcdef")
     usage = project.server_usage
     assert_equal(1024, usage["total_memory_mb_usage"])
+  end
+
+  def test_role_assignment
+    project_id = 'aaaa166533fd49f3b11b1cdce2430000'
+    stub = stub_request(:get, "https://example.com:12345/role_assignments?scope.project.id=#{project_id}").
+      to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "role_assignments": [{
+            "scope": {
+              "project": {
+                "id": "aaaa166533fd49f3b11b1cdce2430000"
+              }
+            }
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    project = Yao::Project.new('id' => project_id)
+    role_assignment = project.role_assignment
+    assert_equal('aaaa166533fd49f3b11b1cdce2430000', role_assignment.first.scope['project']['id'])
+    assert_requested(stub)
   end
 end
