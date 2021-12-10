@@ -30,6 +30,11 @@ module Yao::Resources
       meters.select{|m| m.name == meter_name}
     end
 
+    # @return [Yao::Resources::RoleAssignment]
+    def role_assignment
+      Yao::RoleAssignment.get(tenant: id)
+    end
+
     class << self
       def accessible
         as_member { self.list }

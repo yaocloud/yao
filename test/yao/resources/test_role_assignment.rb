@@ -54,6 +54,81 @@ class TestRoleAssignment < TestYaoResource
     assert_requested(stub)
   end
 
+  def test_get_user
+    user_id = '123456'
+    stub = stub_request(:get, "https://example.com:12345/role_assignments?user.id=#{user_id}").
+      to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "role_assignments": [{
+            "scope": {
+              "project": {
+                "id": "aaaa166533fd49f3b11b1cdce2430000"
+              }
+            }
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    user = Yao::User.new('id' => user_id)
+    role_assignment = Yao::RoleAssignment.get(user: user)
+    assert_equal('aaaa166533fd49f3b11b1cdce2430000', role_assignment.first.scope['project']['id'])
+    assert_requested(stub)
+  end
+
+  def test_get_project
+    project_id = 'aaaa166533fd49f3b11b1cdce2430000'
+    stub = stub_request(:get, "https://example.com:12345/role_assignments?scope.project.id=#{project_id}").
+      to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "role_assignments": [{
+            "scope": {
+              "project": {
+                "id": "aaaa166533fd49f3b11b1cdce2430000"
+              }
+            }
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    project = Yao::Project.new('id' => project_id)
+    role_assignment = Yao::RoleAssignment.get(project: project)
+    assert_equal('aaaa166533fd49f3b11b1cdce2430000', role_assignment.first.scope['project']['id'])
+    assert_requested(stub)
+  end
+
+  def test_get_tenant
+    tenant_id = 'aaaa166533fd49f3b11b1cdce2430000'
+    stub = stub_request(:get, "https://example.com:12345/role_assignments?scope.project.id=#{tenant_id}").
+      to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "role_assignments": [{
+            "scope": {
+              "project": {
+                "id": "aaaa166533fd49f3b11b1cdce2430000"
+              }
+            }
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    tenant = Yao::Project.new('id' => tenant_id)
+    role_assignment = Yao::RoleAssignment.get(tenant: tenant)
+    assert_equal('aaaa166533fd49f3b11b1cdce2430000', role_assignment.first.scope['project']['id'])
+    assert_requested(stub)
+  end
+
   def test_project
     stub = stub_request(:get, "https://example.com:12345/tenants/456789").
       to_return(

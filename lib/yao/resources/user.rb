@@ -1,6 +1,6 @@
 module Yao::Resources
   class User < Base
-    friendly_attributes :name, :email, :enabled, :id
+    friendly_attributes :name, :email, :enabled
 
     alias enabled? enabled
 
@@ -8,6 +8,11 @@ module Yao::Resources
     self.resource_name  = "user"
     self.resources_name = "users"
     self.admin          = true
+
+    # @return [Yao::Resources::RoleAssignment]
+    def role_assignment
+      Yao::RoleAssignment.get(user: self)
+    end
 
     class << self
       # @return [Bool]

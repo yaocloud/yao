@@ -1,14 +1,41 @@
 class TestUser < TestYaoResource
-  def test_sg_attributes
+  def test_user
     params = {
+      "id" => '1234567890',
       "name" => "test_user",
       "email" => "test-user@example.com",
       "password" => "passw0rd"
     }
 
     user = Yao::User.new(params)
+    assert_equal("1234567890", user.id)
     assert_equal("test_user", user.name)
     assert_equal("test-user@example.com", user.email)
+  end
+
+  def test_role_assignment
+    user_id = '123456'
+    stub = stub_request(:get, "https://example.com:12345/role_assignments?user.id=#{user_id}").
+      to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "role_assignments": [{
+            "scope": {
+              "project": {
+                "id": "aaaa166533fd49f3b11b1cdce2430000"
+              }
+            }
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    user = Yao::User.new('id' => user_id)
+    role_assignment = user.role_assignment
+    assert_equal('aaaa166533fd49f3b11b1cdce2430000', role_assignment.first.scope['project']['id'])
+    assert_requested(stub)
   end
 
   sub_test_case 'with keystone v2.0' do

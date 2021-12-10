@@ -25,6 +25,11 @@ module Yao::Resources
       @ports ||= Yao::Port.list(tenant_id: id)
     end
 
+    # @return [Yao::Resources::RoleAssignment]
+    def role_assignment
+      Yao::RoleAssignment.get(project: id)
+    end
+
     class << self
 
       def accessible
