@@ -45,13 +45,6 @@ module Yao::Resources
       def remove_interface(id, param)
         PUT(['routers', id, 'remove_router_interface.json'].join('/'), param.to_json)
       end
-
-      # @param name [String]
-      # @return [Array<Yao::Resources::Router>]
-      def get_by_name(name)
-        self.list(name: name)
-      end
-      alias find_by_name get_by_name
     end
   end
 end
