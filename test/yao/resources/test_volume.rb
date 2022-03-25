@@ -98,4 +98,25 @@ class TestVolume < TestYaoResource
     volume.status = 'error'
     assert_requested(stub)
   end
+
+  def test_project
+    stub = stub_request(:get, "https://example.com:12345/projects/0123456789abcdef0123456789abcdef")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "project": {
+            "id": "0123456789abcdef0123456789abcdef"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    volume = Yao::Volume.new('project_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Project, volume.project)
+    assert_equal('0123456789abcdef0123456789abcdef', volume.project.id)
+
+    assert_requested(stub)
+  end
 end
