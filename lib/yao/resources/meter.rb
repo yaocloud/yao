@@ -1,7 +1,7 @@
 module Yao::Resources
   class Meter < Base
 
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :meter_id, :name, :user_id, :resource_id, :source, :type, :unit
 

@@ -88,13 +88,13 @@ class TestMeter < TestYaoResource
     assert_requested(stub)
   end
 
-  def test_tenant
-    stub = stub_request(:get, "https://example.com:12345/tenants/00000000-0000-0000-0000-000000000000")
+  def test_project
+    stub = stub_request(:get, "https://example.com:12345/projects/00000000-0000-0000-0000-000000000000")
       .to_return(
         status: 200,
         body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "00000000-0000-0000-0000-000000000000"
           }
         }
@@ -107,8 +107,8 @@ class TestMeter < TestYaoResource
     }
 
     meter  = Yao::Meter.new(params)
-    assert_instance_of(Yao::Tenant, meter.tenant)
-    assert_equal("00000000-0000-0000-0000-000000000000", meter.tenant.id)
+    assert_instance_of(Yao::Project, meter.project)
+    assert_equal("00000000-0000-0000-0000-000000000000", meter.project.id)
 
     assert_requested(stub)
   end

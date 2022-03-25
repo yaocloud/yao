@@ -206,14 +206,14 @@ class TestServer < TestYaoResource
     assert_equal(Yao::Server.method(:list), Yao::Server.method(:list_detail))
   end
 
-  def test_tenant
+  def test_project
 
-    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/projects/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "0123456789abcdef0123456789abcdef"
           }
         }
@@ -221,9 +221,9 @@ class TestServer < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
-    server = Yao::Server.new('tenant_id' => '0123456789abcdef0123456789abcdef')
-    assert_instance_of(Yao::Tenant, server.tenant)
-    assert_equal('0123456789abcdef0123456789abcdef', server.tenant.id)
+    server = Yao::Server.new('project_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Project, server.project)
+    assert_equal('0123456789abcdef0123456789abcdef', server.project.id)
 
     assert_requested(stub)
   end

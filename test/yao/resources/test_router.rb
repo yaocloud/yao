@@ -150,14 +150,14 @@ class TestRouter < TestYaoResource
     assert_requested(stub)
   end
 
-  def test_tenant
+  def test_project
 
-    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/projects/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "0123456789abcdef0123456789abcdef"
           }
         }
@@ -165,9 +165,9 @@ class TestRouter < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
-    router = Yao::Router.new('tenant_id' => '0123456789abcdef0123456789abcdef')
-    assert_instance_of(Yao::Tenant, router.tenant)
-    assert_equal('0123456789abcdef0123456789abcdef', router.tenant.id)
+    router = Yao::Router.new('project_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Project, router.project)
+    assert_equal('0123456789abcdef0123456789abcdef', router.project.id)
 
     assert_requested(stub)
   end

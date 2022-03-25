@@ -11,9 +11,9 @@ module Yao::Resources
     self.admin          = true
     self.api_version    = "v3"
 
-    # @return [Yao::Resources::Tenant]
+    # @return [Yao::Resources::Project]
     def project
-      @project ||= Yao::Tenant.get(scope["project"]["id"])
+      @project ||= Yao::Project.get(scope["project"]["id"])
     end
 
     class << self

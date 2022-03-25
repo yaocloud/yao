@@ -1,6 +1,6 @@
 module Yao::Resources
   class OldSample < Base
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :counter_name, :counter_type, :counter_unit, :counter_volume,
                         :message_id, :resource_id, :timestamp, :resource_metadata, :user_id,

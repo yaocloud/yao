@@ -76,13 +76,13 @@ class TestSubnet < TestYaoResource
     assert_requested(stub)
   end
 
-  def test_tenant
-    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+  def test_project
+    stub = stub_request(:get, "https://example.com:12345/projects/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "0123456789abcdef0123456789abcdef"
           }
         }
@@ -90,9 +90,9 @@ class TestSubnet < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
-    subnet = Yao::Subnet.new('tenant_id' => '0123456789abcdef0123456789abcdef')
-    assert_instance_of(Yao::Tenant, subnet.tenant)
-    assert_equal('0123456789abcdef0123456789abcdef', subnet.tenant.id)
+    subnet = Yao::Subnet.new('project_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Project, subnet.project)
+    assert_equal('0123456789abcdef0123456789abcdef', subnet.project.id)
 
     assert_requested(stub)
   end

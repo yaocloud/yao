@@ -37,14 +37,14 @@ class TestNetwork < TestYaoResource
     assert_equal(1000, network.segmentation_id)
   end
 
-  def test_tenant
+  def test_project
 
-    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/projects/0123456789abcdef0123456789abcdef")
       .to_return(
          status: 200,
          body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "0123456789abcdef0123456789abcdef"
           }
         }
@@ -57,9 +57,9 @@ class TestNetwork < TestYaoResource
       "tenant_id"  => "0123456789abcdef0123456789abcdef",
     )
 
-    assert_instance_of(Yao::Tenant, network.tenant)
-    assert_instance_of(Yao::Tenant, network.project)
-    assert_equal('0123456789abcdef0123456789abcdef', network.tenant.id)
+    assert_instance_of(Yao::Project, network.tenant)
+    assert_instance_of(Yao::Project, network.project)
+    assert_equal('0123456789abcdef0123456789abcdef', network.project.id)
 
     assert_requested(stub)
   end

@@ -2,7 +2,7 @@ module Yao::Resources
   class FloatingIP < Base
 
     include PortAssociationable
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :router_id, :description, :dns_domain, :dns_name,
                         :revision_number,
@@ -18,11 +18,5 @@ module Yao::Resources
     def router
       @router ||= Yao::Router.get(router_id)
     end
-
-    # @return [Yao::Resources::Tenant]
-    def project
-      @project ||= Yao::Tenant.get(project_id)
-    end
-    alias :tenant :project
   end
 end

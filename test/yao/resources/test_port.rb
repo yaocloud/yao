@@ -77,14 +77,14 @@ class TestPort < TestYaoResource
     assert_equal("10.0.0.1", port.primary_ip)
   end
 
-  def test_tenant
+  def test_project
 
-    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/projects/0123456789abcdef0123456789abcdef")
       .to_return(
         status: 200,
         body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "0123456789abcdef0123456789abcdef"
           }
         }
@@ -92,9 +92,9 @@ class TestPort < TestYaoResource
         headers: {'Content-Type' => 'application/json'}
       )
 
-    port = Yao::Port.new('tenant_id' => '0123456789abcdef0123456789abcdef')
-    assert_instance_of(Yao::Tenant, port.tenant)
-    assert_equal('0123456789abcdef0123456789abcdef', port.tenant.id)
+    port = Yao::Port.new('project_id' => '0123456789abcdef0123456789abcdef')
+    assert_instance_of(Yao::Project, port.project)
+    assert_equal('0123456789abcdef0123456789abcdef', port.project.id)
 
     assert_requested(stub)
   end

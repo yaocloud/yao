@@ -1,6 +1,6 @@
 module Yao::Resources
   class Router < Base
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :name, :description, :admin_state_up, :status, :external_gateway_info,
                         :routes, :distributed, :ha, :availability_zone_hints, :availability_zones

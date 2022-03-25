@@ -82,14 +82,14 @@ class TestFloatingIP < TestYaoResource
     assert_requested(stub)
   end
 
-  def test_tenant
+  def test_project
 
-    stub = stub_request(:get, "https://example.com:12345/tenants/0123456789abcdef0123456789abcdef")
+    stub = stub_request(:get, "https://example.com:12345/projects/0123456789abcdef0123456789abcdef")
       .to_return(
          status: 200,
          body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "0123456789abcdef0123456789abcdef"
           }
         }
@@ -102,8 +102,8 @@ class TestFloatingIP < TestYaoResource
       "tenant_id"  => "0123456789abcdef0123456789abcdef",
     )
 
-    assert_instance_of(Yao::Tenant, fip.tenant)
-    assert_instance_of(Yao::Tenant, fip.project)
+    assert_instance_of(Yao::Project, fip.tenant)
+    assert_instance_of(Yao::Project, fip.project)
     assert_equal('0123456789abcdef0123456789abcdef', fip.tenant.id)
 
     assert_requested(stub)
