@@ -8,9 +8,6 @@ module Yao::Resources
     def self.friendly_attributes(*names)
       names.map(&:to_s).each do |name|
         define_method(name) do
-          if !@data.key?(name) && id
-            @data = self.class.get(id).to_hash
-          end
           self[name]
         end
       end
@@ -58,6 +55,9 @@ module Yao::Resources
     # @param name [String]
     # @return [String]
     def [](name)
+      unless @data["id"].nil? || @data.key?(name) || name.include?("__")
+        @data = self.class.get(@data["id"]).to_hash
+      end
       @data[name]
     end
 
@@ -80,14 +80,14 @@ module Yao::Resources
 
     # @return [Date]
     def created
-      if date = self["created"] || self["created_at"]
+      if date = self["created_at"] || self["created"]
         Time.parse(date)
       end
     end
 
     # @return [Date]
     def updated
-      if date = self["updated"] || self["updated_at"]
+      if date = self["updated_at"] || self["updated"]
         Time.parse(date)
       end
     end
