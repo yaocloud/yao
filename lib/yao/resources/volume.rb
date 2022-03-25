@@ -2,6 +2,8 @@ require 'yao/resources/volume_action'
 
 module Yao::Resources
   class Volume < Base
+    include ProjectAssociationable
+
     friendly_attributes :attachments, :availability_zone, :bootable, :descriptions, :encrypted, :metadata, :multiattach, :name, :replication_status, :size, :snapshot_id, :status, :user_id, :volume_type
     alias :type :volume_type
 
