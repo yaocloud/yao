@@ -7,16 +7,6 @@ module Yao::Resources
     map_attribute_to_resources loadbalancers: LoadBalancer
     map_attribute_to_resources listeners: LoadBalancerListener
 
-    # @return [Date]
-    def created_at
-      Date.parse(self["created_at"])
-    end
-
-    # @return [Date]
-    def updated_at
-      Date.parse(self["updated_at"])
-    end
-
     # @return [Yao::Resources::LoadBalancerListener]
     def listeners
       @listeners ||= self["listeners"].map do |listener|
