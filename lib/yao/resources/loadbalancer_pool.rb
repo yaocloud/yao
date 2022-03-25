@@ -7,21 +7,11 @@ module Yao::Resources
     map_attribute_to_resources loadbalancers: LoadBalancer
     map_attribute_to_resources listeners: LoadBalancerListener
 
-    # @return [Date]
-    def created_at
-      Date.parse(self["created_at"])
-    end
-
-    # @return [Date]
-    def updated_at
-      Date.parse(self["updated_at"])
-    end
-
     # @return [Yao::Resources::LoadBalancerListener]
     def listeners
-      self["listeners"].map do |listener|
-        Yao::LoadBalancerListener.find listener["id"]
-      end
+      @listeners ||= self["listeners"].map do |listener|
+                       Yao::LoadBalancerListener.get(listener["id"])
+                     end
     end
 
     # @return [Yao::Resources::Tenant]
@@ -32,18 +22,18 @@ module Yao::Resources
     end
     alias :tenant :project
 
-    # @return [Yao::Resources::LoadBalancerListener]
+    # @return [Yao::Resources::LoadBalancerPoolMember]
     def members
-      self["members"].map do |member|
-        Yao::LoadBalancerPoolMember.find(self,member["id"])
-      end
+      @members ||= self["members"].map do |member|
+                     Yao::LoadBalancerPoolMember.get(self, member["id"])
+                   end
     end
 
     # @return [Yao::Resources::LoadBalancerHealthMonitor]
     def healthmonitor
-      if healthmonitor_id = self["healthmonitor_id"]
-        Yao::LoadBalancerHealthMonitor.find healthmonitor_id
-      end
+      @healthmonitor ||= if healthmonitor_id = self["healthmonitor_id"]
+                           Yao::LoadBalancerHealthMonitor.get(healthmonitor_id)
+                         end
     end
 
     self.service        = "load-balancer"
