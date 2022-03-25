@@ -95,12 +95,33 @@ class TestRouter < TestYaoResource
     assert_equal([], router.availability_zone_hints)
     assert_equal([ "nova" ], router.availability_zones)
 
-    pend 'oops. These are invalid friendly_attributes'
-    assert_equal( '', router.network_id)
-    assert_equal('', router.enable_snat)
-    assert_equal(router.external_fixed_ips '')
-    assert_equal(router.destination '')
-    assert_equal(router.nexthop '')
+    stub = stub_request(:get, "https://example.com:12345/networks/ae34051f-aa6c-4c75-abf5-50dc9ac99ef3")
+           .to_return(
+             status: 200,
+             body: <<~JSON,
+             {
+               "network": {
+                 "id": "ae34051f-aa6c-4c75-abf5-50dc9ac99ef3",
+                 "name": "example-network"
+               }
+             }
+             JSON
+             headers: {'Content-Type' => 'application/json'}
+            )
+    assert_instance_of(Yao::Network, router.external_network)
+    assert_equal("ae34051f-aa6c-4c75-abf5-50dc9ac99ef3", router.external_network.id)
+    assert_equal("example-network", router.external_network.name)
+    assert_equal(true, router.enable_snat)
+    assert_equal([
+      {
+        "ip_address" => "172.24.4.3",
+        "subnet_id" => "b930d7f6-ceb7-40a0-8b81-a425dd994ccf"
+      },
+      {
+        "ip_address" => "2001:db8::c",
+        "subnet_id" => "0c56df5d-ace5-46c8-8f4c-45fa4e334d18"
+      }
+    ], router.external_fixed_ips)
   end
 
   def test_iterfaces
