@@ -1,7 +1,7 @@
 require 'time'
 module Yao::Resources
   class Resource < Base
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :user_id, :resource_id,
                         :last_sample_timestamp, :first_sample_timestamp,

@@ -130,12 +130,12 @@ class TestRoleAssignment < TestYaoResource
   end
 
   def test_project
-    stub = stub_request(:get, "https://example.com:12345/tenants/456789").
+    stub = stub_request(:get, "https://example.com:12345/projects/456789").
       to_return(
         status: 200,
         body: <<-JSON,
         {
-          "tenant": {
+          "project": {
             "id": "456789"
           }
         }
@@ -152,7 +152,7 @@ class TestRoleAssignment < TestYaoResource
     }
 
     role_assignment = Yao::RoleAssignment.new(params)
-    assert_instance_of(Yao::Resources::Tenant, role_assignment.project)
+    assert_instance_of(Yao::Project, role_assignment.project)
     assert_equal("456789", role_assignment.project.id)
 
     assert_requested(stub)

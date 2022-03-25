@@ -1,18 +1,18 @@
 module Yao
   module Resources
-    module TenantAssociationable
+    module ProjectAssociationable
 
       def self.included(base)
         base.friendly_attributes :project_id
         base.friendly_attributes :tenant_id
       end
 
-      # @return [Yao::Resources::Tenant]
-      def tenant
-        @tenant ||= Yao::Tenant.find(project_id || tenant_id)
+      # @return [Yao::Resources::Project]
+      def project
+        @project ||= Yao::Project.find(project_id || tenant_id)
       end
 
-      alias :project :tenant
+      alias :tenant :project
     end
   end
 end

@@ -1,7 +1,7 @@
 require 'yao/resources/security_group_rule'
 module Yao::Resources
   class SecurityGroup < Base
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :name, :description
 

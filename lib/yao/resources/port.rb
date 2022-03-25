@@ -2,7 +2,7 @@ module Yao::Resources
   class Port < Base
 
     include NetworkAssociationable
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :name, :mac_address, :status, :allowed_address_pairs,
                         :device_owner, :fixed_ips, :security_groups, :device_id,

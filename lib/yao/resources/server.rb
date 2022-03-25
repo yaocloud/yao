@@ -2,7 +2,7 @@ require 'yao/resources/metadata_available'
 require 'yao/resources/action'
 module Yao::Resources
   class Server < Base
-    include TenantAssociationable
+    include ProjectAssociationable
 
     friendly_attributes :addresses, :metadata, :name, :progress,
                         :status, :user_id, :key_name
