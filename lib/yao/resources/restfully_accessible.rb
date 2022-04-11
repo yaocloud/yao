@@ -148,7 +148,7 @@ module Yao::Resources
     # @return [Yao::Resources::*]
     def get!(id_or_name_or_permalink, query={})
       get(id_or_name_or_permalink, query)
-    rescue Yao::ItemNotFound, Yao::NotFound
+    rescue Yao::ItemNotFound, Yao::NotFound, Yao::InvalidResponse
       nil
     end
 
