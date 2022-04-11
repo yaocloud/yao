@@ -84,8 +84,17 @@ class TestRestfullyAccesible < Test::Unit::TestCase
 
   sub_test_case 'get!' do
     test 'not found' do
-      stub_get_request_not_found("https://example.com/dummy_resource")
-      assert_equal(nil, Test.get!("https://example.com/dummy_resource"))
+      Test.return_single_on_querying = false
+      name = "dummy"
+      uuid = "00112233-4455-6677-8899-aabbccddeeff"
+      body = {@resources_name => []}
+
+      stub1 = stub_get_request_not_found([@url, @resources_name, name].join('/'))
+      stub2 = stub_get_request_with_json_response([@url, "#{@resources_name}?name=#{name}"].join('/'), body)
+
+      assert_equal(nil, Test.get!(name))
+      assert_requested(stub1)
+      assert_requested(stub2)
     end
 
     test 'found' do
