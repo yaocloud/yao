@@ -20,5 +20,15 @@ module Yao::Resources
     self.resource_name  = "flavor"
     self.resources_name = "flavors"
     self.resources_detail_available = true
+
+    class << self
+      # override Yao::Resources::RestfullyAccessible#find_by_name
+      # @return [Array<Yao::Resources::Role>]
+      def find_by_name(name, query={})
+        list(query).select do |flavor|
+          flavor.name == name
+        end
+      end
+    end
   end
 end
