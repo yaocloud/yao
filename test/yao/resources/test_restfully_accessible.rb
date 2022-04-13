@@ -125,4 +125,8 @@ class TestRestfullyAccesible < Test::Unit::TestCase
     assert_equal(false, Test.send(:uuid?, "dummy resource"))
     assert_equal(false, Test.send(:uuid?, "00112233445566778899aabbccddeeff"))
   end
+
+  def test_delete
+    assert_equal(Yao::Base.method(:delete), Yao::Base.method(:destroy))
+  end
 end
