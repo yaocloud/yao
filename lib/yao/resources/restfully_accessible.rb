@@ -188,6 +188,7 @@ module Yao::Resources
       res = DELETE(create_url(id))
       res.body
     end
+    alias delete destroy
 
     private
 
