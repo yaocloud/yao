@@ -1,6 +1,18 @@
 class TestRestfullyAccesible < Test::Unit::TestCase
   include RestfullyAccessibleStub
   class Test
+    def initialize(data_via_json)
+      @data = data_via_json
+    end
+
+    def id
+      @data['id']
+    end
+
+    def name
+      @data['name']
+    end
+
     class << self
       attr_accessor :client
     end
@@ -45,7 +57,7 @@ class TestRestfullyAccesible < Test::Unit::TestCase
 
       stub_get_request_not_found([@url, @resources_name, name].join('/'))
       stub_get_request([@url, "#{@resources_name}?name=dummy"].join('/'), @resources_name)
-      mock(Test).new("dummy_resource") { Struct.new(:id).new(uuid) }
+      mock(Test).new("dummy_resource") { Struct.new(:id, :name).new(uuid, name) }
       stub_get_request([@url, @resources_name, uuid].join('/'), @resources_name)
       mock(Test).new("dummy_resource") { "OK" }
 
@@ -60,7 +72,7 @@ class TestRestfullyAccesible < Test::Unit::TestCase
 
       stub_get_request_not_found([@url, @resources_name, name].join('/'))
       stub_get_request_with_json_response([@url, "#{@resources_name}?name=dummy"].join('/'), body)
-      mock(Test).new("dummy_resources") { Struct.new(:id).new(uuid) }
+      mock(Test).new("dummy_resources") { Struct.new(:id, :name).new(uuid, name) }
       stub_get_request([@url, @resources_name, uuid].join('/'), @resource_name)
       mock(Test).new("dummy_resource") { "OK" }
 
@@ -112,6 +124,23 @@ class TestRestfullyAccesible < Test::Unit::TestCase
     end
   end
 
+  sub_test_case 'get_by_name' do
+    test 'multiple found' do
+      name = 'dummy'
+      uuid = '00112233-4455-6677-8899-aabbccddeeff'
+      list_body = { @resources_name => [
+        { 'name' => 'dummy', 'id' => uuid },
+        { 'name' => 'dummy2', 'id' => '308cb410-9c84-40ec-a3eb-583001aaa7fd' }
+      ]}
+      get_body = { @resource_name => { 'name' => 'dummy', 'id' => uuid } }
+      stub1 = stub_get_request_not_found([@url, @resources_name, name].join('/'))
+      stub2 = stub_get_request_with_json_response([@url, "#{@resources_name}?name=#{name}"].join('/'), list_body)
+      stub3 = stub_get_request_with_json_response([@url, @resources_name, name].join('/'), get_body)
+
+      assert_equal(uuid, Test.send(:get_by_name, 'dummy').body[@resource_name]['id'])
+    end
+  end
+
   def test_find_by_name
     mock(Test).list({"name" => "dummy"}) { "dummy" }
 
@@ -127,6 +156,6 @@ class TestRestfullyAccesible < Test::Unit::TestCase
   end
 
   def test_delete
-    assert_equal(Yao::Base.method(:delete), Yao::Base.method(:destroy))
+    assert_equal(Test.method(:delete), Test.method(:destroy))
   end
 end
