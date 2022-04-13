@@ -156,6 +156,6 @@ class TestRestfullyAccesible < Test::Unit::TestCase
   end
 
   def test_delete
-    assert_equal(Yao::Base.method(:delete), Yao::Base.method(:destroy))
+    assert_equal(Test.method(:delete), Test.method(:destroy))
   end
 end
