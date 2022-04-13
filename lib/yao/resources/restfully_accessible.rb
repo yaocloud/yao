@@ -239,7 +239,7 @@ module Yao::Resources
         GET(create_url(name), query)
       rescue => e
         raise e unless e.class == Yao::ItemNotFound || e.class == Yao::NotFound
-        item = find_by_name(name)
+        item = find_by_name(name).select { |r| r.name == name }
         if item.size > 1
           raise Yao::TooManyItemFonud.new("More than one resource exists with the name '#{name}'")
         elsif item.size.zero?
