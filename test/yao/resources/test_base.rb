@@ -23,4 +23,25 @@ class TestResourceBase < TestYaoResource
     assert_equal(nil, base.empty)
   end
 
+  def test_update
+    stub(Yao::Resources::Base).update('foo', {name: 'BAR'}) { Yao::Resources::Base.new('id' => 'foo', 'name' => 'BAR')}
+    base = Yao::Resources::Base.new({'id' => 'foo', 'name' => 'bar'})
+    got = base.update(name: 'BAR')
+    assert_equal(got.name, 'BAR')
+  end
+
+  def test_destroy
+    stub(Yao::Resources::Base).destroy('foo') { nil }
+    base = Yao::Resources::Base.new({'id' => 'foo'})
+    got = base.destroy
+    assert_equal(got, nil)
+  end
+
+  def test_delete
+    stub(Yao::Resources::Base).destroy('foo') { nil }
+    base = Yao::Resources::Base.new({'id' => 'foo'})
+    got = base.delete
+    assert_equal(got, nil)
+  end
+
 end

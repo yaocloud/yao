@@ -92,6 +92,18 @@ module Yao::Resources
       end
     end
 
+    # @param resource_params [Hash]
+    # @return [Yao::Resources::*]
+    def update(resource_params)
+      self.class.update(id, resource_params)
+    end
+
+    # @return [String]
+    def destroy
+      self.class.destroy(id)
+    end
+    alias delete destroy
+
     extend RestfullyAccessible
   end
 end
