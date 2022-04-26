@@ -227,4 +227,50 @@ class TestServer < TestYaoResource
 
     assert_requested(stub)
   end
+
+  def test_ports
+
+    stub = stub_request(:get, "https://example.com:12345/ports?device_id")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "ports": [{
+            "id": "0123456789abcdef0123456789abcdef"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    server = Yao::Server.new('project_id' => '0123456789abcdef0123456789abcdef')
+    ports  = server.ports
+
+    assert_instance_of(Array, ports)
+    assert_instance_of(Yao::Port, ports.first)
+    assert_equal('0123456789abcdef0123456789abcdef', ports.first.id)
+
+    assert_requested(stub)
+  end
+
+  def test_ports_empty
+
+    stub = stub_request(:get, "https://example.com:12345/ports?device_id")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "ports": []
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    server = Yao::Server.new('project_id' => '0123456789abcdef0123456789abcdef')
+    ports  = server.ports
+
+    assert_instance_of(Array, ports)
+    assert_equal(0, ports.size)
+    assert_requested(stub)
+  end
 end

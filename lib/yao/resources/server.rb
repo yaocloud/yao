@@ -32,6 +32,11 @@ module Yao::Resources
       Yao::OldSample.list(counter_name, query).select{|os| os.resource_metadata["instance_id"] == id}
     end
 
+    # @return [Array<Yao::Resources::Port>]
+    def ports
+      @ports ||= Yao::Port.list(device_id: id)
+    end
+
     # @param id [String]
     # @return [Hash]
     def self.start(id)
