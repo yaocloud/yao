@@ -36,13 +36,6 @@ module Yao::Resources
       # @param port_id [String] ID of port
       # @return [Yao::Resources::FloatingIP]
       def associate_port(id, port_id)
-
-        param = {
-          floatingip: {
-            port_id: port_id
-          }
-        }
-
         update(id, port_id: port_id)
       end
 
