@@ -170,4 +170,52 @@ class TestPort < TestYaoResource
 
     assert_requested(stub)
   end
+
+  def test_floating_ip
+
+    stub = stub_request(:get, "https://example.com:12345/floatingips?port_id")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "floatingips": [{
+            "id": "00000000-0000-0000-0000-000000000000"
+          }]
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "port_id" => "00000000-0000-0000-0000-000000000000",
+    }
+
+    port = Yao::Port.new(params)
+    assert_instance_of(Yao::FloatingIP, port.floating_ip)
+    assert_true(port.has_floating_ip?)
+    assert_requested(stub)
+  end
+
+  def test_floating_ip_empty
+
+    stub = stub_request(:get, "https://example.com:12345/floatingips?port_id")
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "floatingips": []
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    params = {
+      "port_id" => "00000000-0000-0000-0000-000000000000",
+    }
+
+    port = Yao::Port.new(params)
+    assert_nil(port.floating_ip)
+    assert_false(port.has_floating_ip?)
+    assert_requested(stub)
+  end
 end
