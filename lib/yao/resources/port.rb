@@ -19,6 +19,22 @@ module Yao::Resources
       @subnet ||= Yao::Subnet.find fixed_ips.first["subnet_id"]
     end
 
+    # @return [Yao::FloatingIP]
+    def floating_ip
+      # notice: port が floating_ip を持たない場合has_floating_ip? を呼び出す度に
+      # Yao::FloatingIP.list を評価しなくていいように defined? を入れている
+      if defined?(@floating_ip)
+        @floating_ip
+      else
+        @floating_ip = Yao::FloatingIP.list(port_id: id).first
+      end
+    end
+
+    # @return [Bool]
+    def has_floating_ip?
+      !!floating_ip
+    end
+
     self.service        = "network"
     self.resource_name  = "port"
     self.resources_name = "ports"
