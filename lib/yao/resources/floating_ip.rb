@@ -42,15 +42,7 @@ module Yao::Resources
       # @param id [String] ID of floating_ip
       # @return [Yao::Resources::FloatingIP]
       def disassociate_port(id)
-
-        param = {
-          floatingip: {
-            port_id: nil
-          }
-        }
-
-        res = PUT([resources_path, id].join('/'), param.to_json)
-        resource_from_json(res.body)
+        update(id, port_id: nil)
       end
     end
   end
