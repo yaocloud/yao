@@ -43,8 +43,7 @@ module Yao::Resources
           }
         }
 
-        res = PUT([resources_path, id ].join('/'), param.to_json)
-        resource_from_json(res.body)
+        update(id, port_id: port_id)
       end
 
       # @param id [String] ID of floating_ip
