@@ -131,4 +131,95 @@ class TestFloatingIP < TestYaoResource
 
     assert_requested(stub)
   end
+
+  def test_associate_port
+
+    floating_ip = Yao::FloatingIP.new("id" => "00000000-0000-0000-0000-000000000000")
+    port = Yao::Port.new("id" => "01234567-0123-0123-0123-0123456789ab")
+
+    stub = stub_request(:put, "https://example.com:12345/floatingips/00000000-0000-0000-0000-000000000000").
+      with(
+        body: '{"floatingip":{"port_id":"01234567-0123-0123-0123-0123456789ab"}}'
+      )
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "floatingip": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    resource = Yao::FloatingIP.associate_port(floating_ip.id, port.id)
+    assert_instance_of(Yao::FloatingIP, resource)
+    assert_equal("00000000-0000-0000-0000-000000000000", resource.id)
+
+    assert_requested(stub)
+  end
+
+  sub_test_case 'Yao::FloatingIP#associate_port' do
+
+    def setup
+      stub(Yao::Resources::FloatingIP).associate_port {}
+    end
+
+    def test_associate_port
+      floating_ip = Yao::FloatingIP.new("id" => "00000000-0000-0000-0000-000000000000")
+      port = Yao::Port.new("id" => "01234567-0123-0123-0123-0123456789ab")
+
+      floating_ip.associate_port(port)
+
+      assert_received(Yao::Resources::FloatingIP) { |subject|
+        subject.associate_port(floating_ip.id, port.id)
+      }
+    end
+  end
+
+  def test_disassociate_port
+
+    stub = stub_request(:put, "https://example.com:12345/floatingips/00000000-0000-0000-0000-000000000000").
+      with(
+        body: '{"floatingip":{"port_id":null}}'
+      )
+      .to_return(
+        status: 200,
+        body: <<-JSON,
+        {
+          "floatingip": {
+            "id": "00000000-0000-0000-0000-000000000000"
+          }
+        }
+        JSON
+        headers: {'Content-Type' => 'application/json'}
+      )
+
+    floating_ip = Yao::FloatingIP.new("id" => "00000000-0000-0000-0000-000000000000")
+
+    resource = Yao::FloatingIP.disassociate_port(floating_ip.id)
+    assert_instance_of(Yao::FloatingIP, resource)
+    assert_equal("00000000-0000-0000-0000-000000000000", resource.id)
+
+    assert_requested(stub)
+  end
+
+  sub_test_case 'Yao::FloatingIP#disassociate_port' do
+
+    def setup
+      stub(Yao::Resources::FloatingIP).disassociate_port {}
+    end
+
+    def test_associate_port
+      floating_ip = Yao::FloatingIP.new("id" => "00000000-0000-0000-0000-000000000000")
+      port = Yao::Port.new("id" => "01234567-0123-0123-0123-0123456789ab")
+
+      floating_ip.disassociate_port
+
+      assert_received(Yao::Resources::FloatingIP) { |subject|
+        subject.disassociate_port(floating_ip.id)
+      }
+    end
+  end
 end
