@@ -4,9 +4,22 @@ require 'time'
 module Yao::Resources
   class Base
 
+    # @param name [String]
+    def self.add_instantiation_name_list(name)
+      @instantiation_list ||= []
+      @instantiation_list << name
+    end
+
+    # @param name [String]
+    # @return [bool]
+    def self.instantiation?(name)
+      @instantiation_list.include?(name)
+    end
+
     # @param name [Array]
     def self.friendly_attributes(*names)
       names.map(&:to_s).each do |name|
+        add_instantiation_name_list(name)
         define_method(name) do
           self[name]
         end
@@ -17,6 +30,7 @@ module Yao::Resources
     # @return [Symbol]
     def self.map_attribute_to_attribute(k_and_v)
       as_json, as_method = *k_and_v.to_a.first.map(&:to_s)
+      add_instantiation_name_list(as_method)
       define_method(as_method) do
         self[as_json]
       end
@@ -27,6 +41,7 @@ module Yao::Resources
     def self.map_attribute_to_resource(k_and_v)
       _name, klass = *k_and_v.to_a.first
       name = _name.to_s
+      add_instantiation_name_list(name)
       define_method(name) do
         unless self[name].empty?
           self[[name, klass].join("__")] ||= klass.new(self[name])
@@ -39,6 +54,7 @@ module Yao::Resources
     def self.map_attribute_to_resources(k_and_v)
       _name, klass = *k_and_v.to_a.first
       name = _name.to_s
+      add_instantiation_name_list(name)
       define_method(name) do
         self[[name, klass].join("__")] ||= self[name].map {|d|
           klass.new(d)
@@ -55,7 +71,7 @@ module Yao::Resources
     # @param name [String]
     # @return [String]
     def [](name)
-      unless @data["id"].nil? || @data.key?(name) || name.include?("__")
+      if !@data.key?(name) && self.class.instantiation?(name)
         @data = self.class.get(@data["id"]).to_hash
       end
       @data[name]
