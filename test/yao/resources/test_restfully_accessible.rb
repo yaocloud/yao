@@ -140,6 +140,21 @@ class TestRestfullyAccesible < Test::Unit::TestCase
       assert_equal(uuid, Test.send(:get_by_name, 'dummy').body[@resource_name]['id'])
     end
 
+    test 'multiple same name found' do
+      name = 'dummy'
+      uuid = '00112233-4455-6677-8899-aabbccddeeff'
+      list_body = { @resources_name => [
+        { 'name' => 'dummy', 'id' => uuid },
+        { 'name' => 'dummy', 'id' => '308cb410-9c84-40ec-a3eb-583001aaa7fd' }
+      ]}
+      stub1 = stub_get_request_not_found([@url, @resources_name, name].join('/'))
+      stub2 = stub_get_request_with_json_response([@url, "#{@resources_name}?name=#{name}"].join('/'), list_body)
+
+      assert_raise(Yao::TooManyItemFonud, "More than one resource exists with the name '#{name}'") do
+        Test.send(:get_by_name, name)
+      end
+    end
+
     test 'empty name' do
       assert_raise(Yao::InvalidRequest, "Invalid requeset with empty name or nil") do
         Test.send(:get_by_name, '')
