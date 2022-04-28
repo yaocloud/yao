@@ -5,6 +5,10 @@ module Yao::Resources
                         :monitor_address, :address,
                         :protocol_port, :operating_status
 
+    map_attributes_to_time :created_at, :updated_at
+    alias :created :created_at
+    alias :updated :updated_at
+
     # @return [Yao::Resources::Tenant]
     def project
       if project_id = self["project_id"]

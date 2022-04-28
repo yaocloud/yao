@@ -4,10 +4,9 @@ module Yao::Resources
   class Aggregates < Base
     friendly_attributes :availability_zone, :deleted, :hosts, :metadata, :name
 
-    # @return [Date]
-    def deleted_at
-      Date.parse(self["deleted_at"]) if self["deleted_at"]
-    end
+    map_attributes_to_time :created_at, :updated_at, :deleted_at
+    alias :created :created_at
+    alias :updated :updated_at
 
     self.service        = "compute"
     self.resources_name = "aggregates"

@@ -62,6 +62,16 @@ module Yao::Resources
       end
     end
 
+    # @param names [Array<Symbol>]
+    # @return [Symbol]
+    def self.map_attributes_to_time(*names)
+      names.map(&:to_s).each do |name|
+        define_method(name) do
+          Time.parse(self[name])
+        end
+      end
+    end
+
     # @param data_via_json [Hash]
     # @return [Hash]
     def initialize(data_via_json)
@@ -92,20 +102,6 @@ module Yao::Resources
     # @return [String]
     def id
       self["id"]
-    end
-
-    # @return [Date]
-    def created
-      if date = self["created_at"] || self["created"]
-        Time.parse(date)
-      end
-    end
-
-    # @return [Date]
-    def updated
-      if date = self["updated_at"] || self["updated"]
-        Time.parse(date)
-      end
     end
 
     # @param resource_params [Hash]

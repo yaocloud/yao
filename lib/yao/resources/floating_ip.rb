@@ -10,6 +10,10 @@ module Yao::Resources
                         :floating_ip_address,
                         :status, :port_details, :tags, :port_forwardings
 
+    map_attributes_to_time :created_at, :updated_at
+    alias :created :created_at
+    alias :updated :updated_at
+
     self.service        = "network"
     self.resource_name  = "floatingip"
     self.resources_name = "floatingips"

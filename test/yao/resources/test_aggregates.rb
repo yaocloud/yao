@@ -19,6 +19,6 @@ class TestAggregates < TestYaoResource
     assert_equal("nova", aggregates.name)
     assert_equal(Time.parse("2015-08-27T09:49:58-05:00"), aggregates.created)
     assert_equal(Time.parse("2015-08-27T09:49:58-05:00"), aggregates.updated)
-    assert_equal(Date.parse("2015-08-27T09:49:58-05:00"), aggregates.deleted_at)
+    assert_equal(Time.parse("2015-08-27T09:49:58-05:00"), aggregates.deleted_at)
   end
 end

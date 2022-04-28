@@ -2,6 +2,9 @@ module Yao::Resources
   class ComputeServices < Base
     friendly_attributes  :status, :binary, :host, :zone, :state, :disabled_reason, :forced_down
 
+    map_attributes_to_time :updated_at
+    alias :updated :updated_at
+
     self.service        = "compute"
     self.resource_name  = "service"
     self.resources_name = "os-services"
