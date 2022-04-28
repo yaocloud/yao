@@ -148,7 +148,7 @@ module Yao::Resources
     # @return [Yao::Resources::*]
     def get!(id_or_name_or_permalink, query={})
       get(id_or_name_or_permalink, query)
-    rescue Yao::ItemNotFound, Yao::NotFound, Yao::InvalidResponse, Yao::InvalidRequest
+    rescue Yao::ItemNotFound, Yao::NotFound, Yao::InvalidRequest
       nil
     end
 
@@ -242,13 +242,12 @@ module Yao::Resources
 
       begin
         GET(create_url(name), query)
-      rescue => e
-        raise e unless e.class == Yao::ItemNotFound || e.class == Yao::NotFound
+      rescue Yao::ItemNotFound, Yao::NotFound => e
         item = find_by_name(name).select { |r| r.name == name }
         if item.size > 1
           raise Yao::TooManyItemFonud.new("More than one resource exists with the name '#{name}'")
         elsif item.size.zero?
-          raise Yao::InvalidResponse.new("No resource exists with the name '#{name}'")
+          raise e
         end
         GET(create_url(item.first.id), query)
       end
