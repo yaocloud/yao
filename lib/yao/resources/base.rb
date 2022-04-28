@@ -82,7 +82,7 @@ module Yao::Resources
     # @param name [String]
     # @return [String]
     def [](name)
-      if !@data.key?(name) && self.class.instantiation?(name)
+      if @data["id"] && !@data.key?(name) && self.class.instantiation?(name)
         @data = self.class.get(@data["id"]).to_hash
       end
       @data[name]
