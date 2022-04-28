@@ -1,7 +1,6 @@
 module Yao
   class ReadOnlyViolationError < ::StandardError; end
   class TooManyItemFonud       < ::StandardError; end
-  class InvalidResponse        < ::StandardError; end
   class InvalidRequest         < ::StandardError; end
 
   class ServerError < ::StandardError
