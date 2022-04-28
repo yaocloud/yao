@@ -66,6 +66,7 @@ module Yao::Resources
     # @return [Symbol]
     def self.map_attributes_to_time(*names)
       names.map(&:to_s).each do |name|
+        add_instantiation_name_list(name)
         define_method(name) do
           Time.parse(self[name])
         end
