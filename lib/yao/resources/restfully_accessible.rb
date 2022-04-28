@@ -131,7 +131,7 @@ module Yao::Resources
     # @param query [Hash]
     # @return [Yao::Resources::*]
     def get(id_or_name_or_permalink, query={})
-      res = if id_or_name_or_permalink.start_with?("http://", "https://")
+      res = if id_or_name_or_permalink&.start_with?("http://", "https://")
               GET(id_or_name_or_permalink, query)
             elsif uuid?(id_or_name_or_permalink)
               GET(create_url(id_or_name_or_permalink), query)
@@ -148,7 +148,7 @@ module Yao::Resources
     # @return [Yao::Resources::*]
     def get!(id_or_name_or_permalink, query={})
       get(id_or_name_or_permalink, query)
-    rescue Yao::ItemNotFound, Yao::NotFound, Yao::InvalidResponse
+    rescue Yao::ItemNotFound, Yao::NotFound, Yao::InvalidResponse, Yao::InvalidRequest
       nil
     end
 
@@ -234,6 +234,11 @@ module Yao::Resources
     # @param query [Hash]
     # @return [Yao::Resources::*]
     def get_by_name(name, query={})
+
+      # 空またnilの場合listと同じURLにリクエストしてしまい意図しないレスポンスが返ってくる
+      if name.nil? || name.empty?
+        raise Yao::InvalidRequest.new("Invalid request with empty name or nil")
+      end
 
       begin
         GET(create_url(name), query)

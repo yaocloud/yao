@@ -139,6 +139,18 @@ class TestRestfullyAccesible < Test::Unit::TestCase
 
       assert_equal(uuid, Test.send(:get_by_name, 'dummy').body[@resource_name]['id'])
     end
+
+    test 'empty name' do
+      assert_raise(Yao::InvalidRequest, "Invalid requeset with empty name or nil") do
+        Test.send(:get_by_name, '')
+      end
+    end
+
+    test 'nil' do
+      assert_raise(Yao::InvalidRequest, "Invalid requeset with empty name or nil") do
+        Test.send(:get_by_name, nil)
+      end
+    end
   end
 
   def test_find_by_name
