@@ -20,6 +20,10 @@ module Yao::Resources
     map_attribute_to_attribute 'OS-EXT-STS:task_state'               => :ext_sts_task_state
     map_attribute_to_attribute 'OS-EXT-STS:vm_state'                 => :ext_sts_vm_state
 
+    map_attributes_to_time :created, :updated
+    alias :created_at :created
+    alias :updated_at :updated
+
     self.service        = "compute"
     self.resource_name  = "server"
     self.resources_name = "servers"

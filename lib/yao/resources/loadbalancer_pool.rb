@@ -7,6 +7,10 @@ module Yao::Resources
     map_attribute_to_resources loadbalancers: LoadBalancer
     map_attribute_to_resources listeners: LoadBalancerListener
 
+    map_attributes_to_time :created_at, :updated_at
+    alias :created :created_at
+    alias :updated :updated_at
+
     # @return [Yao::Resources::LoadBalancerListener]
     def listeners
       @listeners ||= self["listeners"].map do |listener|
