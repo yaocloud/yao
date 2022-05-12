@@ -68,6 +68,16 @@ module Yao::Resources
       self.class.resize(id, flavor_id)
     end
 
+    # @param id [String]
+    # @param host [String]
+    # @param block_migration [Boolean]
+    # @param disk_over_commit [Boolean]
+    # @param opts [Hash]
+    # @return [Hash]
+    def live_migrate(host = nil, block_migration = false, disk_over_commit = false, opts = {})
+      self.class.live_migrate(id, host, block_migration, disk_over_commit, opts)
+    end
+
     # @return [Hash]
     def add_security_group(sg_name)
       self.class.add_security_group(id, sg_name)
@@ -100,6 +110,21 @@ module Yao::Resources
     # @return [Hash]
     def self.resize(id, flavor_id)
       action(id,"resize" => { "flavorRef" => flavor_id })
+    end
+
+    # @param id [String]
+    # @param host [String]
+    # @param block_migration [Boolean]
+    # @param disk_over_commit [Boolean]
+    # @param opts [Hash]
+    # @return [Hash]
+    def self.live_migrate(id, host = nil, block_migration = false, disk_over_commit = false, opts ={})
+      query = {
+        "host" => host,
+        "block_migration" => block_migration,
+        "disk_over_commit" => disk_over_commit,
+      }.merge(opts)
+      action(id, "os-migrateLive" => query)
     end
 
     # @param id [String]
