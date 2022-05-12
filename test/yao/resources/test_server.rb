@@ -320,6 +320,21 @@ class TestServer < TestYaoResource
     assert_requested(stub)
   end
 
+  def test_live_migrate
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"os-migrateLive": {
+          "host": "test-node-1",
+          "block_migration": false,
+          "disk_over_commit": false
+        }}]
+    )
+
+    Yao::Server.new('id' => server_id).live_migrate("test-node-1", false, false)
+    assert_requested(stub)
+  end
+
   def test_add_security_group
     server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
     stub = stub_post_request(
