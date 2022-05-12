@@ -47,6 +47,42 @@ module Yao::Resources
       action(id, "os-start" => nil)
     end
 
+    # @return [Hash]
+    def start
+      self.class.start(id)
+    end
+
+    # @return [Hash]
+    def shutoff
+      self.class.shutoff(id)
+    end
+    alias :stop :shutoff
+
+    # @return [Hash]
+    def reboot
+      self.class.reboot(id)
+    end
+
+    # @return [Hash]
+    def resize(flavor_id)
+      self.class.resize(id, flavor_id)
+    end
+
+    # @return [Hash]
+    def add_security_group(sg_name)
+      self.class.add_security_group(id, sg_name)
+    end
+
+    # @return [Hash]
+    def remove_security_group(sg_name)
+      self.class.remove_security_group(id, sg_name)
+    end
+
+    # @return [Hash]
+    def get_vnc_console
+      self.class.get_vnc_console(id)
+    end
+
     # @param id [String]
     # @return [Hash]
     def self.shutoff(id)
@@ -81,7 +117,7 @@ module Yao::Resources
     end
 
     # @param id [String]
-    # @return [Hash]
+    # @return [String]
     def self.get_vnc_console(id)
       response = action(id, {"os-getVNCConsole": {"type": "novnc"}})
       response.dig("console", "url")
