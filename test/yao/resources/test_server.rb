@@ -1,4 +1,5 @@
 class TestServer < TestYaoResource
+  include RestfullyAccessibleStub
 
   def test_server
 
@@ -271,6 +272,85 @@ class TestServer < TestYaoResource
 
     assert_instance_of(Array, ports)
     assert_equal(0, ports.size)
+    assert_requested(stub)
+  end
+
+  def test_start
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"os-start": nil}]
+    )
+
+    Yao::Server.new('id' => server_id).start
+    assert_requested(stub)
+  end
+
+  def test_shutoff
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"os-stop": nil}]
+    )
+
+    Yao::Server.new('id' => server_id).stop
+    assert_requested(stub)
+    assert_equal(Yao::Server.method(:stop), Yao::Server.method(:shutoff))
+  end
+
+  def test_reboot
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"reboot": { "type" => "HARD" }}]
+    )
+
+    Yao::Server.new('id' => server_id).reboot
+    assert_requested(stub)
+  end
+
+  def test_resize
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"resize": { "flavorRef": "test-flavor" }}]
+    )
+
+    Yao::Server.new('id' => server_id).resize("test-flavor")
+    assert_requested(stub)
+  end
+
+  def test_add_security_group
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"addSecurityGroup": { "name": "test-sg" }}]
+    )
+
+    Yao::Server.new('id' => server_id).add_security_group("test-sg")
+    assert_requested(stub)
+  end
+
+  def test_remove_security_group
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"removeSecurityGroup": { "name": "test-sg" }}]
+    )
+
+    Yao::Server.new('id' => server_id).remove_security_group("test-sg")
+    assert_requested(stub)
+  end
+
+  def test_get_vnc_concolse
+    server_id = '2ce4c5b3-2866-4972-93ce-77a2ea46a7f9'
+    stub = stub_post_request(
+      "https://example.com:12345/servers/#{server_id}/action",
+      [{"os-getVNCConsole": { "type": "novnc" }}],
+      {"console": { "url": "https://example.com/vnc" }}
+    )
+
+    Yao::Server.new('id' => server_id).get_vnc_console
     assert_requested(stub)
   end
 end
