@@ -1,4 +1,5 @@
 class TestComputeServices < TestYaoResource
+  include RestfullyAccessibleStub
 
   def test_compute_services
 
@@ -126,5 +127,12 @@ class TestComputeServices < TestYaoResource
     assert_equal("test2", compute_service.disabled_reason)
 
     assert_requested stub
+  end
+
+  def test_delete
+    stub = stub_delete_request("https://example.com:12345/os-services/test-id")
+    compute_service = Yao::ComputeServices.new({"id" => "test-id"})
+    assert_equal({}, compute_service.delete)
+    assert_requested(stub)
   end
 end
