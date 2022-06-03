@@ -10,6 +10,10 @@ module Yao::Resources
     map_attribute_to_attribute 'os-vol-host-attr:host' => :host
     map_attribute_to_attribute 'os-vol-tenant-attr:tenant_id' => :tenant_id
 
+    map_attributes_to_time :created_at, :updated_at
+    alias :created :created_at
+    alias :updated :updated_at
+
     self.service        = "volumev3"
     self.resource_name  = "volume"
     self.resources_name = "volumes"
