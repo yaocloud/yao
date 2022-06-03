@@ -13,7 +13,9 @@ class TestVolume < TestYaoResource
         'snapshot_id' => nil,
         'status' => 'available',
         'user_id' => 'aaaa166533fd49f3b11b1cdce2430000',
-        'volume_type' => 'test'
+        'volume_type' => 'test',
+        'created_at' => '2018-11-28T06:25:15.288987',
+        'updated_at' => '2019-11-28T06:25:15.288987'
     }
 
     volume = Yao::Volume.new(params)
@@ -30,6 +32,10 @@ class TestVolume < TestYaoResource
     assert_equal(volume.user_id, 'aaaa166533fd49f3b11b1cdce2430000')
     assert_equal(volume.volume_type, 'test')
     assert_equal(volume.type, 'test')
+    assert_equal(Time.parse('2018-11-28T06:25:15.288987'), volume.created_at)
+    assert_equal(Time.parse('2018-11-28T06:25:15.288987'), volume.created)
+    assert_equal(Time.parse('2019-11-28T06:25:15.288987'), volume.updated_at)
+    assert_equal(Time.parse('2019-11-28T06:25:15.288987'), volume.updated)
   end
 
   def test_list
