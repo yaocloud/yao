@@ -51,6 +51,18 @@ module RestfullyAccessibleStub
       )
   end
 
+  def stub_put_request(url, body, response = {})
+    stub_request(:put,url)
+      .with(
+        headers: request_headers.merge({'Content-Type' => 'application/json'}),
+        body: body.to_json,
+      ).to_return(
+        status: 200,
+        headers: {'Content-Type' => 'application/json'},
+        body: response.to_json
+      )
+  end
+
   def request_headers
     {'Accept'=>'application/json', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'User-Agent'=>"Yao/#{Yao::VERSION} Faraday/#{Faraday::VERSION}"}
   end
