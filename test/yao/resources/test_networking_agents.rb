@@ -1,4 +1,5 @@
 class TestNetworkingAgents < TestYaoResource
+  include RestfullyAccessibleStub
 
   def test_networking_agents
 
@@ -80,5 +81,12 @@ class TestNetworkingAgents < TestYaoResource
     assert_equal(Time.parse("2017-09-12 19:40:08"), agent.heartbeat_timestamp)
     assert_equal(Time.parse("2017-09-12 19:35:38"), agent.created_at)
     assert_equal(Time.parse("2017-09-12 19:35:38"), agent.started_at)
+  end
+
+  def test_delete
+    stub = stub_delete_request("https://example.com:12345/agents/test-id")
+    agents = Yao::NetworkingAgents.new({"id" => "test-id"})
+    assert_equal({}, agents.delete)
+    assert_requested(stub)
   end
 end

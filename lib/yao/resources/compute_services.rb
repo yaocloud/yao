@@ -21,6 +21,11 @@ module Yao::Resources
       status == 'disabled'
     end
 
+    # @return []
+    def delete
+      self.class.delete(id)
+    end
+
     class << self
       # @param host [String]
       # @param binary [String]

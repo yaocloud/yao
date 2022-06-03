@@ -25,6 +25,11 @@ module Yao::Resources
       Time.parse(self["heartbeat_timestamp"])
     end
 
+    # @return []
+    def delete
+      self.class.delete(id)
+    end
+
     alias :state :admin_state_up
   end
 end
