@@ -14,7 +14,7 @@ class TestNetwork < TestYaoResource
       "router:external" => false,
       "shared" => false,
       "status" => "ACTIVE",
-      "subnets" => [],
+      "subnets" => ["52822b63-eb89-496d-9509-f91473b9d85d"],
       "tenant_id" => "c05140b3dc7c4555afff9fab6b58edc2",
       "project_id" => "c05140b3dc7c4555afff9fab6b58edc2",
     }
@@ -28,13 +28,15 @@ class TestNetwork < TestYaoResource
     assert_equal(false, network.shared)
     assert_equal(false, network.shared?)
     assert_equal("c05140b3dc7c4555afff9fab6b58edc2", network.tenant_id)
-    assert_equal([], network.subnets)
     assert_equal(true, network.admin_state_up)
 
     #map_attribute_to_attribute
     assert_equal("physnet1", network.physical_network)
     assert_equal("vlan", network.type)
     assert_equal(1000, network.segmentation_id)
+
+    assert_equal(Yao::Subnet, network.subnets.first.class)
+    assert_equal("52822b63-eb89-496d-9509-f91473b9d85d", network.subnets.first.id)
   end
 
   def test_project
