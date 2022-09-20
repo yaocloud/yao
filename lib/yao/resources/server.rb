@@ -41,6 +41,11 @@ module Yao::Resources
       @ports ||= Yao::Port.list(device_id: id)
     end
 
+    # @return [Array<Yao::Resources::ServerMigrate>]
+    def migrations
+      Yao::ServerMigrate.get(id)
+    end
+
     # @param id [String]
     # @return [Hash]
     def self.start(id)

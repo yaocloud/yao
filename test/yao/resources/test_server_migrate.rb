@@ -1,5 +1,5 @@
 class TestServerGroup < TestYaoResource
-  def test_server_group
+  def test_server_migrate
     # https://docs.openstack.org/api-ref/compute/?expanded=list-migrations-detail#list-migrations
     params = {
       "created_at" => "2012-10-29T13:42:02.000000",
@@ -22,7 +22,7 @@ class TestServerGroup < TestYaoResource
     assert_equal("1.2.3.4", migrate.dest_host)
     assert_equal("node2", migrate.dest_node)
     assert_equal(1234, migrate.id)
-    assert_equal("8600d31b-d1a1-4632-b2ff-45c2be1a70ff", migrate.instance_uuid)
+    assert_equal("8600d31b-d1a1-4632-b2ff-45c2be1a70ff", migrate.server_id)
     assert_equal(2, migrate.new_instance_type_id)
     assert_equal(1, migrate.old_instance_type_id)
     assert_equal("compute1", migrate.source_compute)
