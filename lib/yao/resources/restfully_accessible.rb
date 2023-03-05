@@ -106,9 +106,8 @@ module Yao::Resources
         r = GET(url, query).body
         if r.is_a?(Hash)
           res.deep_merge!(r)
-          links = r.find {|k,_| k =~ /links/ }
-          if links && links.last.is_a?(Array) && next_link = links.last.find{|s| s["rel"] == "next" }
-            uri = URI.parse(next_link["href"])
+          if next_link = find_next_link(r)
+            uri = URI.parse(next_link)
             query = Hash[URI::decode_www_form(uri.query)] if uri.query
             next
           end
@@ -126,6 +125,16 @@ module Yao::Resources
 
     # @note .list is defined to keep backward compatibility and will be deprecated
     alias :list_detail :list
+
+    # @param response [Hash]
+    # @return [String]
+    def find_next_link(response)
+      if links = response.find {|k, v| k =~ /links/ && v.is_a?(Array) }&.last
+        links.find{|s| s["rel"] == "next" }&.fetch("href")
+      else
+        response["next"]
+      end
+    end
 
     # @param id_or_name_or_permalink [Stirng]
     # @param query [Hash]
