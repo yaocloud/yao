@@ -23,6 +23,16 @@ class TestResourceBase < TestYaoResource
     assert_equal(nil, base.empty)
   end
 
+  def test_map_attributes_to_time
+    base = Yao::Resources::Base.new("updated_at" => "2015-01-01T00:00:00Z")
+    base.class.map_attributes_to_time :updated_at
+    assert_equal(Time.parse("2015-01-01T00:00:00Z"), base.updated_at)
+
+    base = Yao::Resources::Base.new("updated_at" => nil)
+    base.class.map_attributes_to_time :updated_at
+    assert(base.updated_at.nil?)
+  end
+
   def test_update
     stub(Yao::Resources::Base).update('foo', {name: 'BAR'}) { Yao::Resources::Base.new('id' => 'foo', 'name' => 'BAR')}
     base = Yao::Resources::Base.new({'id' => 'foo', 'name' => 'bar'})

@@ -68,7 +68,8 @@ module Yao::Resources
       names.map(&:to_s).each do |name|
         add_instantiation_name_list(name)
         define_method(name) do
-          Time.parse(self[name])
+          time = self[name]
+          Time.parse(time) if time
         end
       end
     end
